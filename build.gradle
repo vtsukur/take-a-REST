@@ -9,7 +9,7 @@ repositories {
 
 dependencies {
   compile('org.jboss.resteasy:resteasy-jaxrs:3.0.8.Final')
-  compile('org.jboss.resteasy:resteasy-servlet-initializer:3.0.8.Final')
+  compile('log4j:log4j:1.2.14')
 }
 
 task wrapper(type: Wrapper) {
