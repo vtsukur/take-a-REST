@@ -13,6 +13,8 @@ public final class RESTApplication extends Application {
 
     public RESTApplication() {
         singletons.add(new HelloResource());
+        singletons.add(new EntryPointResource());
+        singletons.add(new HotelsResource());
     }
 
     public Set<Object> getSingletons() {
