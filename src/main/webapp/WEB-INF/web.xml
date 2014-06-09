@@ -17,7 +17,7 @@
     <init-param>
       <param-name>resteasy.providers</param-name>
       <param-value>
-        org.realrest.infrastructure.rest.jaxrs.HalMessageBodyWriter
+        org.realrest.infrastructure.rest.jaxrs.resources.HalMessageBodyWriter
       </param-value>
     </init-param>
   </servlet>
