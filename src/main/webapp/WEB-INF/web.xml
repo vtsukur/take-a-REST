@@ -10,10 +10,14 @@
       <param-name>javax.ws.rs.Application</param-name>
       <param-value>org.realrest.infrastructure.rest.jaxrs.RESTApplication</param-value>
     </init-param>
+    <init-param>
+      <param-name>resteasy.servlet.mapping.prefix</param-name>
+      <param-value>api</param-value>
+    </init-param>
   </servlet>
 
   <servlet-mapping>
     <servlet-name>rest-api</servlet-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/api/*</url-pattern>
   </servlet-mapping>
 </web-app>
