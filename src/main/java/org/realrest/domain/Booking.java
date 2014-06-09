@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * @author volodymyr.tsukur
  */
-public class Booking extends Identifiable {
+public final class Booking extends Identifiable {
 
     private User user;
 

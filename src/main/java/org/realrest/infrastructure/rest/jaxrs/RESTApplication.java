@@ -7,7 +7,7 @@ import java.util.Set;
 /**
 * @author volodymyr.tsukur
 */
-public class RESTApplication extends Application {
+public final class RESTApplication extends Application {
 
     private final Set<Object> singletons = new HashSet<Object>();
 

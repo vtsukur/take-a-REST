@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * @author volodymyr.tsukur
  */
-public class User extends Identifiable {
+public final class User extends Identifiable {
 
     private Set<Booking> bookings;
 
