@@ -3,7 +3,7 @@ package org.realrest.domain;
 /**
  * @author volodymyr.tsukur
  */
-public class Room extends Identifiable {
+public final class Room extends Identifiable {
 
     private Hotel hotel;
 

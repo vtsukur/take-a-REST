@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * @author volodymyr.tsukur
  */
-public class Hotel extends Identifiable {
+public final class Hotel extends Identifiable {
 
     private Set<Room> rooms;
 

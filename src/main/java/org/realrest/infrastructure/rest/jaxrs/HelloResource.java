@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
  * @author volodymyr.tsukur
  */
 @Path("hello")
-public class HelloResource {
+public final class HelloResource {
 
     @GET
     @Produces("text/plain")
