@@ -3,7 +3,7 @@ package org.realrest.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 /**
  * @author volodymyr.tsukur
@@ -16,9 +16,9 @@ public final class Booking extends Identifiable {
 
     private Room room;
 
-    private Date from;
+    private ZonedDateTime from;
 
-    private Date to;
+    private ZonedDateTime to;
 
     private boolean includeBreakfast;
 
