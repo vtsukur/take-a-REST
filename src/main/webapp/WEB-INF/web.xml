@@ -26,4 +26,13 @@
     <servlet-name>rest-api</servlet-name>
     <url-pattern>/api/*</url-pattern>
   </servlet-mapping>
+
+  <!--<listener>-->
+    <!--<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>-->
+  <!--</listener>-->
+
+  <context-param>
+    <param-name>resteasy.injector.factory</param-name>
+    <param-value>org.jboss.resteasy.cdi.CdiInjectorFactory</param-value>
+  </context-param>
 </web-app>
