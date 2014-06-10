@@ -1,29 +1,18 @@
 package org.realrest.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @author volodymyr.tsukur
  */
+@Getter
+@Setter
 public final class Room extends Identifiable {
 
     private Hotel hotel;
 
     private Type type;
-
-    public Hotel getHotel() {
-        return hotel;
-    }
-
-    public void setHotel(final Hotel hotel) {
-        this.hotel = hotel;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(final Type type) {
-        this.type = type;
-    }
 
     public enum Type {
 
