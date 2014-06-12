@@ -1,6 +1,16 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'org.gradle.api.plugins:gradle-cargo-plugin:1.5'
+  }
+}
+
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'jetty'
+apply plugin: 'cargo'
 apply plugin: 'idea'
 
 repositories {
@@ -9,11 +19,12 @@ repositories {
 
 dependencies {
   compile('org.jboss.resteasy:resteasy-jaxrs:3.0.8.Final')
-  compile('org.jboss.resteasy:resteasy-cdi:3.0.8.Final')
-  compile('org.jboss.weld.servlet:weld-servlet:2.2.1.Final')
+//  compile('org.jboss.resteasy:resteasy-cdi:3.0.8.Final')
+//  compile('org.jboss.weld.servlet:weld-servlet:2.2.1.Final')
   compile('log4j:log4j:1.2.14')
   compile('com.theoryinpractise:halbuilder-standard:3.0.1')
   compile('org.projectlombok:lombok:1.14.2')
+//  compile('javax.enterprise:cdi-api:1.2')
 }
 
 task wrapper(type: Wrapper) {
@@ -25,3 +36,13 @@ version = '1.0'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
+
+cargo {
+  containerId = 'jetty9x'
+  port = 8080
+
+  local {
+    homeDir = file('/Development/infrastructure/jetty-distribution-9.2.1.v20140609')
+    outputFile = file('build/jetty.log')
+  }
+}
