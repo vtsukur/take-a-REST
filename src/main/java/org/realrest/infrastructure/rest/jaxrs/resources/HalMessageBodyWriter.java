@@ -21,7 +21,7 @@ import java.lang.reflect.Type;
  * @author volodymyr.tsukur
  */
 @Provider
-public final class HalMessageBodyWriter implements MessageBodyWriter {
+public class HalMessageBodyWriter implements MessageBodyWriter {
 
     private static final MediaType HAL_JSON_MEDIA_TYPE = MediaType.valueOf(RepresentationFactory.HAL_JSON);
 
