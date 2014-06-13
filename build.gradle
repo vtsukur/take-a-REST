@@ -19,13 +19,12 @@ repositories {
 
 dependencies {
   compile('org.jboss.resteasy:resteasy-jaxrs:3.0.8.Final')
-//  compile('org.jboss.resteasy:resteasy-cdi:3.0.8.Final')
+  compile('org.jboss.resteasy:resteasy-cdi:3.0.8.Final')
   compile('org.jboss.weld.servlet:weld-servlet:2.2.1.Final')
   compile('log4j:log4j:1.2.14')
   compile('com.theoryinpractise:halbuilder-standard:3.0.1')
   compile('org.projectlombok:lombok:1.14.2')
   compile('com.google.guava:guava:17.0')
-//  compile('javax.enterprise:cdi-api:1.2')
 
   def tomcatVersion = '7.0.54'
   tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
