@@ -12,8 +12,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
-* @author volodymyr.tsukur
-*/
+ * @author volodymyr.tsukur
+ */
 @Path("/")
 public class EntryPointResource {
 
