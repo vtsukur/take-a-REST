@@ -25,6 +25,7 @@ dependencies {
   compile('com.theoryinpractise:halbuilder-standard:3.0.1')
   compile('org.projectlombok:lombok:1.14.2')
   compile('com.google.guava:guava:17.0')
+  compile('com.googlecode.siren4j:siren4j:1.0.14')
 
   def tomcatVersion = '7.0.54'
   tomcat("org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}")
