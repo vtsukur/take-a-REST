@@ -71,10 +71,28 @@ dependencies {
   integrationTestCompile('org.jboss.resteasy:resteasy-client:3.0.8.Final')
 }
 
+ext {
+  tomcatStopPort = 8081
+  tomcatStopKey = 'stopKey'
+}
+
+task integrationTomcatRun(type: org.gradle.api.plugins.tomcat.tasks.TomcatRun) {
+  stopPort = tomcatStopPort
+  stopKey = tomcatStopKey
+  daemon = true
+}
+
+task integrationTomcatStop(type: org.gradle.api.plugins.tomcat.tasks.TomcatStop) {
+  stopPort = tomcatStopPort
+  stopKey = tomcatStopKey
+}
+
 task integrationTest(type: Test) {
   description = "Runs integration tests"
   testClassesDir = sourceSets.integrationTest.output.classesDir
   classpath = sourceSets.integrationTest.runtimeClasspath
+  dependsOn integrationTomcatRun
+  finalizedBy integrationTomcatStop
 }
 
 task wrapper(type: Wrapper) {
