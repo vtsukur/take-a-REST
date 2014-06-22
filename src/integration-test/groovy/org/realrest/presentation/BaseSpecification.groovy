@@ -2,6 +2,7 @@ package org.realrest.presentation
 
 import spock.lang.Specification
 
+import javax.ws.rs.client.Client
 import javax.ws.rs.client.ClientBuilder
 
 /**
@@ -9,10 +10,14 @@ import javax.ws.rs.client.ClientBuilder
  */
 class BaseSpecification extends Specification {
 
-  def client
+  protected Client client
 
   def setup() {
     client = ClientBuilder.newClient()
+  }
+
+  protected static String uri(String relative) {
+    "http://localhost:8080/$relative"
   }
 
 }

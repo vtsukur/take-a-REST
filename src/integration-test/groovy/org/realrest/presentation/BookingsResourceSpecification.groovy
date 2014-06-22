@@ -5,9 +5,9 @@ package org.realrest.presentation
  */
 class BookingsResourceSpecification extends BaseSpecification {
 
-  def 'retrieve bookings'() {
+  def 'create booking'() {
     when:
-    def response = client.target("http://localhost:8080/realrest/api").request().buildGet().invoke()
+    def response = client.target(uri('/realrest/api')).request().buildGet().invoke()
 
     then:
     response
