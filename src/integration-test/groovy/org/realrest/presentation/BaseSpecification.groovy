@@ -8,7 +8,7 @@ import javax.ws.rs.client.ClientBuilder
 /**
  * @author volodymyr.tsukur
  */
-class BaseSpecification extends Specification {
+abstract class BaseSpecification extends Specification {
 
   protected Client client
 
