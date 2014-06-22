@@ -1,5 +1,6 @@
 package org.realrest.presentation
 
+import org.realrest.domain.Booking
 import org.realrest.infrastructure.rest.jaxrs.transitions.CreateBookingTransition
 
 import javax.ws.rs.client.Entity
@@ -34,14 +35,14 @@ class BookingsResourceSpecification extends BaseSpecification {
     bookingURI
 
     when:
-    response = client.target(bookingURI).
-        request().
-        buildGet().
-        invoke()
-    response.close()
+    def actualBooking = client.target(bookingURI).request().get(Booking)
 
     then:
-    200 == response.status
+    actualBooking
+    actualBooking.id
+    booking.from.equals(actualBooking.from)
+    booking.to.equals(actualBooking.to)
+    booking.includeBreakfast.equals(actualBooking.includeBreakfast)
   }
 
 }
