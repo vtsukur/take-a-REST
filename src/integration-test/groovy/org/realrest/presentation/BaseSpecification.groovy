@@ -17,7 +17,7 @@ class BaseSpecification extends Specification {
   }
 
   protected static String uri(String relative) {
-    "http://localhost:8080/$relative"
+    "http://localhost:8080/realrest$relative"
   }
 
 }
