@@ -29,15 +29,15 @@ public final class Booking extends Identifiable {
      */
     public enum State {
 
-        PENDING,
+        CREATED,
 
-        CONFIRMED,
+        PAYMENT_SUBMITTED,
 
-        CANCELLED,
+        PAYMENT_CONFIRMED,
 
         SERVED,
 
-        REJECTED
+        CANCELLED
 
     }
 

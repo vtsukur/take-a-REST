@@ -42,7 +42,7 @@ class BookingsResourceSpecification extends BaseSpecification {
     transition.from.equals(actualBooking.from)
     transition.to.equals(actualBooking.to)
     transition.includeBreakfast.equals(actualBooking.includeBreakfast)
-    Booking.State.PENDING == actualBooking.state
+    Booking.State.CREATED == actualBooking.state
   }
 
 }
