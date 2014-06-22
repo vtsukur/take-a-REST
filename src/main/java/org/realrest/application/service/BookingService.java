@@ -1,7 +1,7 @@
-package org.realrest.domain.service;
+package org.realrest.application.service;
 
 import org.realrest.domain.Booking;
-import org.realrest.infrastructure.rest.jaxrs.transitions.CreateBookingTransition;
+import org.realrest.presentation.transitions.CreateBookingTransition;
 
 /**
  * @author volodymyr.tsukur

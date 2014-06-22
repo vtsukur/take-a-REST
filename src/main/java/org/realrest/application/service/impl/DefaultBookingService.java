@@ -1,9 +1,9 @@
-package org.realrest.domain.service.impl;
+package org.realrest.application.service.impl;
 
 import org.realrest.domain.Booking;
 import org.realrest.domain.repository.BookingRepository;
-import org.realrest.domain.service.BookingService;
-import org.realrest.infrastructure.rest.jaxrs.transitions.CreateBookingTransition;
+import org.realrest.application.service.BookingService;
+import org.realrest.presentation.transitions.CreateBookingTransition;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

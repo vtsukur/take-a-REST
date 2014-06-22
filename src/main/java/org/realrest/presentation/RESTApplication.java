@@ -1,8 +1,8 @@
-package org.realrest.infrastructure.rest.jaxrs;
+package org.realrest.presentation;
 
-import org.realrest.infrastructure.rest.jaxrs.providers.BookingsResource;
-import org.realrest.infrastructure.rest.jaxrs.providers.EntryPointResource;
-import org.realrest.infrastructure.rest.jaxrs.providers.HotelsResource;
+import org.realrest.presentation.resources.BookingsResource;
+import org.realrest.presentation.resources.EntryPointResource;
+import org.realrest.presentation.resources.HotelsResource;
 
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
