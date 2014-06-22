@@ -45,4 +45,13 @@ class BookingsResourceSpecification extends BaseSpecification {
     Booking.State.CREATED == actualBooking.state
   }
 
+  def 'should respond with 404 when booking does not exist'() {
+    when:
+    def response = client.target(uri('/api/bookings/item/0')).request().get()
+    response.close()
+
+    then:
+    404 == response.status
+  }
+
 }
