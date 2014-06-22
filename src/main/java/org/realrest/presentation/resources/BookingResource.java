@@ -3,13 +3,12 @@ package org.realrest.presentation.resources;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.realrest.application.service.BookingService;
 import org.realrest.domain.Booking;
+import org.realrest.domain.BookingNotFoundException;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.lang.reflect.Method;
 import java.net.URI;
@@ -27,7 +26,12 @@ public class BookingResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Booking read(@PathParam("id") final Long id) {
-        return bookingService.findById(id);
+        try {
+            return bookingService.findById(id);
+        }
+        catch (final BookingNotFoundException e) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
     }
 
     public static URI readURI(final UriBuilder uriBuilder, final Long id) {

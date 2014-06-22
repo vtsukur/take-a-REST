@@ -1,8 +1,9 @@
 package org.realrest.application.service.impl;
 
-import org.realrest.domain.Booking;
-import org.realrest.domain.repository.BookingRepository;
 import org.realrest.application.service.BookingService;
+import org.realrest.domain.Booking;
+import org.realrest.domain.BookingNotFoundException;
+import org.realrest.domain.repository.BookingRepository;
 import org.realrest.presentation.transitions.CreateBookingTransition;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -28,7 +29,7 @@ public class DefaultBookingService implements BookingService {
     }
 
     @Override
-    public Booking findById(final Long id) {
+    public Booking findById(final Long id) throws BookingNotFoundException {
         return bookingRepository.findById(id);
     }
 

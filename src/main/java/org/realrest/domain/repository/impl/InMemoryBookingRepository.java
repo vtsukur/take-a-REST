@@ -1,6 +1,7 @@
 package org.realrest.domain.repository.impl;
 
 import org.realrest.domain.Booking;
+import org.realrest.domain.BookingNotFoundException;
 import org.realrest.domain.repository.BookingRepository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -27,8 +28,14 @@ public class InMemoryBookingRepository implements BookingRepository {
     }
 
     @Override
-    public Booking findById(final Long id) {
-        return bookingMap.getOrDefault(id, null);
+    public Booking findById(final Long id) throws BookingNotFoundException {
+        final Booking result = bookingMap.getOrDefault(id, null);
+        if (result != null) {
+            return result;
+        }
+        else {
+            throw new BookingNotFoundException(String.format("Booking with id %d not found", id));
+        }
     }
 
 }
