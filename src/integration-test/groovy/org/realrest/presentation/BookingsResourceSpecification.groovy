@@ -12,20 +12,19 @@ import java.time.LocalDate
  */
 class BookingsResourceSpecification extends BaseSpecification {
 
-  def 'should create booking which is then discoverable by individual URI'() {
+  def 'should create booking discoverable by individual URI'() {
     given:
-    def booking = new CreateBookingTransition(
+    def transition = new CreateBookingTransition(
         roomId: 1,
         from: LocalDate.of(2014, 8, 1),
         to: LocalDate.of(2014, 8, 15),
         includeBreakfast: true
     )
-    def response
 
     when:
-    response = client.target(uri('/api/bookings')).
+    def response = client.target(uri('/api/bookings')).
         request().
-        buildPost(Entity.entity(booking, MediaType.APPLICATION_JSON_TYPE)).
+        buildPost(Entity.entity(transition, MediaType.APPLICATION_JSON_TYPE)).
         invoke()
     response.close()
 
@@ -40,9 +39,9 @@ class BookingsResourceSpecification extends BaseSpecification {
     then:
     actualBooking
     actualBooking.id
-    booking.from.equals(actualBooking.from)
-    booking.to.equals(actualBooking.to)
-    booking.includeBreakfast.equals(actualBooking.includeBreakfast)
+    transition.from.equals(actualBooking.from)
+    transition.to.equals(actualBooking.to)
+    transition.includeBreakfast.equals(actualBooking.includeBreakfast)
   }
 
 }
