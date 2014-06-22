@@ -3,7 +3,7 @@ package org.realrest.infrastructure.rest.jaxrs.transitions;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 /**
  * @author volodymyr.tsukur
@@ -14,9 +14,9 @@ public class CreateBookingTransition {
 
     private Long roomId;
 
-    private ZonedDateTime from;
+    private LocalDate from;
 
-    private ZonedDateTime to;
+    private LocalDate to;
 
     private boolean includeBreakfast;
 

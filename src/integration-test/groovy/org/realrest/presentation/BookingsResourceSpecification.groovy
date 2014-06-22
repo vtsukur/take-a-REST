@@ -4,6 +4,7 @@ import org.realrest.infrastructure.rest.jaxrs.transitions.CreateBookingTransitio
 
 import javax.ws.rs.client.Entity
 import javax.ws.rs.core.MediaType
+import java.time.LocalDate
 
 /**
  * @author volodymyr.tsukur
@@ -14,8 +15,8 @@ class BookingsResourceSpecification extends BaseSpecification {
     given:
     def booking = new CreateBookingTransition(
         roomId: 1,
-        from: null,
-        to: null,
+        from: LocalDate.of(2014, 8, 1),
+        to: LocalDate.of(2014, 8, 15),
         includeBreakfast: true
     )
 
