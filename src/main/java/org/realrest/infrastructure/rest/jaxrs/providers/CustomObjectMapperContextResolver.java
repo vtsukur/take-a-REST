@@ -1,4 +1,4 @@
-package org.realrest.infrastructure.rest.jaxrs.serialization;
+package org.realrest.infrastructure.rest.jaxrs.providers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;

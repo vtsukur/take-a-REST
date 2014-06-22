@@ -1,4 +1,4 @@
-package org.realrest.infrastructure.rest.jaxrs.transitions;
+package org.realrest.presentation.transitions;
 
 import lombok.Getter;
 import lombok.Setter;

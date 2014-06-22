@@ -8,7 +8,7 @@
     </servlet-class>
     <init-param>
       <param-name>javax.ws.rs.Application</param-name>
-      <param-value>org.realrest.infrastructure.rest.jaxrs.RESTApplication</param-value>
+      <param-value>org.realrest.presentation.RESTApplication</param-value>
     </init-param>
     <init-param>
       <param-name>resteasy.servlet.mapping.prefix</param-name>
@@ -17,7 +17,7 @@
     <init-param>
       <param-name>resteasy.providers</param-name>
       <param-value>
-        org.realrest.infrastructure.rest.jaxrs.resources.HalMessageBodyWriter
+          org.realrest.infrastructure.rest.jaxrs.providers.HalMessageBodyWriter
       </param-value>
     </init-param>
   </servlet>

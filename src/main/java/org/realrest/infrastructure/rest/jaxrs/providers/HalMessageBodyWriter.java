@@ -1,4 +1,4 @@
-package org.realrest.infrastructure.rest.jaxrs.resources;
+package org.realrest.infrastructure.rest.jaxrs.providers;
 
 import com.theoryinpractise.halbuilder.api.ReadableRepresentation;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;

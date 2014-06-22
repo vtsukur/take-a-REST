@@ -1,8 +1,8 @@
-package org.realrest.infrastructure.rest.jaxrs.providers;
+package org.realrest.presentation.resources;
 
 import org.realrest.domain.Booking;
-import org.realrest.domain.service.BookingService;
-import org.realrest.infrastructure.rest.jaxrs.transitions.CreateBookingTransition;
+import org.realrest.application.service.BookingService;
+import org.realrest.presentation.transitions.CreateBookingTransition;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
