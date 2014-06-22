@@ -2,7 +2,7 @@ real-rest
 =========
 ![Build status](https://travis-ci.org/flushdia/real-rest.svg?branch=master)
 
-h1. Setting up project in IntelliJ IDEA
+# Setting up Project in IntelliJ IDEA
 
 Required plugins:
  * [Lombok](http://plugins.jetbrains.com/plugin/6317?pr=idea)
