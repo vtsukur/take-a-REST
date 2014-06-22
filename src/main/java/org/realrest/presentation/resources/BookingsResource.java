@@ -15,7 +15,7 @@ import java.net.URI;
 /**
  * @author volodymyr.tsukur
  */
-@Path("bookings")
+@Path("/bookings")
 public class BookingsResource {
 
     @Inject
@@ -24,17 +24,10 @@ public class BookingsResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createBooking(final CreateBookingTransition data, @Context final UriInfo uriInfo) {
+    public Response create(final CreateBookingTransition data, @Context final UriInfo uriInfo) {
         final Booking result = bookingService.create(data);
-        final URI bookingURI = uriInfo.getBaseUriBuilder().path("bookings").path(result.getId().toString()).build();
+        final URI bookingURI = BookingResource.readURI(uriInfo.getBaseUriBuilder(), result.getId());
         return Response.created(bookingURI).build();
-    }
-
-    @GET
-    @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Booking readBooking(@PathParam("id") final Long id) {
-        return bookingService.findById(id);
     }
 
 }
