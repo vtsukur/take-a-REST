@@ -1,16 +1,13 @@
 package org.realrest.presentation.resources;
 
-import org.apache.commons.lang3.reflect.MethodUtils;
+import com.google.code.siren4j.component.Entity;
 import org.realrest.application.service.BookingService;
-import org.realrest.domain.Booking;
 import org.realrest.domain.BookingNotFoundException;
+import org.realrest.presentation.representations.BookingRepresentation;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import java.lang.reflect.Method;
+import javax.ws.rs.core.*;
 import java.net.URI;
 
 /**
@@ -25,9 +22,9 @@ public class BookingResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Booking read(@PathParam("id") final Long id) {
+    public Entity read(@PathParam("id") final Long id, @Context final UriInfo uriInfo) {
         try {
-            return bookingService.findById(id);
+            return BookingRepresentation.fromBooking(bookingService.findById(id));
         }
         catch (final BookingNotFoundException e) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -37,12 +34,8 @@ public class BookingResource {
     public static URI readURI(final UriBuilder uriBuilder, final Long id) {
         return uriBuilder.
                 path(BookingResource.class).
-                path(BookingResource.readMethod()).
-                build(id);
-    }
-
-    private static Method readMethod() {
-        return MethodUtils.getAccessibleMethod(BookingResource.class, "read", Long.class);
+                path(id.toString()).
+                build();
     }
 
 }
