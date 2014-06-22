@@ -1,8 +1,10 @@
 package org.realrest.infrastructure.rest.jaxrs.providers;
 
 import org.realrest.domain.Booking;
+import org.realrest.domain.service.BookingService;
 import org.realrest.infrastructure.rest.jaxrs.transitions.CreateBookingTransition;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -16,11 +18,15 @@ import java.net.URI;
 @Path("bookings")
 public class BookingsResource {
 
+    @Inject
+    private BookingService bookingService;
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createBooking(final CreateBookingTransition data, @Context final UriInfo uriInfo) {
-        final URI bookingURI = uriInfo.getBaseUriBuilder().path("bookings").path("1").build();
+        final Booking result = bookingService.create(data);
+        final URI bookingURI = uriInfo.getBaseUriBuilder().path("bookings").path(result.getId().toString()).build();
         return Response.created(bookingURI).build();
     }
 
@@ -28,9 +34,7 @@ public class BookingsResource {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Booking readBooking(@PathParam("id") final Long id) {
-        final Booking booking = new Booking();
-        booking.setId(id);
-        return booking;
+        return bookingService.findById(id);
     }
 
 }
