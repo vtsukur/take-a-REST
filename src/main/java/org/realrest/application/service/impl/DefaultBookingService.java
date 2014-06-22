@@ -23,7 +23,7 @@ public class DefaultBookingService implements BookingService {
         booking.setFrom(data.getFrom());
         booking.setTo(data.getTo());
         booking.setIncludeBreakfast(data.isIncludeBreakfast());
-        booking.setState(Booking.State.PENDING);
+        booking.setState(Booking.State.CREATED);
         return bookingRepository.create(booking);
     }
 
