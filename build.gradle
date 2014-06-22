@@ -9,12 +9,37 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'war'
 apply plugin: 'tomcat'
 apply plugin: 'idea'
 
 repositories {
   mavenCentral()
+}
+
+configurations {
+  integrationTestCompile {
+    extendsFrom testCompile
+  }
+  integrationTestRuntime {
+    extendsFrom integrationTestCompile, testRuntime
+  }
+}
+
+def sets = [ "java", "groovy" ]
+def sourceFolder = { set ->
+  "src/integration-test/$set"
+}
+
+sourceSets {
+  integrationTest { sourceSet ->
+    sets.each {
+      if (sourceSet.hasProperty(it)) {
+        sourceSet."$it".srcDir file(sourceFolder(it))
+      }
+    }
+  }
 }
 
 dependencies {
@@ -33,6 +58,23 @@ dependencies {
   tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
     exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
   }
+
+  integrationTestCompile sourceSets.main.output
+  integrationTestCompile sourceSets.test.output
+  integrationTestCompile configurations.testCompile
+  integrationTestRuntime configurations.testRuntime
+
+  integrationTestCompile 'org.codehaus.groovy:groovy-all:2.3.3'
+  integrationTestCompile('org.spockframework:spock-core:0.7-groovy-2.0') {
+      exclude group: 'org.codehaus.groovy'
+  }
+  integrationTestCompile('org.jboss.resteasy:resteasy-client:3.0.8.Final')
+}
+
+task integrationTest(type: Test) {
+  description = "Runs integration tests"
+  testClassesDir = sourceSets.integrationTest.output.classesDir
+  classpath = sourceSets.integrationTest.runtimeClasspath
 }
 
 task wrapper(type: Wrapper) {
@@ -44,3 +86,9 @@ version = '1.0'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
+
+idea {
+  module {
+    scopes.TEST.plus += configurations.integrationTestCompile
+  }
+}
