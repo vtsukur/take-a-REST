@@ -46,6 +46,13 @@ class BookingsResourceSpecification extends BaseSpecification {
     transition.from.equals(toLocalDate(properties.get('from') as List))
     transition.to.equals(toLocalDate(properties.get('to') as List))
     transition.includeBreakfast.equals(properties.get('includeBreakfast'))
+    def links = actualBooking.get('links') as List
+    links?.size()
+    def self = links[0] as Map
+    def selfRel = self.get('rel') as List
+    selfRel?.size()
+    selfRel.get(0) == 'self'
+    self.get('href') == bookingURI.toString()
   }
   
   private static LocalDate toLocalDate(List values) {
