@@ -1,12 +1,10 @@
 package org.realrest.presentation
 
-import org.realrest.domain.Booking
 import org.realrest.presentation.transitions.CreateBookingTransition
 
 import javax.ws.rs.client.Entity
 import javax.ws.rs.core.MediaType
 import java.time.LocalDate
-
 /**
  * @author volodymyr.tsukur
  */
@@ -34,15 +32,19 @@ class BookingsResourceSpecification extends BaseSpecification {
     bookingURI
 
     when:
-    def actualBooking = client.target(bookingURI).request().get(Booking)
+    def actualBooking = client.target(bookingURI).request().get(Map)
 
     then:
     actualBooking
-    actualBooking.id
-    transition.from.equals(actualBooking.from)
-    transition.to.equals(actualBooking.to)
-    transition.includeBreakfast.equals(actualBooking.includeBreakfast)
-    Booking.State.CREATED == actualBooking.state
+    def classes = actualBooking.get('class') as List
+    classes?.size()
+    classes.get(0) == 'booking'
+    def properties = actualBooking.get('properties') as Map
+    properties
+    properties.get('id')
+//    transition.from.equals(properties.get('from'))
+//    transition.to.equals(properties.get('to'))
+    transition.includeBreakfast.equals(properties.get('includeBreakfast'))
   }
 
   def 'should respond with 404 when booking does not exist'() {
