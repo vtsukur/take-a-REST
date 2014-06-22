@@ -52,6 +52,7 @@ dependencies {
   compile('org.projectlombok:lombok:1.14.2')
   compile('com.google.guava:guava:17.0')
   compile('com.googlecode.siren4j:siren4j:1.0.14')
+  compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.4.0')
 
   def tomcatVersion = '7.0.54'
   tomcat("org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}")
