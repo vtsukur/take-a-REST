@@ -11,7 +11,7 @@ import java.time.LocalDate
  */
 class BookingsResourceSpecification extends BaseSpecification {
 
-  def 'create booking'() {
+  def 'should create booking which is then discoverable by individual URI'() {
     given:
     def booking = new CreateBookingTransition(
         roomId: 1,
@@ -19,18 +19,29 @@ class BookingsResourceSpecification extends BaseSpecification {
         to: LocalDate.of(2014, 8, 15),
         includeBreakfast: true
     )
+    def response
 
     when:
-    def response = client.target(uri('/api/bookings')).
+    response = client.target(uri('/api/bookings')).
         request().
         buildPost(Entity.entity(booking, MediaType.APPLICATION_JSON_TYPE)).
         invoke()
+    response.close()
 
     then:
     201 == response.status
+    def bookingURI = response.location
+    bookingURI
 
-    cleanup:
+    when:
+    response = client.target(bookingURI).
+        request().
+        buildGet().
+        invoke()
     response.close()
+
+    then:
+    200 == response.status
   }
 
 }
