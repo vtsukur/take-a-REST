@@ -1,12 +1,15 @@
 package org.realrest.presentation.resources;
 
-import org.realrest.domain.Booking;
 import org.realrest.application.service.BookingService;
+import org.realrest.domain.Booking;
 import org.realrest.presentation.representations.BookingRepresentationBuilder;
 import org.realrest.presentation.transitions.CreateBookingTransition;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -25,6 +28,9 @@ public class BookingsResource {
     @Inject
     private BookingRepresentationBuilder bookingRepresentationBuilder;
 
+    @Inject
+    private BookingResource bookingResource;
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -32,6 +38,11 @@ public class BookingsResource {
         final Booking result = bookingService.create(data);
         final URI bookingURI = bookingRepresentationBuilder.buildURI(result, uriInfo.getBaseUriBuilder());
         return Response.created(bookingURI).build();
+    }
+
+    @Path("/item")
+    public BookingResource item() {
+        return bookingResource;
     }
 
 }

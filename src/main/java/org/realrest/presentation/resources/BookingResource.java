@@ -13,7 +13,6 @@ import javax.ws.rs.core.*;
 /**
  * @author volodymyr.tsukur
  */
-@Path("/bookings/item")
 public class BookingResource {
 
     @Inject

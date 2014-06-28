@@ -5,7 +5,7 @@ import com.google.code.siren4j.component.Link;
 import com.google.code.siren4j.component.builder.EntityBuilder;
 import com.google.code.siren4j.component.builder.LinkBuilder;
 import org.realrest.domain.Booking;
-import org.realrest.presentation.resources.BookingResource;
+import org.realrest.presentation.resources.BookingsResource;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.UriBuilder;
@@ -34,7 +34,8 @@ public class BookingRepresentationBuilder {
 
     public URI buildURI(final Booking booking, final UriBuilder uriBuilder) {
         return uriBuilder.
-                path(BookingResource.class).
+                path(BookingsResource.class).
+                path("item").
                 path(booking.getId().toString()).
                 build();
     }
