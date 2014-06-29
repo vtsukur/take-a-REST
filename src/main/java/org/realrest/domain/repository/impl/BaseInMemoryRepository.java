@@ -5,8 +5,9 @@ import org.realrest.domain.Identifiable;
 import org.realrest.domain.repository.BaseRepository;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -14,7 +15,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public abstract class BaseInMemoryRepository<E extends Identifiable> implements BaseRepository<E> {
 
-    protected final Map<Long, E> store = new ConcurrentHashMap<>();
+    protected final Map<Long, E> store = Collections.synchronizedMap(new LinkedHashMap<>());
 
     private final AtomicLong incrementalId = new AtomicLong(0);
 
