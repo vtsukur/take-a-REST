@@ -1,14 +1,14 @@
 package org.realrest.presentation
-
 import groovy.json.JsonSlurper
 import org.realrest.presentation.transitions.CreateBookingTransition
 import org.realrest.presentation.transitions.PayForBookingTransition
 import org.skyscreamer.jsonassert.JSONAssert
 
-import javax.ws.rs.client.Entity
-import javax.ws.rs.core.MediaType
+import javax.ws.rs.core.Response
 import java.time.LocalDate
 
+import static javax.ws.rs.client.Entity.entity
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON
 /**
  * @author volodymyr.tsukur
  */
@@ -16,25 +16,33 @@ class BookingsResourceSpecification extends BaseSpecification {
 
   def 'should find first hotel room, book it and then pay for it'() {
     given:
-    def startingPoint = '/api/hotels'
+    def startingPoint = uri('/api/hotels')
+    def response
 
     when:
-    def hotelsPayload = client.target(uri(startingPoint)).request().get(String)
+    def hotelsPayload = request(startingPoint).get(String)
 
     then:
-    JSONAssert.assertEquals(loadTemplate("hotels.json", [ baseURI: uri() ]), hotelsPayload, false)
+    def hotels = assertTemplateNotStrict('hotels.json', hotelsPayload)
+    def hotelURI = hotels.entities?.get(0)?.links?.find({ it.rel.contains('self') })?.href as String
+    hotelURI
 
     when:
-    def transition = new CreateBookingTransition(
-        roomId: 1,
-        from: LocalDate.of(2014, 8, 1),
-        to: LocalDate.of(2014, 8, 15),
-        includeBreakfast: true
-    )
-    def response = client.target(uri('/api/bookings')).
-        request().
-        post(Entity.entity(transition, MediaType.APPLICATION_JSON))
-    response.close()
+    def hotelPayload = request(hotelURI).get(String)
+
+    then:
+    def hotel = assertTemplateNotStrict('hotel.json', hotelPayload)
+    def bookingAction = hotel.entities?.get(0)?.actions?.find({ it.name == 'book' })
+    bookingAction
+
+    when:
+    response = close(request(bookingAction.href as String).post(
+        entity(new CreateBookingTransition(
+            roomId: bookingAction.fields.find({ it.name == 'roomId' }).value,
+            from: LocalDate.of(2014, 8, 1),
+            to: LocalDate.of(2014, 8, 15),
+            includeBreakfast: true
+        ), APPLICATION_JSON)))
 
     then:
     201 == response.status
@@ -42,48 +50,42 @@ class BookingsResourceSpecification extends BaseSpecification {
     bookingURI
 
     when:
-    def createdBookingPayload = client.target(bookingURI).request().get(String)
+    def createdBookingPayload = request(bookingURI).get(String)
 
     then:
-    JSONAssert.assertEquals(loadTemplate("booking-created.json", [
+    def createdBooking = assertTemplateNotStrict('booking-created.json', createdBookingPayload, [
         bookingURI: bookingURI
-    ]), createdBookingPayload, false)
-    def createdBooking = new JsonSlurper().parseText(createdBookingPayload) as Map
-    def paymentAction = (createdBooking.actions as List).get(0) as Map
+    ])
+    def paymentAction = createdBooking?.actions?.find({ it.name == 'pay' })
     paymentAction
 
     when:
-    response = client.target(paymentAction.href as String).
-        request().
-        method(paymentAction.method as String, Entity.entity(new PayForBookingTransition(
+    def paidBookingPayload = request(paymentAction.href as String).
+        method(paymentAction.method as String, entity(new PayForBookingTransition(
             cardholdersName: 'Viktor Yanukovych',
             creditCardNumber: '1234 5678 9012 3456',
             cvv: 123
-        ), MediaType.APPLICATION_JSON))
-    def paidBookingPayload = response.readEntity(String)
-    response.close()
+        ), APPLICATION_JSON), String)
 
     then:
-    200 == response.status
-    JSONAssert.assertEquals(loadTemplate("booking-paid.json", [
+    assertTemplateNotStrict('booking-paid.json', paidBookingPayload, [
         bookingURI: bookingURI
-    ]), paidBookingPayload, false)
+    ])
   }
 
   def 'should create booking and then cancel it'() {
     given:
-    def transition = new CreateBookingTransition(
-        roomId: 1,
-        from: LocalDate.of(2014, 8, 1),
-        to: LocalDate.of(2014, 8, 15),
-        includeBreakfast: true
-    )
+    def response
 
     when:
-    def response = client.target(uri('/api/bookings')).
+    response = close(client.target(uri('/api/bookings')).
         request().
-        post(Entity.entity(transition, MediaType.APPLICATION_JSON))
-    response.close()
+        post(entity(new CreateBookingTransition(
+            roomId: 1,
+            from: LocalDate.of(2014, 8, 1),
+            to: LocalDate.of(2014, 8, 15),
+            includeBreakfast: true
+        ), APPLICATION_JSON)))
 
     then:
     201 == response.status
@@ -91,28 +93,23 @@ class BookingsResourceSpecification extends BaseSpecification {
     bookingURI
 
     when:
-    def createdBookingPayload = client.target(bookingURI).request().get(String)
+    def createdBookingPayload = request(bookingURI).get(String)
 
     then:
-    JSONAssert.assertEquals(loadTemplate("booking-created.json", [
+    def createdBooking = assertTemplateNotStrict('booking-created.json', createdBookingPayload, [
         bookingURI: bookingURI
-    ]), createdBookingPayload, false)
-    def createdBooking = new JsonSlurper().parseText(createdBookingPayload) as Map
-    def cancelAction = (createdBooking.actions as List).get(1) as Map
+    ])
+    def cancelAction = createdBooking?.actions?.find({ it.name == 'cancel'})
     cancelAction
 
     when:
-    response = client.target(cancelAction.href as String).
-        request().
-        method(cancelAction.method as String)
-    response.close()
+    response = close(request(cancelAction.href as String).method(cancelAction.method as String))
 
     then:
     204 == response.status
 
     when:
-    response = client.target(bookingURI).request().get()
-    response.close()
+    response = close(request(bookingURI).get())
 
     then:
     404 == response.status
@@ -120,11 +117,24 @@ class BookingsResourceSpecification extends BaseSpecification {
 
   def 'should respond with 404 when booking does not exist'() {
     when:
-    def response = client.target(uri('/api/bookings/item/0')).request().get()
-    response.close()
+    def response = request(uri('/api/bookings/item/0')).get()
 
     then:
     404 == response.status
+  }
+
+  private static assertTemplateNotStrict(String template, String payload, Map binding = [:]) {
+    JSONAssert.assertEquals(loadTemplate(template, [ baseURI: uri() ] << binding), payload, false)
+    toJson(payload)
+  }
+
+  private static Response close(Response response) {
+    response.close()
+    response
+  }
+
+  private static toJson(String text) {
+    new JsonSlurper().parseText(text)
   }
 
 }

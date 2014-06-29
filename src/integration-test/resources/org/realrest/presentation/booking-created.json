@@ -7,7 +7,7 @@
     },
     "actions": [
         {
-            "name": "payment",
+            "name": "pay",
             "method": "POST",
             "href": "$bookingURI/payment",
             "type": "application/json",

@@ -1,0 +1,93 @@
+{
+    "class": ["hotel"],
+    "properties": {
+        "id": 1,
+        "name": "Vintage Boutique Hotel"
+    },
+    "entities": [
+        {
+            "rel": ["hotel-room"],
+            "properties": {
+                "type": "single",
+                "price": 500
+            },
+            "actions": [
+                {
+                    "name": "book",
+                    "method": "POST",
+                    "href": "$baseURI/api/bookings",
+                    "type": "application/json",
+                    "fields": [
+                        {
+                            "name": "roomId",
+                            "type": "TEXT",
+                            "value": "1",
+                            "required": false
+                        },
+                        {
+                            "name": "from",
+                            "type": "DATE",
+                            "required": false
+                        },
+                        {
+                            "name": "to",
+                            "type": "DATE",
+                            "required": false
+                        },
+                        {
+                            "name": "includeBreakfast",
+                            "type": "CHECKBOX",
+                            "required": false
+                        }
+                    ],
+                    "class": ["booking"]
+                }
+            ]
+        },
+        {
+            "rel": ["hotel-room"],
+            "properties": {
+                "type": "double",
+                "price": 800
+            },
+            "actions": [
+                {
+                    "name": "book",
+                    "method": "POST",
+                    "href": "$baseURI/api/bookings",
+                    "type": "application/json",
+                    "fields": [
+                        {
+                            "name": "roomId",
+                            "type": "TEXT",
+                            "value": "2",
+                            "required": false
+                        },
+                        {
+                            "name": "from",
+                            "type": "DATE",
+                            "required": false
+                        },
+                        {
+                            "name": "to",
+                            "type": "DATE",
+                            "required": false
+                        },
+                        {
+                            "name": "includeBreakfast",
+                            "type": "CHECKBOX",
+                            "required": false
+                        }
+                    ],
+                    "class": ["booking"]
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": ["self"],
+            "href": "$baseURI/api/hotels/item/1"
+        }
+    ]
+}
