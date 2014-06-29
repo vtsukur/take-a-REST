@@ -8,15 +8,14 @@ import javax.ws.rs.core.UriInfo;
 /**
  * @author volodymyr.tsukur
  */
-public class HotelEmbeddedRepresentationBuilder extends BaseHotelRepresentationBuilder {
+public class HotelRepresentationBuilder extends BaseHotelRepresentationBuilder {
 
-    public HotelEmbeddedRepresentationBuilder(final Hotel hotel, final UriInfo uriInfo) {
+    public HotelRepresentationBuilder(final Hotel hotel, final UriInfo uriInfo) {
         super(hotel, uriInfo);
     }
 
     public Entity build() {
         return builder().
-                setRelationship("hotel").
                 build();
     }
 

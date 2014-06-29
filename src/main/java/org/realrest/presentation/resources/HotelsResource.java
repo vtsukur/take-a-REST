@@ -22,10 +22,18 @@ public class HotelsResource {
     @Inject
     private HotelService hotelService;
 
+    @Inject
+    private HotelResource hotelResource;
+
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
     public Entity all(@Context final UriInfo uriInfo) {
         return new HotelsRepresentationBuilder(hotelService.findAll(), uriInfo).build();
+    }
+
+    @Path("/item")
+    public HotelResource item() {
+        return hotelResource;
     }
 
 }
