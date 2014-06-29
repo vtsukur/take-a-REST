@@ -1,6 +1,7 @@
 package org.realrest.presentation
 
 import org.realrest.presentation.transitions.CreateBookingTransition
+import org.skyscreamer.jsonassert.JSONAssert
 
 import javax.ws.rs.client.Entity
 import javax.ws.rs.core.MediaType
@@ -33,30 +34,12 @@ class BookingsResourceSpecification extends BaseSpecification {
     bookingURI
 
     when:
-    def actualBooking = client.target(bookingURI).request().get(Map)
+    def actualBookingJSON = client.target(bookingURI).request().get(String)
 
     then:
-    actualBooking
-    def classes = actualBooking.get('class') as List
-    classes?.size()
-    classes.get(0) == 'booking'
-    def properties = actualBooking.get('properties') as Map
-    properties
-    properties.get('id')
-    transition.from.equals(toLocalDate(properties.get('from') as List))
-    transition.to.equals(toLocalDate(properties.get('to') as List))
-    transition.includeBreakfast.equals(properties.get('includeBreakfast'))
-    def links = actualBooking.get('links') as List
-    links?.size()
-    def self = links[0] as Map
-    def selfRel = self.get('rel') as List
-    selfRel?.size()
-    selfRel.get(0) == 'self'
-    self.get('href') == bookingURI.toString()
-  }
-  
-  private static LocalDate toLocalDate(List values) {
-    LocalDate.of(values[0] as int, values[1] as int, values[2] as int)
+    JSONAssert.assertEquals(loadTemplate("booking-created.json", [
+        requestedURI: bookingURI
+    ]), actualBookingJSON, false)
   }
 
   def 'should respond with 404 when booking does not exist'() {

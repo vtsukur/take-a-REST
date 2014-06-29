@@ -18,17 +18,13 @@ public class BookingResource {
     @Inject
     private BookingService bookingService;
 
-    @Inject
-    private BookingRepresentationBuilder bookingRepresentationBuilder;
-
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Entity read(@PathParam("id") final Long id, @Context final UriInfo uriInfo) {
         try {
             final Booking booking = bookingService.findById(id);
-            final UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
-            return bookingRepresentationBuilder.build(booking, uriBuilder);
+            return new BookingRepresentationBuilder(booking, uriInfo).build();
         }
         catch (final BookingNotFoundException e) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
