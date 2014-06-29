@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @author volodymyr.tsukur
  */
-public abstract class BaseInMemoryBookingRepository<E extends Identifiable> implements BaseRepository<E> {
+public abstract class BaseInMemoryRepository<E extends Identifiable> implements BaseRepository<E> {
 
     protected final Map<Long, E> store = new ConcurrentHashMap<>();
 
@@ -20,7 +20,7 @@ public abstract class BaseInMemoryBookingRepository<E extends Identifiable> impl
 
     private final String entityName;
 
-    protected BaseInMemoryBookingRepository(final String entityName) {
+    protected BaseInMemoryRepository(final String entityName) {
         this.entityName = entityName;
     }
 

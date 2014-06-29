@@ -9,7 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
  * @author volodymyr.tsukur
  */
 @ApplicationScoped
-public class InMemoryPaymentRepository extends BaseInMemoryBookingRepository<Payment> implements PaymentRepository {
+public class InMemoryPaymentRepository extends BaseInMemoryRepository<Payment> implements PaymentRepository {
 
     public InMemoryPaymentRepository() {
         super("Payment");

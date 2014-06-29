@@ -9,7 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
  * @author volodymyr.tsukur
  */
 @ApplicationScoped
-public class InMemoryCityRepository extends BaseInMemoryBookingRepository<City> implements CityRepository {
+public class InMemoryCityRepository extends BaseInMemoryRepository<City> implements CityRepository {
 
     public InMemoryCityRepository() {
         super("City");
