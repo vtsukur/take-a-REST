@@ -28,11 +28,10 @@ abstract class BaseHotelRepresentationBuilder {
                 setComponentClass("hotel").
                 addProperty("id", hotel.getId()).
                 addProperty("name", hotel.getName()).
-                addLink(
-                        LinkBuilder.newInstance().
-                                setHref(selfHref()).
-                                setRelationship(Link.RELATIONSHIP_SELF).
-                                build());
+                addLink(LinkBuilder.newInstance().
+                        setHref(selfHref()).
+                        setRelationship(Link.RELATIONSHIP_SELF).
+                        build());
     }
 
     protected String selfHref() {
@@ -43,7 +42,7 @@ abstract class BaseHotelRepresentationBuilder {
         return selfURI(hotel, uriInfo);
     }
 
-    private static URI selfURI(final Hotel hotel, final UriInfo uriInfo) {
+    static URI selfURI(final Hotel hotel, final UriInfo uriInfo) {
         return uriInfo.getBaseUriBuilder().
                 path(HotelsResource.class).
                 path("item").
