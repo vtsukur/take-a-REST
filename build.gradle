@@ -80,7 +80,7 @@ ext {
   tomcatStopKey = 'stopKey'
 }
 
-task integrationTomcatRun(type: org.gradle.api.plugins.tomcat.tasks.TomcatRun) {
+task integrationTomcatRunWar(type: org.gradle.api.plugins.tomcat.tasks.TomcatRunWar) {
   stopPort = tomcatStopPort
   stopKey = tomcatStopKey
   daemon = true
@@ -95,7 +95,7 @@ task integrationTest(type: Test) {
   description = "Runs integration tests"
   testClassesDir = sourceSets.integrationTest.output.classesDir
   classpath = sourceSets.integrationTest.runtimeClasspath
-  dependsOn integrationTomcatRun
+  dependsOn integrationTomcatRunWar
   finalizedBy integrationTomcatStop
 }
 
