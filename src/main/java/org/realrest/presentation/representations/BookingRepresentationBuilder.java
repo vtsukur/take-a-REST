@@ -48,7 +48,7 @@ public class BookingRepresentationBuilder {
         if (booking.getState() == Booking.State.CREATED) {
             return entityBuilder.addAction(
                     ActionBuilder.newInstance().
-                            setName("payment").
+                            setName("pay").
                             setComponentClass("payment").
                             setMethod(ActionImpl.Method.POST).
                             setHref(selfHref() + "/payment").

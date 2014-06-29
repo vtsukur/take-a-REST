@@ -5,6 +5,7 @@ import spock.lang.Specification
 
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.ClientBuilder
+import javax.ws.rs.client.Invocation
 
 /**
  * @author volodymyr.tsukur
@@ -15,6 +16,14 @@ abstract class BaseSpecification extends Specification {
 
   def setup() {
     client = ClientBuilder.newClient()
+  }
+
+  protected Invocation.Builder request(String href) {
+    client.target(href).request()
+  }
+
+  protected Invocation.Builder request(URI uri) {
+    client.target(uri).request()
   }
 
   protected static String uri(String relative = '') {
