@@ -17,7 +17,7 @@ abstract class BaseSpecification extends Specification {
     client = ClientBuilder.newClient()
   }
 
-  protected static String uri(String relative) {
+  protected static String uri(String relative = '') {
     "http://localhost:8080/realrest$relative"
   }
 

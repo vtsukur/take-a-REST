@@ -1,0 +1,39 @@
+{
+    "class": ["hotels"],
+    "entities": [
+        {
+            "class": ["hotel"],
+            "rel": ["hotel"],
+            "properties": {
+                "id": 1,
+                "name": "Vintage Boutique Hotel"
+            },
+            "links": [
+                {
+                    "rel": ["self"],
+                    "href": "$baseURI/api/hotels/item/1"
+                }
+            ]
+        },
+        {
+            "class": ["hotel"],
+            "rel": ["hotel"],
+            "properties": {
+                "id": 2,
+                "name": "Premier Palace"
+            },
+            "links": [
+                {
+                    "rel": ["self"],
+                    "href": "$baseURI/api/hotels/item/2"
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": ["self"],
+            "href": "$baseURI/api/hotels"
+        }
+    ]
+}
