@@ -10,7 +10,7 @@ import java.time.LocalDate;
  */
 @Getter
 @Setter
-public class CreateBookingTransition {
+public final class CreateBookingTransition {
 
     private Long roomId;
 

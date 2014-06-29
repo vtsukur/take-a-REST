@@ -1,0 +1,14 @@
+{
+    "class": ["booking"],
+    "properties": {
+        "from": [2014, 8, 1],
+        "to": [2014, 8, 15],
+        "includeBreakfast": true
+    },
+    "links": [
+        {
+            "rel": ["self"],
+            "href": "$bookingURI"
+        }
+    ]
+}

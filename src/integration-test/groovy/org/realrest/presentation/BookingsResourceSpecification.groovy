@@ -1,6 +1,8 @@
 package org.realrest.presentation
 
+import groovy.json.JsonSlurper
 import org.realrest.presentation.transitions.CreateBookingTransition
+import org.realrest.presentation.transitions.PayForBookingTransition
 import org.skyscreamer.jsonassert.JSONAssert
 
 import javax.ws.rs.client.Entity
@@ -12,7 +14,7 @@ import java.time.LocalDate
  */
 class BookingsResourceSpecification extends BaseSpecification {
 
-  def 'should create booking discoverable by individual URI'() {
+  def 'should create booking discoverable by individual URI and then pay for it'() {
     given:
     def transition = new CreateBookingTransition(
         roomId: 1,
@@ -24,8 +26,7 @@ class BookingsResourceSpecification extends BaseSpecification {
     when:
     def response = client.target(uri('/api/bookings')).
         request().
-        buildPost(Entity.entity(transition, MediaType.APPLICATION_JSON_TYPE)).
-        invoke()
+        post(Entity.entity(transition, MediaType.APPLICATION_JSON_TYPE))
     response.close()
 
     then:
@@ -34,12 +35,32 @@ class BookingsResourceSpecification extends BaseSpecification {
     bookingURI
 
     when:
-    def actualBookingJSON = client.target(bookingURI).request().get(String)
+    def createdBookingPayload = client.target(bookingURI).request().get(String)
 
     then:
     JSONAssert.assertEquals(loadTemplate("booking-created.json", [
-        requestedURI: bookingURI
-    ]), actualBookingJSON, false)
+        bookingURI: bookingURI
+    ]), createdBookingPayload, false)
+    def createdBooking = new JsonSlurper().parseText(createdBookingPayload) as Map
+    def paymentAction = (createdBooking.actions as List).get(0) as Map
+    paymentAction
+
+    when:
+    response = client.target(paymentAction.href as String).
+        request().
+        method(paymentAction.method as String, Entity.entity(new PayForBookingTransition(
+            cardholdersName: 'Viktor Yanukovych',
+            creditCardNumber: '1234 5678 9012 3456',
+            cvv: 123
+        ), MediaType.APPLICATION_JSON))
+    def paidBookingPayload = response.readEntity(String)
+    response.close()
+
+    then:
+    200 == response.status
+    JSONAssert.assertEquals(loadTemplate("booking-paid.json", [
+        bookingURI: bookingURI
+    ]), paidBookingPayload, false)
   }
 
   def 'should respond with 404 when booking does not exist'() {

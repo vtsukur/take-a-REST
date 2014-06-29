@@ -9,7 +9,7 @@
         {
             "name": "payment",
             "method": "POST",
-            "href": "$requestedURI/payment",
+            "href": "$bookingURI/payment",
             "type": "application/json",
             "fields": [
                 {
@@ -34,7 +34,7 @@
     "links": [
         {
             "rel": ["self"],
-            "href": "$requestedURI"
+            "href": "$bookingURI"
         }
     ]
 }
