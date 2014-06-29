@@ -1,6 +1,5 @@
 package org.realrest.presentation;
 
-import org.realrest.presentation.resources.BookingResource;
 import org.realrest.presentation.resources.BookingsResource;
 import org.realrest.presentation.resources.EntryPointResource;
 import org.realrest.presentation.resources.HotelsResource;
@@ -22,7 +21,6 @@ public class RESTApplication extends Application {
         classes.add(EntryPointResource.class);
         classes.add(HotelsResource.class);
         classes.add(BookingsResource.class);
-        classes.add(BookingResource.class);
     }
 
     public Set<Class<?>> getClasses() {
