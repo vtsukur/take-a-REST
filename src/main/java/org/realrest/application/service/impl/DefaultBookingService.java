@@ -7,11 +7,13 @@ import org.realrest.domain.EntityNotFoundException;
 import org.realrest.domain.Payment;
 import org.realrest.domain.repository.BookingRepository;
 import org.realrest.domain.repository.PaymentRepository;
+import org.realrest.domain.repository.RoomRepository;
 import org.realrest.presentation.transitions.CreateBookingTransition;
 import org.realrest.presentation.transitions.PayForBookingTransition;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.time.Period;
 
 /**
  * @author volodymyr.tsukur
@@ -23,18 +25,22 @@ public class DefaultBookingService implements BookingService {
     private BookingRepository bookingRepository;
 
     @Inject
+    private RoomRepository roomRepository;
+
+    @Inject
     private PaymentRepository paymentRepository;
 
     @Inject
     private PaymentGateway paymentGateway;
 
     @Override
-    public Booking create(final CreateBookingTransition data) {
+    public Booking create(final CreateBookingTransition data) throws EntityNotFoundException {
         final Booking booking = new Booking();
         booking.setFrom(data.getFrom());
         booking.setTo(data.getTo());
         booking.setIncludeBreakfast(data.isIncludeBreakfast());
         booking.setState(Booking.State.CREATED);
+        booking.setRoom(roomRepository.findById(data.getRoomId()));
         return bookingRepository.create(booking);
     }
 
@@ -50,7 +56,8 @@ public class DefaultBookingService implements BookingService {
         Payment payment = new Payment();
         payment.setCardholdersName(data.getCardholdersName());
         payment.setCreditCardNumber(data.getCreditCardNumber());
-        payment.setAmount(1000); // TODO take amount from room price
+        payment.setAmount(booking.getRoom().getPrice() *
+                Period.between(booking.getFrom(), booking.getTo()).getDays());
 
         payment = paymentRepository.create(payment);
         booking.setPayment(payment);
