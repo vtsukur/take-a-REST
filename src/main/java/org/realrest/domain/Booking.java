@@ -24,6 +24,8 @@ public final class Booking extends Identifiable {
 
     private State state;
 
+    private Payment payment;
+
     /**
      * @author volodymyr.tsukur
      */
@@ -31,9 +33,7 @@ public final class Booking extends Identifiable {
 
         CREATED,
 
-        PAYMENT_SUBMITTED,
-
-        PAYMENT_CONFIRMED,
+        PAID,
 
         SERVED,
 

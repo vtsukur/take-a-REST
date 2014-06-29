@@ -3,12 +3,16 @@ package org.realrest.presentation.resources;
 import com.google.code.siren4j.component.Entity;
 import org.realrest.application.service.BookingService;
 import org.realrest.domain.Booking;
-import org.realrest.domain.BookingNotFoundException;
+import org.realrest.domain.EntityNotFoundException;
 import org.realrest.presentation.representations.BookingRepresentationBuilder;
+import org.realrest.presentation.transitions.PayForBookingTransition;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * @author volodymyr.tsukur
@@ -26,7 +30,22 @@ public class BookingResource {
             final Booking booking = bookingService.findById(id);
             return new BookingRepresentationBuilder(booking, uriInfo).build();
         }
-        catch (final BookingNotFoundException e) {
+        catch (final EntityNotFoundException e) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+    }
+
+    @POST
+    @Path("/{id}/payment")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Entity pay(@PathParam("id") final Long id, @Context final UriInfo uriInfo,
+                      final PayForBookingTransition data) {
+        try {
+            final Booking booking = bookingService.pay(id, data);
+            return new BookingRepresentationBuilder(booking, uriInfo).build();
+        }
+        catch (final EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
     }
