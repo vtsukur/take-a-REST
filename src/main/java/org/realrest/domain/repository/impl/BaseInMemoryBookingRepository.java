@@ -4,6 +4,7 @@ import org.realrest.domain.EntityNotFoundException;
 import org.realrest.domain.Identifiable;
 import org.realrest.domain.repository.BaseRepository;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -40,6 +41,11 @@ public abstract class BaseInMemoryBookingRepository<E extends Identifiable> impl
         else {
             throw new EntityNotFoundException(String.format("%s with id %d not found", entityName, id));
         }
+    }
+
+    @Override
+    public Collection<E> findAll() {
+        return store.values();
     }
 
     @Override
