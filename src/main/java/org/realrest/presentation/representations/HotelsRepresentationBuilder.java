@@ -10,6 +10,8 @@ import org.realrest.presentation.resources.HotelsResource;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author volodymyr.tsukur
@@ -26,18 +28,20 @@ public class HotelsRepresentationBuilder {
     }
 
     public Entity build() {
-        EntityBuilder entityBuilder = EntityBuilder.newInstance().
+        return EntityBuilder.newInstance().
                 setComponentClass("hotels").
+                addSubEntities(hotels()).
                 addLink(LinkBuilder.newInstance().
                         setHref(selfHref()).
                         setRelationship(Link.RELATIONSHIP_SELF).
-                        build());
-        for (final Hotel hotel : hotels) {
-            entityBuilder = entityBuilder.addSubEntity(
-                    new HotelEmbeddedRepresentationBuilder(hotel, uriInfo).build()
-            );
-        }
-        return entityBuilder.build();
+                        build()).
+                build();
+    }
+
+    private List<Entity> hotels() {
+        return hotels.stream().
+                map(hotel -> new HotelEmbeddedRepresentationBuilder(hotel, uriInfo).build()).
+                collect(Collectors.toList());
     }
 
     private String selfHref() {

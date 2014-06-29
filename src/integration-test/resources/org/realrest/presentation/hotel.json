@@ -1,7 +1,6 @@
 {
     "class": ["hotel"],
     "properties": {
-        "id": 1,
         "name": "Vintage Boutique Hotel"
     },
     "entities": [

@@ -26,7 +26,6 @@ abstract class BaseHotelRepresentationBuilder {
     protected EntityBuilder builder() {
         return EntityBuilder.newInstance().
                 setComponentClass("hotel").
-                addProperty("id", hotel.getId()).
                 addProperty("name", hotel.getName()).
                 addLink(LinkBuilder.newInstance().
                         setHref(selfHref()).
