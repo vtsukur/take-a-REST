@@ -75,7 +75,8 @@ public class BookingRepresentationBuilder {
     }
 
     private EntityBuilder addCancellationActionIfAvailable(final EntityBuilder entityBuilder) {
-        if (booking.getState() != Booking.State.CANCELLED) {
+        if (booking.getState() == Booking.State.CREATED ||
+                booking.getState() == Booking.State.PAID) {
             return entityBuilder.addAction(
                     ActionBuilder.newInstance().
                             setName("cancel").
