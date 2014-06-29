@@ -29,6 +29,12 @@
                 }
             ],
             "class": ["payment"]
+        },
+        {
+            "name": "cancel",
+            "method": "DELETE",
+            "href": "$bookingURI",
+            "class": ["booking"]
         }
     ],
     "links": [

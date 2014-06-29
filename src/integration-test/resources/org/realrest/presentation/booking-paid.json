@@ -5,6 +5,14 @@
         "to": [2014, 8, 15],
         "includeBreakfast": true
     },
+    "actions": [
+        {
+            "name": "cancel",
+            "method": "DELETE",
+            "href": "$bookingURI",
+            "class": ["booking"]
+        }
+    ],
     "links": [
         {
             "rel": ["self"],
