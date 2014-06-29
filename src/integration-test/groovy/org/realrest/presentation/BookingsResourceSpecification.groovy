@@ -14,16 +14,23 @@ import java.time.LocalDate
  */
 class BookingsResourceSpecification extends BaseSpecification {
 
-  def 'should create booking discoverable by individual URI and then pay for it'() {
+  def 'should find first hotel room, book it and then pay for it'() {
     given:
+    def startingPoint = '/api/hotels'
+
+    when:
+    def hotelsPayload = client.target(uri(startingPoint)).request().get(String)
+
+    then:
+    JSONAssert.assertEquals(loadTemplate("hotels.json", [ baseURI: uri() ]), hotelsPayload, false)
+
+    when:
     def transition = new CreateBookingTransition(
         roomId: 1,
         from: LocalDate.of(2014, 8, 1),
         to: LocalDate.of(2014, 8, 15),
         includeBreakfast: true
     )
-
-    when:
     def response = client.target(uri('/api/bookings')).
         request().
         post(Entity.entity(transition, MediaType.APPLICATION_JSON))
