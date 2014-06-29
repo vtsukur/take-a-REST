@@ -16,4 +16,6 @@ public interface BookingService {
 
     Booking pay(Long id, PayForBookingTransition data) throws EntityNotFoundException;
 
+    void delete(Long id);
+    
 }

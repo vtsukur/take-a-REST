@@ -63,6 +63,54 @@ class BookingsResourceSpecification extends BaseSpecification {
     ]), paidBookingPayload, false)
   }
 
+  def 'should create booking and then cancel it'() {
+    given:
+    def transition = new CreateBookingTransition(
+        roomId: 1,
+        from: LocalDate.of(2014, 8, 1),
+        to: LocalDate.of(2014, 8, 15),
+        includeBreakfast: true
+    )
+
+    when:
+    def response = client.target(uri('/api/bookings')).
+        request().
+        post(Entity.entity(transition, MediaType.APPLICATION_JSON_TYPE))
+    response.close()
+
+    then:
+    201 == response.status
+    def bookingURI = response.location
+    bookingURI
+
+    when:
+    def createdBookingPayload = client.target(bookingURI).request().get(String)
+
+    then:
+    JSONAssert.assertEquals(loadTemplate("booking-created.json", [
+        bookingURI: bookingURI
+    ]), createdBookingPayload, false)
+    def createdBooking = new JsonSlurper().parseText(createdBookingPayload) as Map
+    def cancelAction = (createdBooking.actions as List).get(1) as Map
+    cancelAction
+
+    when:
+    response = client.target(cancelAction.href as String).
+        request().
+        method(cancelAction.method as String)
+    response.close()
+
+    then:
+    204 == response.status
+
+    when:
+    response = client.target(bookingURI).request().get()
+    response.close()
+
+    then:
+    404 == response.status
+  }
+
   def 'should respond with 404 when booking does not exist'() {
     when:
     def response = client.target(uri('/api/bookings/item/0')).request().get()

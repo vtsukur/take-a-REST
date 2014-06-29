@@ -42,4 +42,9 @@ public abstract class BaseInMemoryBookingRepository<E extends Identifiable> impl
         }
     }
 
+    @Override
+    public void delete(final Long id) {
+        store.remove(id);
+    }
+
 }
