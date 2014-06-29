@@ -1,5 +1,6 @@
 package org.realrest.presentation.resources;
 
+import com.google.code.siren4j.Siren4J;
 import org.realrest.application.service.BookingService;
 import org.realrest.domain.Booking;
 import org.realrest.presentation.representations.BookingRepresentationBuilder;
@@ -29,7 +30,7 @@ public class BookingsResource {
     private BookingResource bookingResource;
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(final CreateBookingTransition data, @Context final UriInfo uriInfo) {
         final Booking result = bookingService.create(data);
