@@ -41,11 +41,11 @@ public class BookingRepresentationBuilder {
                                 setRelationship(Link.RELATIONSHIP_SELF).
                                 build());
         entityBuilder = addPaymentActionIfAvailable(entityBuilder);
+        entityBuilder = addCancellationActionIfAvailable(entityBuilder);
         return entityBuilder.build();
     }
 
-    private EntityBuilder addPaymentActionIfAvailable(
-            final EntityBuilder entityBuilder) {
+    private EntityBuilder addPaymentActionIfAvailable(final EntityBuilder entityBuilder) {
         if (booking.getState() == Booking.State.CREATED) {
             return entityBuilder.addAction(
                     ActionBuilder.newInstance().
@@ -67,6 +67,21 @@ public class BookingRepresentationBuilder {
                                             setName("cvv").
                                             setType(FieldType.NUMBER).
                                             build()).
+                            build());
+        }
+        else {
+            return entityBuilder;
+        }
+    }
+
+    private EntityBuilder addCancellationActionIfAvailable(final EntityBuilder entityBuilder) {
+        if (booking.getState() != Booking.State.CANCELLED) {
+            return entityBuilder.addAction(
+                    ActionBuilder.newInstance().
+                            setName("cancel").
+                            setComponentClass("booking").
+                            setMethod(ActionImpl.Method.DELETE).
+                            setHref(selfHref()).
                             build());
         }
         else {
