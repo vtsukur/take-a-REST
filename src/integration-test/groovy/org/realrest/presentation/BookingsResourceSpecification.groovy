@@ -1,18 +1,31 @@
 package org.realrest.presentation
+
 import groovy.json.JsonSlurper
+import groovy.text.SimpleTemplateEngine
 import org.realrest.presentation.transitions.CreateBookingTransition
 import org.realrest.presentation.transitions.PayForBookingTransition
 import org.skyscreamer.jsonassert.JSONAssert
+import spock.lang.Specification
 
+import javax.ws.rs.client.Client
+import javax.ws.rs.client.ClientBuilder
+import javax.ws.rs.client.Invocation
 import javax.ws.rs.core.Response
 import java.time.LocalDate
 
 import static javax.ws.rs.client.Entity.entity
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON
+
 /**
  * @author volodymyr.tsukur
  */
-class BookingsResourceSpecification extends BaseSpecification {
+class BookingsResourceSpecification extends Specification {
+
+  protected Client client
+
+  def setup() {
+    client = ClientBuilder.newClient()
+  }
 
   def 'should find first hotel room, book it and then pay for it'() {
     given:
@@ -38,7 +51,7 @@ class BookingsResourceSpecification extends BaseSpecification {
     when:
     response = close(request(bookingAction.href as String).post(
         entity(new CreateBookingTransition(
-            roomId: bookingAction.fields.find({ it.name == 'roomId' }).value,
+            roomId: Long.parseLong(bookingAction.fields?.find({ it.name == 'roomId' })?.value as String),
             from: LocalDate.of(2014, 8, 1),
             to: LocalDate.of(2014, 8, 15),
             includeBreakfast: true
@@ -121,6 +134,22 @@ class BookingsResourceSpecification extends BaseSpecification {
 
     then:
     404 == response.status
+  }
+
+  protected Invocation.Builder request(String href) {
+    client.target(href).request()
+  }
+
+  protected Invocation.Builder request(URI uri) {
+    client.target(uri).request()
+  }
+
+  protected static String uri(String relative = '') {
+    "http://localhost:8080/realrest$relative"
+  }
+
+  protected static String loadTemplate(String name, Map binding) {
+    new SimpleTemplateEngine().createTemplate(BookingsResourceSpecification.getResource(name)).make(binding).toString()
   }
 
   private static assertTemplateNotStrict(String template, String payload, Map binding = [:]) {

@@ -10,7 +10,7 @@ import org.realrest.presentation.transitions.PayForBookingTransition;
  */
 public interface BookingService {
 
-    Booking create(CreateBookingTransition data);
+    Booking create(CreateBookingTransition data) throws EntityNotFoundException;
 
     Booking findById(Long id) throws EntityNotFoundException;
 
