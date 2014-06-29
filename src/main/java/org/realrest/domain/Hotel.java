@@ -12,6 +12,8 @@ import java.util.Set;
 @Setter
 public final class Hotel extends Identifiable {
 
+    private String name;
+
     private Set<Room> rooms;
 
 }
