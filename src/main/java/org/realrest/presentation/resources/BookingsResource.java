@@ -26,9 +26,6 @@ public class BookingsResource {
     private BookingService bookingService;
 
     @Inject
-    private BookingRepresentationBuilder bookingRepresentationBuilder;
-
-    @Inject
     private BookingResource bookingResource;
 
     @POST
@@ -36,7 +33,7 @@ public class BookingsResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(final CreateBookingTransition data, @Context final UriInfo uriInfo) {
         final Booking result = bookingService.create(data);
-        final URI bookingURI = bookingRepresentationBuilder.buildURI(result, uriInfo.getBaseUriBuilder());
+        final URI bookingURI = BookingRepresentationBuilder.selfURI(result, uriInfo);
         return Response.created(bookingURI).build();
     }
 

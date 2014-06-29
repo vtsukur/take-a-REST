@@ -27,7 +27,7 @@ configurations {
   }
 }
 
-def sets = [ "java", "groovy" ]
+def sets = [ "java", "groovy", "resources" ]
 def sourceFolder = { set ->
   "src/integration-test/$set"
 }
@@ -72,6 +72,7 @@ dependencies {
       exclude group: 'org.codehaus.groovy'
   }
   integrationTestCompile('org.jboss.resteasy:resteasy-client:3.0.8.Final')
+  integrationTestCompile('org.skyscreamer:jsonassert:1.2.3')
 }
 
 ext {

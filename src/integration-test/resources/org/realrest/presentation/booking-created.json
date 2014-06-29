@@ -1,0 +1,40 @@
+{
+    "class": ["booking"],
+    "properties": {
+        "from": [2014, 8, 1],
+        "to": [2014, 8, 15],
+        "includeBreakfast": true
+    },
+    "actions": [
+        {
+            "name": "payment",
+            "method": "POST",
+            "href": "$requestedURI/payment",
+            "type": "application/json",
+            "fields": [
+                {
+                    "name": "cardholdersName",
+                    "type": "TEXT",
+                    "required": false
+                },
+                {
+                    "name": "creditCardNumber",
+                    "type": "TEXT",
+                    "required": false
+                },
+                {
+                    "name": "cvv",
+                    "type": "NUMBER",
+                    "required": false
+                }
+            ],
+            "class": ["payment"]
+        }
+    ],
+    "links": [
+        {
+            "rel": ["self"],
+            "href": "$requestedURI"
+        }
+    ]
+}
