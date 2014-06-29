@@ -31,7 +31,6 @@ public class BookingRepresentationBuilder {
     public Entity build() {
         EntityBuilder entityBuilder = EntityBuilder.newInstance().
                 setComponentClass("booking").
-                addProperty("id", booking.getId()).
                 addProperty("from", booking.getFrom()).
                 addProperty("to", booking.getTo()).
                 addProperty("includeBreakfast", booking.isIncludeBreakfast()).
