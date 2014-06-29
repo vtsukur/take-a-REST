@@ -35,11 +35,10 @@ public class BookingRepresentationBuilder {
                 addProperty("from", booking.getFrom()).
                 addProperty("to", booking.getTo()).
                 addProperty("includeBreakfast", booking.isIncludeBreakfast()).
-                addLink(
-                        LinkBuilder.newInstance().
-                                setHref(selfHref()).
-                                setRelationship(Link.RELATIONSHIP_SELF).
-                                build());
+                addLink(LinkBuilder.newInstance().
+                        setHref(selfHref()).
+                        setRelationship(Link.RELATIONSHIP_SELF).
+                        build());
         entityBuilder = addPaymentActionIfAvailable(entityBuilder);
         entityBuilder = addCancellationActionIfAvailable(entityBuilder);
         return entityBuilder.build();
