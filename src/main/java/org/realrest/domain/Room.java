@@ -10,9 +10,14 @@ import lombok.Setter;
 @Setter
 public final class Room extends Identifiable {
 
-    private Hotel hotel;
-
     private Type type;
+
+    private Integer price;
+
+    public Room(Type type, Integer price) {
+        this.type = type;
+        this.price = price;
+    }
 
     public enum Type {
 

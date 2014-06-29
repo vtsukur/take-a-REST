@@ -3,6 +3,7 @@ package org.realrest.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -16,6 +17,6 @@ public final class Hotel extends Identifiable {
 
     private String name;
 
-    private Set<Room> rooms;
+    private Set<Room> rooms = new HashSet<>();
 
 }
