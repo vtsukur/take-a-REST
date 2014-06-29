@@ -1,6 +1,7 @@
 package org.realrest.application.service.impl;
 
 import org.realrest.application.service.HotelService;
+import org.realrest.domain.EntityNotFoundException;
 import org.realrest.domain.Hotel;
 import org.realrest.domain.repository.HotelRepository;
 
@@ -16,6 +17,11 @@ public class DefaultHotelService implements HotelService {
 
     @Inject
     private HotelRepository hotelRepository;
+
+    @Override
+    public Hotel findById(final Long id) throws EntityNotFoundException {
+        return hotelRepository.findById(id);
+    }
 
     @Override
     public Collection<Hotel> findAll() {
