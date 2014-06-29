@@ -8,7 +8,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class City extends Identifiable {
+public final class City extends Identifiable {
 
     private String name;
 
