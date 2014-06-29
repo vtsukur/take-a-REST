@@ -12,4 +12,6 @@ public interface BaseRepository<E extends Identifiable> {
 
     E findById(Long id) throws EntityNotFoundException;
 
+    void delete(Long id);
+
 }

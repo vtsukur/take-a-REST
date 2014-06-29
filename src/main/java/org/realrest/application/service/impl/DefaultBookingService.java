@@ -63,4 +63,9 @@ public class DefaultBookingService implements BookingService {
         return booking;
     }
 
+    @Override
+    public void delete(final Long id) {
+        bookingRepository.delete(id);
+    }
+
 }

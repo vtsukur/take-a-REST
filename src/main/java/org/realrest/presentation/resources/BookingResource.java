@@ -50,4 +50,11 @@ public class BookingResource {
         }
     }
 
+    @DELETE
+    @Path("/{id}")
+    public Response cancel(@PathParam("id") final Long id) {
+        bookingService.delete(id);
+        return Response.noContent().build();
+    }
+
 }
