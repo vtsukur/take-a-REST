@@ -26,19 +26,19 @@ public class MockedDataLoader {
 
     private void saveCitiesAndHotels() {
         final City lviv = new City();
-        lviv.setName("Львов");
+        lviv.setName("Lviv");
         cityRepository.create(lviv);
 
         final City kyiv = new City();
-        kyiv.setName("Киев");
+        kyiv.setName("Kyiv");
         cityRepository.create(kyiv);
 
         final Hotel vintageBoutique = new Hotel();
-        vintageBoutique.setName("Винтаж Бутик Отель");
+        vintageBoutique.setName("Vintage Bootique Hotel");
         hotelRepository.create(vintageBoutique);
 
         final Hotel premierPalace = new Hotel();
-        premierPalace.setName("Премьер Палас");
+        premierPalace.setName("Premier Palace");
         hotelRepository.create(premierPalace);
     }
 
