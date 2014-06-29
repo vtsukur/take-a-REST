@@ -1,5 +1,6 @@
 package org.realrest.presentation.resources;
 
+import com.google.code.siren4j.Siren4J;
 import com.google.code.siren4j.component.Entity;
 import org.realrest.application.service.BookingService;
 import org.realrest.domain.Booking;
@@ -24,7 +25,7 @@ public class BookingResource {
 
     @GET
     @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
     public Entity read(@PathParam("id") final Long id, @Context final UriInfo uriInfo) {
         try {
             final Booking booking = bookingService.findById(id);
@@ -37,7 +38,7 @@ public class BookingResource {
 
     @POST
     @Path("/{id}/payment")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
     @Consumes(MediaType.APPLICATION_JSON)
     public Entity pay(@PathParam("id") final Long id, @Context final UriInfo uriInfo,
                       final PayForBookingTransition data) {

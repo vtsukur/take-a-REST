@@ -26,7 +26,7 @@ class BookingsResourceSpecification extends BaseSpecification {
     when:
     def response = client.target(uri('/api/bookings')).
         request().
-        post(Entity.entity(transition, MediaType.APPLICATION_JSON_TYPE))
+        post(Entity.entity(transition, MediaType.APPLICATION_JSON))
     response.close()
 
     then:
@@ -75,7 +75,7 @@ class BookingsResourceSpecification extends BaseSpecification {
     when:
     def response = client.target(uri('/api/bookings')).
         request().
-        post(Entity.entity(transition, MediaType.APPLICATION_JSON_TYPE))
+        post(Entity.entity(transition, MediaType.APPLICATION_JSON))
     response.close()
 
     then:

@@ -1,14 +1,14 @@
 package org.realrest.presentation.resources;
 
-import com.theoryinpractise.halbuilder.api.Representation;
-import com.theoryinpractise.halbuilder.api.RepresentationFactory;
-import com.theoryinpractise.halbuilder.standard.StandardRepresentationFactory;
+import com.google.code.siren4j.Siren4J;
+import com.google.code.siren4j.component.Entity;
+import com.google.code.siren4j.component.builder.EntityBuilder;
 
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -17,14 +17,10 @@ import javax.ws.rs.core.UriInfo;
 @Path("/")
 public class EntryPointResource {
 
-    @Inject
-    private StandardRepresentationFactory standardRepresentationFactory;
-
     @GET
-    @Produces(RepresentationFactory.HAL_JSON)
-    public Representation services(@Context final UriInfo uriInfo) {
-        return standardRepresentationFactory.newRepresentation().
-                withLink("hotels", uriInfo.getBaseUriBuilder().path(HotelsResource.class).build());
+    @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
+    public Entity services(@Context final UriInfo uriInfo) {
+        return EntityBuilder.newInstance().build();
     }
 
 }
