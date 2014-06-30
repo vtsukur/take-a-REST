@@ -8,6 +8,7 @@ import org.realrest.presentation.representations.HotelsRepresentationBuilder;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -22,18 +23,15 @@ public class HotelsResource {
     @Inject
     private HotelService hotelService;
 
-    @Inject
-    private HotelResource hotelResource;
-
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
     public Entity all(@Context final UriInfo uriInfo) {
         return new HotelsRepresentationBuilder(hotelService.findAll(), uriInfo).build();
     }
 
-    @Path("/item")
-    public HotelResource item() {
-        return hotelResource;
+    @Path("/{id}")
+    public HotelResource item(@PathParam("id") final Long id) {
+        return new HotelResource(id, hotelService);
     }
 
 }
