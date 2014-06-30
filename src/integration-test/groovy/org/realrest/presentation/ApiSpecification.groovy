@@ -39,6 +39,8 @@ class ApiSpecification extends Specification {
     def entryPoint = assertTemplateNotStrict('entryPoint.json', entryPointPayload)
     def hotelsURI = entryPoint.links?.find({ it.rel.contains('hotels') })?.href as String
     hotelsURI
+    def bookingsURI = entryPoint.links?.find({ it.rel.contains('bookings') })?.href as String
+    bookingsURI
 
     when:
     def hotelsPage1Payload = request(hotelsURI).get(String)
@@ -100,6 +102,16 @@ class ApiSpecification extends Specification {
     assertTemplateNotStrict('booking-paid.json', paidBookingPayload, [
         bookingURI: bookingURI
     ])
+
+    when:
+    def bookings = toJson(request(bookingsURI).get(String))
+
+    then:
+    bookings.entities?.find({
+      it.links?.find({
+        it.rel?.contains('self') && it.href == bookingURI.toString()
+      })
+    })
   }
 
   def 'should create booking and then cancel it'() {
