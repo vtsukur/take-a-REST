@@ -48,37 +48,42 @@ public abstract class BaseInMemoryRepository<E extends Identifiable> implements 
     }
 
     @Override
-    public void delete(final Long id) {
-        store.remove(id);
-    }
-
-    @Override
     public List<E> findSeveral(final Pagination pagination) {
         final int startIndex = startIndex(pagination.getOffset());
         final int endIndex = endIndex(startIndex, pagination.getLimit());
         return new ArrayList<>(store.values()).subList(startIndex, endIndex);
     }
 
+    @Override
+    public void delete(final Long id) {
+        store.remove(id);
+    }
+
     private int startIndex(final int offset) {
         if (offset < 0) {
             return 0;
         }
-        else if (offset < store.size()) {
+        else if (offset < totalCount()) {
             return offset;
         }
         else {
-            return store.size() - 1;
+            return totalCount() - 1;
         }
     }
 
     private int endIndex(final int startIndex, final int limit) {
         final int optimisticEndIndex = startIndex + limit;
-        if (optimisticEndIndex >= store.size()) {
-            return store.size();
+        if (optimisticEndIndex >= totalCount()) {
+            return totalCount();
         }
         else {
             return optimisticEndIndex;
         }
+    }
+
+    @Override
+    public int totalCount() {
+        return store.size();
     }
 
 }

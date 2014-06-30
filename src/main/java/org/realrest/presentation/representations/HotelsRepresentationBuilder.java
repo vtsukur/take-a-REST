@@ -23,13 +23,17 @@ public class HotelsRepresentationBuilder {
 
     private final Pagination pagination;
 
+    private final int totalCount;
+
     private final UriInfo uriInfo;
 
     public HotelsRepresentationBuilder(final Collection<Hotel> hotels,
                                        final Pagination pagination,
+                                       final int totalCount,
                                        final UriInfo uriInfo) {
         this.hotels = hotels;
         this.pagination = pagination;
+        this.totalCount = totalCount;
         this.uriInfo = uriInfo;
     }
 
@@ -38,6 +42,7 @@ public class HotelsRepresentationBuilder {
                 setComponentClass("hotels").
                 addProperty("offset", pagination.getOffset()).
                 addProperty("limit", pagination.getLimit()).
+                addProperty("total", totalCount).
                 addSubEntities(hotels()).
                 addLink(LinkBuilder.newInstance().
                         setHref(selfHref()).

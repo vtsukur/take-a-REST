@@ -1,5 +1,10 @@
 {
     "class": ["hotels"],
+    "properties": {
+        "offset": 0,
+        "limit": 2,
+        "total": 4
+    },
     "entities": [
         {
             "class": ["hotel"],
