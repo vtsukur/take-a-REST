@@ -82,7 +82,12 @@ public class HotelsRepresentationBuilder {
     }
 
     private String hrefWithOffset(final int offset) {
-        return String.format("%s?offset=%d", baseSelfHref(), offset);
+        if (offset != 0) {
+            return String.format("%s?offset=%d", baseSelfHref(), offset);
+        }
+        else {
+            return baseSelfHref();
+        }
     }
 
     private String baseSelfHref() {
