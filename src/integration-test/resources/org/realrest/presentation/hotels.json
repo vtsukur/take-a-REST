@@ -36,7 +36,7 @@
     "links": [
         {
             "rel": ["self"],
-            "href": "$baseURI/api/hotels?offset=0"
+            "href": "$baseURI/api/hotels"
         },
         {
             "rel": ["next"],
