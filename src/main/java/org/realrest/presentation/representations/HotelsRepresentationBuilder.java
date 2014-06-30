@@ -63,11 +63,24 @@ public class HotelsRepresentationBuilder {
     }
 
     private EntityBuilder addNextLinkIfRequired(final EntityBuilder builder) {
-        return builder;
+        if (hotels.getActualPagination().getOffset() + hotels.getActualPagination().getLimit() <
+                hotels.getTotal()) {
+            // add next link.
+            return builder;
+        }
+        else {
+            return builder;
+        }
     }
 
     private EntityBuilder addPrevLinkIfRequired(final EntityBuilder builder) {
-        return builder;
+        if (hotels.getActualPagination().getOffset() > 0) {
+            // add previous link.
+            return builder;
+        }
+        else {
+            return builder;
+        }
     }
 
 }
