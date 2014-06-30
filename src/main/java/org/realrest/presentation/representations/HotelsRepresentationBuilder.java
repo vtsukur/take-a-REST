@@ -55,7 +55,7 @@ public class HotelsRepresentationBuilder {
             return builder.addLink(LinkBuilder.newInstance().
                     setHref(hrefWithOffset(nextOffset)).
                     setComponentClass("hotels").
-                    setRelationship("next").
+                    setRelationship(Link.RELATIONSHIP_NEXT).
                     build());
         }
         else {
@@ -69,7 +69,7 @@ public class HotelsRepresentationBuilder {
             return builder.addLink(LinkBuilder.newInstance().
                     setHref(hrefWithOffset(prevOffset)).
                     setComponentClass("hotels").
-                    setRelationship("prev").
+                    setRelationship(Link.RELATIONSHIP_PREVIOUS).
                     build());
         }
         else {
