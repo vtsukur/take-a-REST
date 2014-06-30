@@ -3,6 +3,7 @@ package org.realrest.domain.repository.impl;
 import org.realrest.application.service.Pagination;
 import org.realrest.domain.EntityNotFoundException;
 import org.realrest.domain.Identifiable;
+import org.realrest.domain.PaginatedResult;
 import org.realrest.domain.repository.BaseRepository;
 
 import java.util.*;
@@ -48,10 +49,11 @@ public abstract class BaseInMemoryRepository<E extends Identifiable> implements 
     }
 
     @Override
-    public List<E> findSeveral(final Pagination pagination) {
+    public PaginatedResult<E> findSeveral(final Pagination pagination) {
         final int startIndex = startIndex(pagination.getOffset());
         final int endIndex = endIndex(startIndex, pagination.getLimit());
-        return new ArrayList<>(store.values()).subList(startIndex, endIndex);
+        return new PaginatedResult<>(new ArrayList<>(store.values()).subList(startIndex, endIndex),
+                new Pagination(startIndex, endIndex), totalCount());
     }
 
     @Override
@@ -81,8 +83,7 @@ public abstract class BaseInMemoryRepository<E extends Identifiable> implements 
         }
     }
 
-    @Override
-    public int totalCount() {
+    private int totalCount() {
         return store.size();
     }
 

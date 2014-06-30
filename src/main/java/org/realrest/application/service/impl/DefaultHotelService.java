@@ -4,11 +4,11 @@ import org.realrest.application.service.HotelService;
 import org.realrest.application.service.Pagination;
 import org.realrest.domain.EntityNotFoundException;
 import org.realrest.domain.Hotel;
+import org.realrest.domain.PaginatedResult;
 import org.realrest.domain.repository.HotelRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.List;
 
 /**
  * @author volodymyr.tsukur
@@ -25,13 +25,8 @@ public class DefaultHotelService implements HotelService {
     }
 
     @Override
-    public List<Hotel> findSeveral(final Pagination pagination) {
+    public PaginatedResult<Hotel> findSeveral(final Pagination pagination) {
         return hotelRepository.findSeveral(pagination);
-    }
-
-    @Override
-    public int totalCount() {
-        return hotelRepository.totalCount();
     }
 
 }
