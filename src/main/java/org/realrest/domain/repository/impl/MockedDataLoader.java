@@ -45,12 +45,26 @@ public class MockedDataLoader {
         vintageBoutique.getRooms().add(roomRepository.create(new Room(Room.Type.DOUBLE, 800)));
         hotelRepository.create(vintageBoutique);
 
+        final Hotel nobilis = new Hotel();
+        nobilis.setName("Nobilis");
+        nobilis.setCity(lviv);
+        nobilis.getRooms().add(roomRepository.create(new Room(Room.Type.JUNIOR_SUITE, 2500)));
+        nobilis.getRooms().add(roomRepository.create(new Room(Room.Type.SUITE, 4500)));
+        hotelRepository.create(nobilis);
+
         final Hotel premierPalace = new Hotel();
         premierPalace.setName("Premier Palace");
         premierPalace.setCity(kyiv);
         premierPalace.getRooms().add(roomRepository.create(new Room(Room.Type.SINGLE, 1000)));
         premierPalace.getRooms().add(roomRepository.create(new Room(Room.Type.DOUBLE, 1500)));
         hotelRepository.create(premierPalace);
+
+        final Hotel fairmontGrandHotelKyiv = new Hotel();
+        fairmontGrandHotelKyiv.setName("Fairmont");
+        fairmontGrandHotelKyiv.setCity(kyiv);
+        fairmontGrandHotelKyiv.getRooms().add(roomRepository.create(new Room(Room.Type.DOUBLE, 3000)));
+        fairmontGrandHotelKyiv.getRooms().add(roomRepository.create(new Room(Room.Type.KING, 6000)));
+        hotelRepository.create(fairmontGrandHotelKyiv);
     }
 
 }

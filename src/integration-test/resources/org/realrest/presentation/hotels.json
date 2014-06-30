@@ -18,7 +18,7 @@
             "class": ["hotel"],
             "rel": ["hotel"],
             "properties": {
-                "name": "Premier Palace"
+                "name": "Nobilis"
             },
             "links": [
                 {

@@ -3,13 +3,11 @@ package org.realrest.presentation.resources;
 import com.google.code.siren4j.Siren4J;
 import com.google.code.siren4j.component.Entity;
 import org.realrest.application.service.HotelService;
+import org.realrest.application.service.Pagination;
 import org.realrest.presentation.representations.HotelsRepresentationBuilder;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
@@ -25,8 +23,11 @@ public class HotelsResource {
 
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
-    public Entity all(@Context final UriInfo uriInfo) {
-        return new HotelsRepresentationBuilder(hotelService.findAll(), uriInfo).build();
+    public Entity all(@Context final UriInfo uriInfo,
+                      @QueryParam("offset") final Integer offset,
+                      @QueryParam("limit") final Integer limit) {
+        return new HotelsRepresentationBuilder(
+                hotelService.findSeveral(Pagination.getPagination(offset, limit)), uriInfo).build();
     }
 
     @Path("/{id}")
