@@ -12,7 +12,9 @@ import java.util.Collection;
  */
 public interface BaseRepository<E extends Identifiable> {
 
-    E create(E data);
+    E create(E entity);
+
+    E update(E entity);
 
     E findById(Long id) throws EntityNotFoundException;
 

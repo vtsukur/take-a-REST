@@ -4,6 +4,7 @@ import groovy.json.JsonSlurper
 import groovy.text.SimpleTemplateEngine
 import org.realrest.presentation.transitions.CreateBookingTransition
 import org.realrest.presentation.transitions.PayForBookingTransition
+import org.realrest.presentation.transitions.BookingData
 import org.skyscreamer.jsonassert.JSONAssert
 import spock.lang.Specification
 
@@ -70,9 +71,11 @@ class ApiSpecification extends Specification {
     response = close(request(bookingAction.href as String).post(
         entity(new CreateBookingTransition(
             roomId: Long.parseLong(bookingAction.fields?.find({ it.name == 'roomId' })?.value as String),
-            from: LocalDate.of(2014, 8, 1),
-            to: LocalDate.of(2014, 8, 15),
-            includeBreakfast: true
+            data: new BookingData(
+              from: LocalDate.of(2014, 8, 1),
+              to: LocalDate.of(2014, 8, 15),
+              includeBreakfast: true
+            )
         ), APPLICATION_JSON)))
 
     then:
@@ -123,9 +126,11 @@ class ApiSpecification extends Specification {
         request().
         post(entity(new CreateBookingTransition(
             roomId: 1,
-            from: LocalDate.of(2014, 8, 1),
-            to: LocalDate.of(2014, 8, 15),
-            includeBreakfast: true
+            data: new BookingData(
+              from: LocalDate.of(2014, 8, 1),
+              to: LocalDate.of(2014, 8, 15),
+              includeBreakfast: true
+            )
         ), APPLICATION_JSON)))
 
     then:

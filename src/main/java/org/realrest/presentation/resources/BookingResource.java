@@ -7,6 +7,7 @@ import org.realrest.domain.Booking;
 import org.realrest.domain.EntityNotFoundException;
 import org.realrest.presentation.representations.BookingRepresentationBuilder;
 import org.realrest.presentation.transitions.PayForBookingTransition;
+import org.realrest.presentation.transitions.UpdateBookingTransition;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -33,6 +34,19 @@ public class BookingResource {
     public Entity read(@Context final UriInfo uriInfo) {
         try {
             final Booking booking = bookingService.findById(id);
+            return new BookingRepresentationBuilder(booking, uriInfo).build();
+        }
+        catch (final EntityNotFoundException e) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
+    public Entity update(final UpdateBookingTransition transition, @Context final UriInfo uriInfo) {
+        try {
+            final Booking booking = bookingService.update(id, transition);
             return new BookingRepresentationBuilder(booking, uriInfo).build();
         }
         catch (final EntityNotFoundException e) {

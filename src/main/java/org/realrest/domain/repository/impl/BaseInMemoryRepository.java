@@ -25,11 +25,20 @@ public abstract class BaseInMemoryRepository<E extends Identifiable> implements 
     }
 
     @Override
-    public E create(final E data) {
+    public E create(final E entity) {
         final Long id = incrementalId.incrementAndGet();
-        data.setId(id);
-        store.put(id, data);
-        return data;
+        entity.setId(id);
+        return store(entity);
+    }
+
+    @Override
+    public E update(final E entity) {
+        return store(entity);
+    }
+
+    private E store(final E entity) {
+        store.put(entity.getId(), entity);
+        return entity;
     }
 
     @Override
