@@ -26,8 +26,8 @@ public class HotelsResource {
     public Entity all(@Context final UriInfo uriInfo,
                       @QueryParam("offset") final Integer offset,
                       @QueryParam("limit") final Integer limit) {
-        return new HotelsRepresentationBuilder(
-                hotelService.findSeveral(Pagination.getPagination(offset, limit)), uriInfo).build();
+        final Pagination pagination = Pagination.getPagination(offset, limit);
+        return new HotelsRepresentationBuilder(hotelService.findSeveral(pagination), pagination, uriInfo).build();
     }
 
     @Path("/{id}")
