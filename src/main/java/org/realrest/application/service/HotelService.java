@@ -2,8 +2,7 @@ package org.realrest.application.service;
 
 import org.realrest.domain.EntityNotFoundException;
 import org.realrest.domain.Hotel;
-
-import java.util.List;
+import org.realrest.domain.PaginatedResult;
 
 /**
  * @author volodymyr.tsukur
@@ -12,8 +11,6 @@ public interface HotelService {
 
     Hotel findById(Long id) throws EntityNotFoundException;
 
-    List<Hotel> findSeveral(Pagination pagination);
-
-    int totalCount();
+    PaginatedResult<Hotel> findSeveral(Pagination pagination);
 
 }

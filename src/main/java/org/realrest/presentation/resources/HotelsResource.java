@@ -29,8 +29,6 @@ public class HotelsResource {
         final Pagination pagination = Pagination.getPagination(offset, limit);
         return new HotelsRepresentationBuilder(
                 hotelService.findSeveral(pagination),
-                pagination,
-                hotelService.totalCount(),
                 uriInfo).build();
     }
 
