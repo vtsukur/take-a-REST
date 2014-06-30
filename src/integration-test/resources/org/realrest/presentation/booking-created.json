@@ -10,7 +10,24 @@
             "name": "update",
             "method": "POST",
             "href": "$bookingURI",
-            "class": ["booking"]
+            "class": ["booking"],
+            "fields": [
+                {
+                    "name": "data.from",
+                    "type": "DATE",
+                    "required": false
+                },
+                {
+                    "name": "data.to",
+                    "type": "DATE",
+                    "required": false
+                },
+                {
+                    "name": "data.includeBreakfast",
+                    "type": "CHECKBOX",
+                    "required": false
+                }
+            ]
         },
         {
             "name": "pay",

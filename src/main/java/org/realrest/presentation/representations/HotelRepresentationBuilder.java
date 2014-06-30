@@ -47,21 +47,7 @@ public class HotelRepresentationBuilder extends BaseHotelRepresentationBuilder {
                                                 setType(FieldType.TEXT).
                                                 setValue(room.getId().toString()).
                                                 build()).
-                                addField(
-                                        FieldBuilder.newInstance().
-                                                setName("from").
-                                                setType(FieldType.DATE).
-                                                build()).
-                                addField(
-                                        FieldBuilder.newInstance().
-                                                setName("to").
-                                                setType(FieldType.DATE).
-                                                build()).
-                                addField(
-                                        FieldBuilder.newInstance().
-                                                setName("includeBreakfast").
-                                                setType(FieldType.CHECKBOX).
-                                                build()).
+                                addFields(new SaveBookingFieldsBuilder().build()).
                                 build()).
                         build()).
                 collect(Collectors.toList());
