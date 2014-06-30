@@ -23,7 +23,7 @@ public class HotelsResource {
 
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
-    public Entity all(@Context final UriInfo uriInfo,
+    public Entity browse(@Context final UriInfo uriInfo,
                       @QueryParam("offset") final Integer offset,
                       @QueryParam("limit") final Integer limit) {
         final Pagination pagination = Pagination.getPagination(offset, limit);
