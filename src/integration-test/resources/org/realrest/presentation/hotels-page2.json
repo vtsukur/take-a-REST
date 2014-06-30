@@ -1,0 +1,47 @@
+{
+    "class": ["hotels"],
+    "properties": {
+        "offset": 2,
+        "limit": 4,
+        "total": 4
+    },
+    "entities": [
+        {
+            "class": ["hotel"],
+            "rel": ["hotel"],
+            "properties": {
+                "name": "Premier Palace"
+            },
+            "links": [
+                {
+                    "rel": ["self"],
+                    "href": "$baseURI/api/hotels/3"
+                }
+            ]
+        },
+        {
+            "class": ["hotel"],
+            "rel": ["hotel"],
+            "properties": {
+                "name": "Fairmont"
+            },
+            "links": [
+                {
+                    "rel": ["self"],
+                    "href": "$baseURI/api/hotels/4"
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": ["self"],
+            "href": "$baseURI/api/hotels?offset=2"
+        },
+        {
+            "rel": ["previous"],
+            "href": "$baseURI/api/hotels",
+            "class": ["hotels"]
+        }
+    ]
+}

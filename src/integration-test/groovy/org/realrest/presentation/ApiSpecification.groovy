@@ -19,7 +19,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON
 /**
  * @author volodymyr.tsukur
  */
-class BookingsResourceSpecification extends Specification {
+class ApiSpecification extends Specification {
 
   protected Client client
 
@@ -27,7 +27,7 @@ class BookingsResourceSpecification extends Specification {
     client = ClientBuilder.newClient()
   }
 
-  def 'should find first hotel room, book it and then pay for it'() {
+  def 'should find hotel room, book it and then pay for it'() {
     given:
     def startingPoint = uri('/api')
     def response
@@ -41,11 +41,19 @@ class BookingsResourceSpecification extends Specification {
     hotelsURI
 
     when:
-    def hotelsPayload = request(hotelsURI).get(String)
+    def hotelsPage1Payload = request(hotelsURI).get(String)
 
     then:
-    def hotels = assertTemplateNotStrict('hotels.json', hotelsPayload)
-    def hotelURI = hotels.entities?.get(0)?.links?.find({ it.rel.contains('self') })?.href as String
+    def hotelsPage1 = assertTemplateNotStrict('hotels-page1.json', hotelsPage1Payload)
+    def nextHotelsPageURI = hotelsPage1.links?.find({ it.rel.contains('next') })?.href as String
+    nextHotelsPageURI
+
+    when:
+    def hotelsPage2Payload = request(nextHotelsPageURI).get(String)
+
+    then:
+    def hotelsPage2 = assertTemplateNotStrict('hotels-page2.json', hotelsPage2Payload)
+    def hotelURI = hotelsPage2.entities?.get(0)?.links?.find({ it.rel.contains('self') })?.href as String
     hotelURI
 
     when:
@@ -157,7 +165,7 @@ class BookingsResourceSpecification extends Specification {
   }
 
   protected static String loadTemplate(String name, Map binding) {
-    new SimpleTemplateEngine().createTemplate(BookingsResourceSpecification.getResource(name)).make(binding).toString()
+    new SimpleTemplateEngine().createTemplate(ApiSpecification.getResource(name)).make(binding).toString()
   }
 
   private static assertTemplateNotStrict(String template, String payload, Map binding = [:]) {
