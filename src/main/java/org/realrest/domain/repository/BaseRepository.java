@@ -1,9 +1,11 @@
 package org.realrest.domain.repository;
 
+import org.realrest.application.service.Pagination;
 import org.realrest.domain.EntityNotFoundException;
 import org.realrest.domain.Identifiable;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author volodymyr.tsukur
@@ -17,5 +19,7 @@ public interface BaseRepository<E extends Identifiable> {
     Collection<E> findAll();
 
     void delete(Long id);
+
+    List<E> findSeveral(Pagination pagination);
 
 }

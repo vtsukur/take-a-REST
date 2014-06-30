@@ -1,13 +1,11 @@
 package org.realrest.domain.repository.impl;
 
+import org.realrest.application.service.Pagination;
 import org.realrest.domain.EntityNotFoundException;
 import org.realrest.domain.Identifiable;
 import org.realrest.domain.repository.BaseRepository;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -52,6 +50,35 @@ public abstract class BaseInMemoryRepository<E extends Identifiable> implements 
     @Override
     public void delete(final Long id) {
         store.remove(id);
+    }
+
+    @Override
+    public List<E> findSeveral(final Pagination pagination) {
+        final int startIndex = startIndex(pagination.getOffset());
+        final int endIndex = endIndex(startIndex, pagination.getLimit());
+        return new ArrayList<>(store.values()).subList(startIndex, endIndex);
+    }
+
+    private int startIndex(final int offset) {
+        if (offset < 0) {
+            return 0;
+        }
+        else if (offset < store.size()) {
+            return offset;
+        }
+        else {
+            return store.size() - 1;
+        }
+    }
+
+    private int endIndex(final int startIndex, final int limit) {
+        final int optimisticEndIndex = startIndex + limit;
+        if (optimisticEndIndex >= store.size()) {
+            return store.size();
+        }
+        else {
+            return optimisticEndIndex;
+        }
     }
 
 }
