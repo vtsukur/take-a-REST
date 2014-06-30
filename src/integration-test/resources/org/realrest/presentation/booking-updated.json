@@ -1,0 +1,69 @@
+{
+    "class": ["booking"],
+    "properties": {
+        "from": [2014, 8, 1],
+        "to": [2014, 8, 20],
+        "includeBreakfast": false
+    },
+    "actions": [
+        {
+            "name": "update",
+            "method": "POST",
+            "href": "$bookingURI",
+            "class": ["booking"],
+            "fields": [
+                {
+                    "name": "data.from",
+                    "type": "DATE",
+                    "required": false
+                },
+                {
+                    "name": "data.to",
+                    "type": "DATE",
+                    "required": false
+                },
+                {
+                    "name": "data.includeBreakfast",
+                    "type": "CHECKBOX",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "name": "pay",
+            "method": "POST",
+            "href": "$bookingURI/payment",
+            "type": "application/json",
+            "fields": [
+                {
+                    "name": "cardholdersName",
+                    "type": "TEXT",
+                    "required": false
+                },
+                {
+                    "name": "creditCardNumber",
+                    "type": "TEXT",
+                    "required": false
+                },
+                {
+                    "name": "cvv",
+                    "type": "NUMBER",
+                    "required": false
+                }
+            ],
+            "class": ["payment"]
+        },
+        {
+            "name": "cancel",
+            "method": "DELETE",
+            "href": "$bookingURI",
+            "class": ["booking"]
+        }
+    ],
+    "links": [
+        {
+            "rel": ["self"],
+            "href": "$bookingURI"
+        }
+    ]
+}

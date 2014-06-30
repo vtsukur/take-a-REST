@@ -5,6 +5,7 @@ import groovy.text.SimpleTemplateEngine
 import org.realrest.presentation.transitions.CreateBookingTransition
 import org.realrest.presentation.transitions.PayForBookingTransition
 import org.realrest.presentation.transitions.BookingData
+import org.realrest.presentation.transitions.UpdateBookingTransition
 import org.skyscreamer.jsonassert.JSONAssert
 import spock.lang.Specification
 
@@ -90,7 +91,24 @@ class ApiSpecification extends Specification {
     def createdBooking = assertTemplateNotStrict('booking-created.json', createdBookingPayload, [
         bookingURI: bookingURI
     ])
-    def paymentAction = createdBooking?.actions?.find({ it.name == 'pay' })
+    def updateAction = createdBooking?.actions?.find({ it.name == 'update' })
+    updateAction
+
+    when:
+    def updateBookingPayload = request(updateAction.href as String).post(
+        entity(new UpdateBookingTransition(
+            data: new BookingData(
+                from: LocalDate.of(2014, 8, 1),
+                to: LocalDate.of(2014, 8, 20),
+                includeBreakfast: false
+            )
+        ), APPLICATION_JSON), String)
+
+    then:
+    def updatedBooking = assertTemplateNotStrict('booking-updated.json', updateBookingPayload, [
+        bookingURI: bookingURI
+    ])
+    def paymentAction = updatedBooking?.actions?.find({ it.name == 'pay' })
     paymentAction
 
     when:
