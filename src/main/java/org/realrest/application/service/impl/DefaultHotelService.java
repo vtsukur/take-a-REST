@@ -8,7 +8,6 @@ import org.realrest.domain.repository.HotelRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -26,13 +25,13 @@ public class DefaultHotelService implements HotelService {
     }
 
     @Override
-    public Collection<Hotel> findAll() {
-        return hotelRepository.findAll();
+    public List<Hotel> findSeveral(final Pagination pagination) {
+        return hotelRepository.findSeveral(pagination);
     }
 
     @Override
-    public List<Hotel> findSeveral(final Pagination pagination) {
-        return hotelRepository.findSeveral(pagination);
+    public int totalCount() {
+        return hotelRepository.totalCount();
     }
 
 }

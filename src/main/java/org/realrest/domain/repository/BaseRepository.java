@@ -18,8 +18,10 @@ public interface BaseRepository<E extends Identifiable> {
 
     Collection<E> findAll();
 
+    List<E> findSeveral(Pagination pagination);
+
     void delete(Long id);
 
-    List<E> findSeveral(Pagination pagination);
+    int totalCount();
 
 }

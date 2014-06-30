@@ -27,7 +27,11 @@ public class HotelsResource {
                       @QueryParam("offset") final Integer offset,
                       @QueryParam("limit") final Integer limit) {
         final Pagination pagination = Pagination.getPagination(offset, limit);
-        return new HotelsRepresentationBuilder(hotelService.findSeveral(pagination), pagination, uriInfo).build();
+        return new HotelsRepresentationBuilder(
+                hotelService.findSeveral(pagination),
+                pagination,
+                hotelService.totalCount(),
+                uriInfo).build();
     }
 
     @Path("/{id}")
