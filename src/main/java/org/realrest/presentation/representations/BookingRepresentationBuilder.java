@@ -21,8 +21,24 @@ public class BookingRepresentationBuilder extends BaseBookingRepresentationBuild
 
     public Entity build() {
         return addCancellationActionIfAvailable(
-                addPaymentActionIfAvailable(builder())).
+                        addPaymentActionIfAvailable(
+                                addUpdateActionIfAvailable(builder()))).
                 build();
+    }
+
+    private EntityBuilder addUpdateActionIfAvailable(final EntityBuilder entityBuilder) {
+        if (booking.getState() == Booking.State.CREATED) {
+            return entityBuilder.addAction(
+                    ActionBuilder.newInstance().
+                            setName("update").
+                            setComponentClass("booking").
+                            setMethod(ActionImpl.Method.POST).
+                            setHref(selfHref()).
+                            build());
+        }
+        else {
+            return entityBuilder;
+        }
     }
 
     private EntityBuilder addPaymentActionIfAvailable(final EntityBuilder entityBuilder) {

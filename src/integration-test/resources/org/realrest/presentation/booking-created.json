@@ -7,6 +7,12 @@
     },
     "actions": [
         {
+            "name": "update",
+            "method": "POST",
+            "href": "$bookingURI",
+            "class": ["booking"]
+        },
+        {
             "name": "pay",
             "method": "POST",
             "href": "$bookingURI/payment",
