@@ -3,15 +3,19 @@ package org.realrest.presentation.transitions;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 /**
  * @author volodymyr.tsukur
  */
 @Getter
 @Setter
-public final class CreateBookingTransition {
+public class BookingData {
 
-    private Long roomId;
+    private LocalDate from;
 
-    private BookingData data;
+    private LocalDate to;
+
+    private Boolean includeBreakfast;
 
 }

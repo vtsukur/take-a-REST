@@ -5,11 +5,14 @@ import org.realrest.application.service.PaymentGateway;
 import org.realrest.domain.Booking;
 import org.realrest.domain.EntityNotFoundException;
 import org.realrest.domain.Payment;
+import org.realrest.domain.Room;
 import org.realrest.domain.repository.BookingRepository;
 import org.realrest.domain.repository.PaymentRepository;
 import org.realrest.domain.repository.RoomRepository;
+import org.realrest.presentation.transitions.BookingData;
 import org.realrest.presentation.transitions.CreateBookingTransition;
 import org.realrest.presentation.transitions.PayForBookingTransition;
+import org.realrest.presentation.transitions.UpdateBookingTransition;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -35,14 +38,34 @@ public class DefaultBookingService implements BookingService {
     private PaymentGateway paymentGateway;
 
     @Override
-    public Booking create(final CreateBookingTransition data) throws EntityNotFoundException {
-        final Booking booking = new Booking();
-        booking.setFrom(data.getFrom());
-        booking.setTo(data.getTo());
-        booking.setIncludeBreakfast(data.isIncludeBreakfast());
+    public Booking create(final CreateBookingTransition transition) throws EntityNotFoundException {
+        final Room room = roomRepository.findById(transition.getRoomId());
+        final Booking booking = map(new Booking(), transition.getData());
         booking.setState(Booking.State.CREATED);
-        booking.setRoom(roomRepository.findById(data.getRoomId()));
+        booking.setRoom(room);
         return bookingRepository.create(booking);
+    }
+
+    @Override
+    public Booking update(final Long id, final UpdateBookingTransition transition) throws EntityNotFoundException {
+        final Booking booking = map(findById(id), transition.getData());
+        bookingRepository.update(booking);
+        return booking;
+    }
+
+    private Booking map(final Booking booking, final BookingData bookingData) {
+        if (bookingData != null) {
+            if (bookingData.getFrom() != null) {
+                booking.setFrom(bookingData.getFrom());
+            }
+            if (bookingData.getTo() != null) {
+                booking.setTo(bookingData.getTo());
+            }
+            if (bookingData.getIncludeBreakfast() != null) {
+                booking.setIncludeBreakfast(bookingData.getIncludeBreakfast());
+            }
+        }
+        return booking;
     }
 
     @Override

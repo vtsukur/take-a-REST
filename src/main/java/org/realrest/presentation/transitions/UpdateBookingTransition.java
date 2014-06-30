@@ -8,9 +8,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public final class CreateBookingTransition {
-
-    private Long roomId;
+public class UpdateBookingTransition {
 
     private BookingData data;
 

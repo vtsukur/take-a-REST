@@ -35,10 +35,10 @@ public class BookingsResource {
     @POST
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(final CreateBookingTransition data, @Context final UriInfo uriInfo) {
+    public Response create(final CreateBookingTransition transition, @Context final UriInfo uriInfo) {
         final Booking result;
         try {
-            result = bookingService.create(data);
+            result = bookingService.create(transition);
         } catch (EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
