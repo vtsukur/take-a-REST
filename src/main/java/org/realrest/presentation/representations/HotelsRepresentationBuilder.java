@@ -4,6 +4,7 @@ import com.google.code.siren4j.component.Entity;
 import com.google.code.siren4j.component.Link;
 import com.google.code.siren4j.component.builder.EntityBuilder;
 import com.google.code.siren4j.component.builder.LinkBuilder;
+import org.realrest.application.service.Pagination;
 import org.realrest.domain.Hotel;
 import org.realrest.domain.PaginatedResult;
 import org.realrest.presentation.resources.HotelsResource;
@@ -36,7 +37,7 @@ public class HotelsRepresentationBuilder {
                 addProperty("total", hotels.getTotal()).
                 addSubEntities(hotels()).
                 addLink(LinkBuilder.newInstance().
-                        setHref(selfHref()).
+                        setHref(selfHrefWithOffset()).
                         setRelationship(Link.RELATIONSHIP_SELF).
                         build());
         return addNextLinkIfRequired(addPrevLinkIfRequired(builder)).build();
@@ -48,25 +49,14 @@ public class HotelsRepresentationBuilder {
                 collect(Collectors.toList());
     }
 
-    private String selfHref() {
-        return selfURI().toString();
-    }
-
-    private URI selfURI() {
-        return selfURI(uriInfo);
-    }
-
-    public static URI selfURI(final UriInfo uriInfo) {
-        return uriInfo.getBaseUriBuilder().
-                path(HotelsResource.class).
-                build();
-    }
-
     private EntityBuilder addNextLinkIfRequired(final EntityBuilder builder) {
-        if (hotels.getActualPagination().getOffset() + hotels.getActualPagination().getLimit() <
-                hotels.getTotal()) {
-            // add next link.
-            return builder;
+        final int nextOffset = hotels.getActualPagination().getOffset() + Pagination.DEFAULT.getLimit();
+        if (nextOffset < hotels.getTotal()) {
+            return builder.addLink(LinkBuilder.newInstance().
+                    setHref(hrefWithOffset(nextOffset)).
+                    setComponentClass("hotels").
+                    setRelationship("next").
+                    build());
         }
         else {
             return builder;
@@ -75,12 +65,38 @@ public class HotelsRepresentationBuilder {
 
     private EntityBuilder addPrevLinkIfRequired(final EntityBuilder builder) {
         if (hotels.getActualPagination().getOffset() > 0) {
-            // add previous link.
-            return builder;
+            final int prevOffset = Math.max(hotels.getActualPagination().getOffset() - Pagination.DEFAULT.getLimit(), 0);
+            return builder.addLink(LinkBuilder.newInstance().
+                    setHref(hrefWithOffset(prevOffset)).
+                    setComponentClass("hotels").
+                    setRelationship("prev").
+                    build());
         }
         else {
             return builder;
         }
+    }
+
+    private String selfHrefWithOffset() {
+        return hrefWithOffset(hotels.getActualPagination().getOffset());
+    }
+
+    private String hrefWithOffset(final int offset) {
+        return String.format("%s?offset=%d", baseSelfHref(), offset);
+    }
+
+    private String baseSelfHref() {
+        return baseSelfURI().toString();
+    }
+
+    private URI baseSelfURI() {
+        return baseSelfURI(uriInfo);
+    }
+
+    private static URI baseSelfURI(final UriInfo uriInfo) {
+        return uriInfo.getBaseUriBuilder().
+                path(HotelsResource.class).
+                build();
     }
 
 }

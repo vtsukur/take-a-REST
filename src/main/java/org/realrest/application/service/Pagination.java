@@ -17,7 +17,7 @@ public final class Pagination {
         this.limit = limit;
     }
 
-    private static final Pagination DEFAULT = new Pagination(0, 2);
+    public static final Pagination DEFAULT = new Pagination(0, 2);
 
     public static Pagination getPagination(final Integer offset, final Integer limit) {
         return new Pagination(offset == null ? DEFAULT.offset : offset, limit == null ? DEFAULT.limit : limit);
