@@ -93,7 +93,7 @@ public class HotelsRepresentationBuilder {
         return baseSelfURI(uriInfo);
     }
 
-    private static URI baseSelfURI(final UriInfo uriInfo) {
+    static URI baseSelfURI(final UriInfo uriInfo) {
         return uriInfo.getBaseUriBuilder().
                 path(HotelsResource.class).
                 build();

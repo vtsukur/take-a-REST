@@ -2,7 +2,7 @@ package org.realrest.presentation.resources;
 
 import com.google.code.siren4j.Siren4J;
 import com.google.code.siren4j.component.Entity;
-import com.google.code.siren4j.component.builder.EntityBuilder;
+import org.realrest.presentation.representations.EntryPointRepresentationBuilder;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,7 +20,7 @@ public class EntryPointResource {
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
     public Entity services(@Context final UriInfo uriInfo) {
-        return EntityBuilder.newInstance().build();
+        return new EntryPointRepresentationBuilder(uriInfo).build();
     }
 
 }
