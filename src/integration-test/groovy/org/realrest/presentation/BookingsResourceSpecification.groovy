@@ -29,11 +29,19 @@ class BookingsResourceSpecification extends Specification {
 
   def 'should find first hotel room, book it and then pay for it'() {
     given:
-    def startingPoint = uri('/api/hotels')
+    def startingPoint = uri('/api')
     def response
 
     when:
-    def hotelsPayload = request(startingPoint).get(String)
+    def entryPointPayload = request(startingPoint).get(String)
+
+    then:
+    def entryPoint = assertTemplateNotStrict('entryPoint.json', entryPointPayload)
+    def hotelsURI = entryPoint.links?.find({ it.rel.contains('hotels') })?.href as String
+    hotelsURI
+
+    when:
+    def hotelsPayload = request(hotelsURI).get(String)
 
     then:
     def hotels = assertTemplateNotStrict('hotels.json', hotelsPayload)

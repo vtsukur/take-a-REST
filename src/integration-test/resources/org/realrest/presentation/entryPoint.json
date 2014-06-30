@@ -1,0 +1,13 @@
+{
+    "class": ["entry-point"],
+    "links": [
+        {
+            "rel": ["self"],
+            "href": "http://localhost:8080/realrest/api/"
+        },
+        {
+            "rel": ["hotels"],
+            "href": "http://localhost:8080/realrest/api/hotels"
+        }
+    ]
+}
