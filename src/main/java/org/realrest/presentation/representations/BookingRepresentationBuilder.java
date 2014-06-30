@@ -34,6 +34,7 @@ public class BookingRepresentationBuilder extends BaseBookingRepresentationBuild
                             setComponentClass("booking").
                             setMethod(ActionImpl.Method.POST).
                             setHref(selfHref()).
+                            addFields(new SaveBookingFieldsBuilder().build()).
                             build());
         }
         else {

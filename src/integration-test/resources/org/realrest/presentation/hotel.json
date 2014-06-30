@@ -24,17 +24,17 @@
                             "required": false
                         },
                         {
-                            "name": "from",
+                            "name": "data.from",
                             "type": "DATE",
                             "required": false
                         },
                         {
-                            "name": "to",
+                            "name": "data.to",
                             "type": "DATE",
                             "required": false
                         },
                         {
-                            "name": "includeBreakfast",
+                            "name": "data.includeBreakfast",
                             "type": "CHECKBOX",
                             "required": false
                         }
@@ -63,17 +63,17 @@
                             "required": false
                         },
                         {
-                            "name": "from",
+                            "name": "data.from",
                             "type": "DATE",
                             "required": false
                         },
                         {
-                            "name": "to",
+                            "name": "data.to",
                             "type": "DATE",
                             "required": false
                         },
                         {
-                            "name": "includeBreakfast",
+                            "name": "data.includeBreakfast",
                             "type": "CHECKBOX",
                             "required": false
                         }
