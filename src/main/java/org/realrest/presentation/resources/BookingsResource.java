@@ -24,9 +24,6 @@ public class BookingsResource {
     @Inject
     private BookingService bookingService;
 
-    @Inject
-    private BookingResource bookingResource;
-
     @POST
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
     @Consumes(MediaType.APPLICATION_JSON)
@@ -41,9 +38,9 @@ public class BookingsResource {
         return Response.created(bookingURI).build();
     }
 
-    @Path("/item")
-    public BookingResource item() {
-        return bookingResource;
+    @Path("/{id}")
+    public BookingResource item(@PathParam("id") final Long id) {
+        return new BookingResource(id, bookingService);
     }
 
 }

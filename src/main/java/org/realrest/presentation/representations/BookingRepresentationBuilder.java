@@ -99,7 +99,6 @@ public class BookingRepresentationBuilder {
     public static URI selfURI(final Booking booking, final UriInfo uriInfo) {
         return uriInfo.getBaseUriBuilder().
                 path(BookingsResource.class).
-                path("item").
                 path(booking.getId().toString()).
                 build();
     }

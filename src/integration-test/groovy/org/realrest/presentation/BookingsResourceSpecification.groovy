@@ -130,7 +130,7 @@ class BookingsResourceSpecification extends Specification {
 
   def 'should respond with 404 when booking does not exist'() {
     when:
-    def response = request(uri('/api/bookings/item/0')).get()
+    def response = request(uri('/api/bookings/0')).get()
 
     then:
     404 == response.status

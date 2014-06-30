@@ -44,7 +44,6 @@ abstract class BaseHotelRepresentationBuilder {
     static URI selfURI(final Hotel hotel, final UriInfo uriInfo) {
         return uriInfo.getBaseUriBuilder().
                 path(HotelsResource.class).
-                path("item").
                 path(hotel.getId().toString()).
                 build();
     }

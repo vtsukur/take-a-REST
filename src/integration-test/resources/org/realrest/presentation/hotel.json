@@ -86,7 +86,7 @@
     "links": [
         {
             "rel": ["self"],
-            "href": "$baseURI/api/hotels/item/1"
+            "href": "$baseURI/api/hotels/1"
         }
     ]
 }

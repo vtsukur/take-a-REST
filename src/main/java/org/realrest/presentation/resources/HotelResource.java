@@ -7,7 +7,6 @@ import org.realrest.domain.EntityNotFoundException;
 import org.realrest.domain.Hotel;
 import org.realrest.presentation.representations.HotelRepresentationBuilder;
 
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -19,13 +18,18 @@ import javax.ws.rs.core.UriInfo;
  */
 public class HotelResource {
 
-    @Inject
+    private Long id;
+
     private HotelService hotelService;
 
+    public HotelResource(final Long id, final HotelService hotelService) {
+        this.id = id;
+        this.hotelService = hotelService;
+    }
+
     @GET
-    @Path("/{id}")
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
-    public Entity read(@PathParam("id") final Long id, @Context final UriInfo uriInfo) {
+    public Entity read(@Context final UriInfo uriInfo) {
         try {
             final Hotel hotel = hotelService.findById(id);
             return new HotelRepresentationBuilder(hotel, uriInfo).build();

@@ -8,7 +8,6 @@ import org.realrest.domain.EntityNotFoundException;
 import org.realrest.presentation.representations.BookingRepresentationBuilder;
 import org.realrest.presentation.transitions.PayForBookingTransition;
 
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -20,13 +19,18 @@ import javax.ws.rs.core.UriInfo;
  */
 public class BookingResource {
 
-    @Inject
+    private Long id;
+
     private BookingService bookingService;
 
+    public BookingResource(final Long id, final BookingService bookingService) {
+        this.id = id;
+        this.bookingService = bookingService;
+    }
+
     @GET
-    @Path("/{id}")
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
-    public Entity read(@PathParam("id") final Long id, @Context final UriInfo uriInfo) {
+    public Entity read(@Context final UriInfo uriInfo) {
         try {
             final Booking booking = bookingService.findById(id);
             return new BookingRepresentationBuilder(booking, uriInfo).build();
@@ -37,11 +41,10 @@ public class BookingResource {
     }
 
     @POST
-    @Path("/{id}/payment")
+    @Path("/payment")
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
     @Consumes(MediaType.APPLICATION_JSON)
-    public Entity pay(@PathParam("id") final Long id, @Context final UriInfo uriInfo,
-                      final PayForBookingTransition data) {
+    public Entity pay(@Context final UriInfo uriInfo, final PayForBookingTransition data) {
         try {
             final Booking booking = bookingService.pay(id, data);
             return new BookingRepresentationBuilder(booking, uriInfo).build();
@@ -52,8 +55,7 @@ public class BookingResource {
     }
 
     @DELETE
-    @Path("/{id}")
-    public Response cancel(@PathParam("id") final Long id) {
+    public Response cancel() {
         bookingService.delete(id);
         return Response.noContent().build();
     }

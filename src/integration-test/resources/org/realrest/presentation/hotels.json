@@ -10,7 +10,7 @@
             "links": [
                 {
                     "rel": ["self"],
-                    "href": "$baseURI/api/hotels/item/1"
+                    "href": "$baseURI/api/hotels/1"
                 }
             ]
         },
@@ -23,7 +23,7 @@
             "links": [
                 {
                     "rel": ["self"],
-                    "href": "$baseURI/api/hotels/item/2"
+                    "href": "$baseURI/api/hotels/2"
                 }
             ]
         }
