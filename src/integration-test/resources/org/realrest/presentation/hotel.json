@@ -1,14 +1,14 @@
 {
     "class": ["hotel"],
     "properties": {
-        "name": "Vintage Boutique Hotel"
+        "name": "Premier Palace"
     },
     "entities": [
         {
             "rel": ["hotel-room"],
             "properties": {
                 "type": "single",
-                "price": 500
+                "price": 1000
             },
             "actions": [
                 {
@@ -20,7 +20,7 @@
                         {
                             "name": "roomId",
                             "type": "TEXT",
-                            "value": "1",
+                            "value": "5",
                             "required": false
                         },
                         {
@@ -47,7 +47,7 @@
             "rel": ["hotel-room"],
             "properties": {
                 "type": "double",
-                "price": 800
+                "price": 1500
             },
             "actions": [
                 {
@@ -59,7 +59,7 @@
                         {
                             "name": "roomId",
                             "type": "TEXT",
-                            "value": "2",
+                            "value": "6",
                             "required": false
                         },
                         {
@@ -86,7 +86,7 @@
     "links": [
         {
             "rel": ["self"],
-            "href": "$baseURI/api/hotels/1"
+            "href": "$baseURI/api/hotels/3"
         }
     ]
 }
