@@ -14,6 +14,7 @@ import org.realrest.presentation.transitions.PayForBookingTransition;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.time.Period;
+import java.util.Collection;
 
 /**
  * @author volodymyr.tsukur
@@ -47,6 +48,11 @@ public class DefaultBookingService implements BookingService {
     @Override
     public Booking findById(final Long id) throws EntityNotFoundException {
         return bookingRepository.findById(id);
+    }
+
+    @Override
+    public Collection<Booking> findAll() {
+        return bookingRepository.findAll();
     }
 
     @Override

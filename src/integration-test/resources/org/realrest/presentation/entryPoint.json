@@ -3,11 +3,15 @@
     "links": [
         {
             "rel": ["self"],
-            "href": "http://localhost:8080/realrest/api/"
+            "href": "$baseURI/api/"
         },
         {
             "rel": ["hotels"],
-            "href": "http://localhost:8080/realrest/api/hotels"
+            "href": "$baseURI/api/hotels"
+        },
+        {
+            "rel": ["bookings"],
+            "href": "$baseURI/api/bookings"
         }
     ]
 }

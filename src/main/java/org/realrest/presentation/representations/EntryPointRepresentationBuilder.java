@@ -31,6 +31,10 @@ public class EntryPointRepresentationBuilder {
                         setHref(HotelsRepresentationBuilder.baseSelfURI(uriInfo).toString()).
                         setRelationship("hotels").
                         build()).
+                addLink(LinkBuilder.newInstance().
+                        setHref(BookingsRepresentationBuilder.selfURI(uriInfo).toString()).
+                        setRelationship("bookings").
+                        build()).
                 build();
     }
 
