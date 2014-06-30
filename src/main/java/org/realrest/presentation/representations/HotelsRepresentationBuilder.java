@@ -38,7 +38,7 @@ public class HotelsRepresentationBuilder {
     }
 
     public Entity build() {
-        return EntityBuilder.newInstance().
+        EntityBuilder builder = EntityBuilder.newInstance().
                 setComponentClass("hotels").
                 addProperty("offset", pagination.getOffset()).
                 addProperty("limit", pagination.getLimit()).
@@ -47,8 +47,8 @@ public class HotelsRepresentationBuilder {
                 addLink(LinkBuilder.newInstance().
                         setHref(selfHref()).
                         setRelationship(Link.RELATIONSHIP_SELF).
-                        build()).
-                build();
+                        build());
+        return addNextLinkIfRequired(addPrevLinkIfRequired(builder)).build();
     }
 
     private List<Entity> hotels() {
@@ -69,6 +69,14 @@ public class HotelsRepresentationBuilder {
         return uriInfo.getBaseUriBuilder().
                 path(HotelsResource.class).
                 build();
+    }
+
+    private EntityBuilder addNextLinkIfRequired(final EntityBuilder builder) {
+        return builder;
+    }
+
+    private EntityBuilder addPrevLinkIfRequired(final EntityBuilder builder) {
+        return builder;
     }
 
 }
