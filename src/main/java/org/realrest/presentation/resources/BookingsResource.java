@@ -1,10 +1,10 @@
 package org.realrest.presentation.resources;
 
 import com.google.code.siren4j.Siren4J;
-import com.google.code.siren4j.component.Entity;
 import org.realrest.application.service.BookingService;
 import org.realrest.domain.Booking;
 import org.realrest.domain.EntityNotFoundException;
+import org.realrest.presentation.cache.CacheControlFactory;
 import org.realrest.presentation.representations.BookingRepresentationBuilder;
 import org.realrest.presentation.representations.BookingsRepresentationBuilder;
 import org.realrest.presentation.transitions.CreateBookingTransition;
@@ -28,8 +28,11 @@ public class BookingsResource {
 
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
-    public Entity browse(@Context final UriInfo uriInfo) {
-        return new BookingsRepresentationBuilder(bookingService.findAll(), uriInfo).build();
+    public Response browse(@Context final UriInfo uriInfo) {
+        return Response.
+                ok(new BookingsRepresentationBuilder(bookingService.findAll(), uriInfo).build()).
+                cacheControl(CacheControlFactory.oneMinute()).
+                build();
     }
 
     @POST
