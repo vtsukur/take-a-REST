@@ -1,4 +1,4 @@
-package org.letustakearest.infrastructure.providers;
+package org.letustakearest.infrastructure.jaxrs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
