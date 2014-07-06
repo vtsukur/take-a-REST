@@ -8,7 +8,7 @@
         </servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>org.realrest.presentation.RESTApplication</param-value>
+            <param-value>org.letustakearest.presentation.RESTApplication</param-value>
         </init-param>
         <init-param>
             <param-name>resteasy.servlet.mapping.prefix</param-name>
@@ -24,7 +24,7 @@
     <servlet>
         <servlet-name>index</servlet-name>
         <servlet-class>
-            org.realrest.infrastructure.web.servlet.IndexServlet
+            org.letustakearest.infrastructure.web.servlet.IndexServlet
         </servlet-class>
     </servlet>
 
