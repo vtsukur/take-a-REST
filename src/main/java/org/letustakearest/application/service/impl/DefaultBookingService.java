@@ -95,6 +95,7 @@ public class DefaultBookingService implements BookingService {
         paymentGateway.process(payment);
 
         booking.setState(Booking.State.PAID);
+        bookingRepository.update(booking);
 
         return booking;
     }
