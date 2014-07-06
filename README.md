@@ -92,13 +92,15 @@ Guidelines for changing Tomcat configuration can be found [here](https://github.
 
 ## Prerequisites
 
-Install required plugins:
+Project was tested on IntelliJ IDEA 13.1.3 on Windows and Mac OS X.
+
+Required plugins:
 * [Lombok](http://plugins.jetbrains.com/plugin/6317?pr=idea)
 
 You may also enable built-in *Tomcat and TomEE Integration* plugin
 to run Apache Tomcat directly from IntelliJ IDEA.
 
-## Setup
+## General Project Setup
 
  * Open IntelliJ IDEA.
  * Import Gradle project using *File > Import Project* menu:
@@ -107,3 +109,28 @@ to run Apache Tomcat directly from IntelliJ IDEA.
  * Make sure that *Project SDK* is set to JDK 8 and project language level is set to *8.0*.
  * Enable Lombok support and annotation processing for the compiler in project settings.
  * Build the project from the IDE.
+
+## Running Web Application
+
+### Configure Application Server
+ 
+ * Use *Settings > Application Servers* screen.
+ * Register *Tomcat Server* using Apache Tomcat 7.0.54 or higher
+(requires [downloading it](http://tomcat.apache.org/download-70.cgi) and unpacking beforehand).
+
+### Setup Run Configuration
+
+ * Open *Run/Debug Configurations* screen.
+ * Click *Add New Configuration* button using *Tomcat Server > Local* configuration type.
+ * Choose configured Apache Tomcat application server.
+ * Configure deployment:
+     * Run configuration will warn that no deployment artifacts are marked for deployment.
+Click *Fix* button choosing one of the suggested Gradle WAR artifacts.
+     * Once deployment artifact is selected, application context has to be changed to a non-conflicting
+one. Default application context is set to `/`, change it to something like `/let-us-take-a-REST` 
+ * (Optional) Specify name of the run configuration.
+ * (Optional) Configure correct URL path to open the browser after launch.
+
+### Run Web Application
+
+ * Choose prepared configuration and execute it by doing a *Run* or *Debug*.
