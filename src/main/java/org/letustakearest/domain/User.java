@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Getter
 @Setter
-public final class User extends Identifiable {
+public final class User extends IdentifiableAndVersioned {
 
     private Set<Booking> bookings;
 

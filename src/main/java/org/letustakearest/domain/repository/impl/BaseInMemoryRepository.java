@@ -2,7 +2,7 @@ package org.letustakearest.domain.repository.impl;
 
 import org.letustakearest.application.service.Pagination;
 import org.letustakearest.domain.EntityNotFoundException;
-import org.letustakearest.domain.Identifiable;
+import org.letustakearest.domain.IdentifiableAndVersioned;
 import org.letustakearest.domain.PaginatedResult;
 import org.letustakearest.domain.repository.BaseRepository;
 
@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @author volodymyr.tsukur
  */
-public abstract class BaseInMemoryRepository<E extends Identifiable> implements BaseRepository<E> {
+public abstract class BaseInMemoryRepository<E extends IdentifiableAndVersioned> implements BaseRepository<E> {
 
     protected final Map<Long, E> store = Collections.synchronizedMap(new LinkedHashMap<>());
 
@@ -38,6 +38,7 @@ public abstract class BaseInMemoryRepository<E extends Identifiable> implements 
 
     private E store(final E entity) {
         store.put(entity.getId(), entity);
+        entity.setVersion(entity.getVersion() + 1);
         return entity;
     }
 

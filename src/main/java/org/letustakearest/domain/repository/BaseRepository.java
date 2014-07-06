@@ -2,7 +2,7 @@ package org.letustakearest.domain.repository;
 
 import org.letustakearest.application.service.Pagination;
 import org.letustakearest.domain.EntityNotFoundException;
-import org.letustakearest.domain.Identifiable;
+import org.letustakearest.domain.IdentifiableAndVersioned;
 import org.letustakearest.domain.PaginatedResult;
 
 import java.util.Collection;
@@ -10,7 +10,7 @@ import java.util.Collection;
 /**
  * @author volodymyr.tsukur
  */
-public interface BaseRepository<E extends Identifiable> {
+public interface BaseRepository<E extends IdentifiableAndVersioned> {
 
     E create(E entity);
 

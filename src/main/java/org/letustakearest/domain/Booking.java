@@ -10,7 +10,7 @@ import java.time.LocalDate;
  */
 @Getter
 @Setter
-public final class Booking extends Identifiable {
+public final class Booking extends IdentifiableAndVersioned {
 
     private User user;
 
