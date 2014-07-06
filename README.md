@@ -75,6 +75,19 @@ It does not affect status of the build.
 Successful build should finish with 0 process exit code and `BUILD SUCCESSFUL` message,
 usually seen right BEFORE `NullPointerException`.
 
+## Running Web Application
+
+`./gradlew tomcatRunWar`
+
+`tomcatRunWar` task starts Tomcat container with the deployed web application,
+accessible under [http://localhost:8080/let-us-take-a-REST](http://localhost:8080/let-us-take-a-REST) URL.
+
+Entry point service resides under [http://localhost:8080/let-us-take-a-REST/api](http://localhost:8080/let-us-take-a-REST/api) URL.
+
+Container can be stopped by hitting CTRL+C.
+
+Guidelines for changing Tomcat configuration can be found [here](https://github.com/bmuschko/gradle-tomcat-plugin).
+
 # Setting up Project in IntelliJ IDEA
 
 ## Prerequisites
@@ -94,4 +107,3 @@ to run Apache Tomcat directly from IntelliJ IDEA.
  * Make sure that *Project SDK* is set to JDK 8 and project language level is set to *8.0*.
  * Enable Lombok support and annotation processing for the compiler in project settings.
  * Build the project from the IDE.
- 
