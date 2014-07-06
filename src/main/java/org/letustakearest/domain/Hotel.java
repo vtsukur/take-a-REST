@@ -11,7 +11,7 @@ import java.util.Set;
  */
 @Getter
 @Setter
-public final class Hotel extends Identifiable {
+public final class Hotel extends IdentifiableAndVersioned {
 
     private City city;
 

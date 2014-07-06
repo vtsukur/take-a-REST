@@ -8,8 +8,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public final class City extends IdentifiableAndVersioned {
+public abstract class IdentifiableAndVersioned {
 
-    private String name;
+    private Long id;
+
+    private int version;
 
 }

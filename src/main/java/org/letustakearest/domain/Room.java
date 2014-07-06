@@ -8,7 +8,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public final class Room extends Identifiable {
+public final class Room extends IdentifiableAndVersioned {
 
     private Type type;
 

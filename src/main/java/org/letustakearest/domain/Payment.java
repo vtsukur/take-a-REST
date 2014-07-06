@@ -8,7 +8,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public final class Payment extends Identifiable {
+public final class Payment extends IdentifiableAndVersioned {
 
     private String cardholdersName;
 

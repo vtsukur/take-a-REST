@@ -9,7 +9,7 @@ import java.util.List;
  * @author volodymyr.tsukur
  */
 @Getter
-public final class PaginatedResult<E extends Identifiable> {
+public final class PaginatedResult<E extends IdentifiableAndVersioned> {
 
     private final List<E> list;
 
