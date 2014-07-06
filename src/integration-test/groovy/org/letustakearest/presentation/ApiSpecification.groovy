@@ -81,11 +81,11 @@ class ApiSpecification extends Specification {
 
     when:
     response = request(bookingURI).get()
+
+    then:
     def createdBookingPayload = response.readEntity(String)
     def createdBookingETag = response.entityTag.value
     createdBookingETag
-
-    then:
     def createdBooking = assertTemplateNotStrict('booking-created.json', createdBookingPayload, [
         bookingURI: bookingURI
     ])
@@ -99,7 +99,8 @@ class ApiSpecification extends Specification {
     Response.Status.NOT_MODIFIED.statusCode == response.status
 
     when:
-    def updateBookingPayload = request(updateAction.href as String).
+    response = request(updateAction.href as String).
+        header('If-Match', createdBookingETag).
         method(
             updateAction.method as String,
             entity(new UpdateBookingTransition(
@@ -108,25 +109,32 @@ class ApiSpecification extends Specification {
                     to: LocalDate.of(2014, 8, 20),
                     includeBreakfast: false
                 )
-            ), APPLICATION_JSON), String)
+            ), APPLICATION_JSON))
 
     then:
-    def updatedBooking = assertTemplateNotStrict('booking-updated.json', updateBookingPayload, [
+    def updatedBookingETag = response.entityTag.value
+    createdBookingETag != updatedBookingETag
+    def updatedBookingPayload = response.readEntity(String)
+    def updatedBooking = assertTemplateNotStrict('booking-updated.json', updatedBookingPayload, [
         bookingURI: bookingURI
     ])
     def paymentAction = updatedBooking?.actions?.find({ it.name == 'pay' })
     paymentAction
 
     when:
-    def paidBookingPayload = request(paymentAction.href as String).
+    response = request(paymentAction.href as String).
+        header('If-Match', updatedBookingETag).
         method(paymentAction.method as String, entity(new PayForBookingTransition(
             cardholdersName: 'Viktor Yanukovych',
             creditCardNumber: '1234 5678 9012 3456',
             cvv: 123
-        ), APPLICATION_JSON), String)
+        ), APPLICATION_JSON))
 
     then:
-    assertTemplateNotStrict('booking-paid.json', paidBookingPayload, [
+    def paidBookingETag = response.entityTag.value
+    updatedBookingETag != paidBookingETag
+    def paidBookingPayload = response.readEntity(String)
+        assertTemplateNotStrict('booking-paid.json', paidBookingPayload, [
         bookingURI: bookingURI
     ])
 
