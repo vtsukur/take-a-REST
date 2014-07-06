@@ -61,7 +61,7 @@ public class BookingResource {
             final Response.ResponseBuilder responseBuilder = request.evaluatePreconditions(entityTag(booking));
 
             if (responseBuilder == null) {
-                booking = bookingService.update(id, transition);
+                booking = bookingService.update(booking, transition);
                 return Response.ok(new BookingRepresentationBuilder(booking, uriInfo).build()).
                         tag(entityTag(booking)).
                         build();
@@ -88,7 +88,7 @@ public class BookingResource {
             final Response.ResponseBuilder responseBuilder = request.evaluatePreconditions(entityTag(booking));
 
             if (responseBuilder == null) {
-                booking = bookingService.pay(id, transition);
+                booking = bookingService.pay(booking, transition);
                 return Response.ok(new BookingRepresentationBuilder(booking, uriInfo).build()).
                         tag(entityTag(booking)).
                         build();

@@ -47,10 +47,10 @@ public class DefaultBookingService implements BookingService {
     }
 
     @Override
-    public Booking update(final Long id, final UpdateBookingTransition transition) throws EntityNotFoundException {
-        final Booking booking = map(findById(id), transition.getData());
-        bookingRepository.update(booking);
-        return booking;
+    public Booking update(final Booking booking, final UpdateBookingTransition transition) {
+        final Booking mappedBooking = map(booking, transition.getData());
+        bookingRepository.update(mappedBooking);
+        return mappedBooking;
     }
 
     private Booking map(final Booking booking, final BookingData bookingData) {
@@ -79,9 +79,7 @@ public class DefaultBookingService implements BookingService {
     }
 
     @Override
-    public Booking pay(final Long id, final PayForBookingTransition data) throws EntityNotFoundException {
-        final Booking booking = findById(id);
-
+    public Booking pay(final Booking booking, final PayForBookingTransition data) {
         Payment payment = new Payment();
         payment.setCardholdersName(data.getCardholdersName());
         payment.setCreditCardNumber(data.getCreditCardNumber());
