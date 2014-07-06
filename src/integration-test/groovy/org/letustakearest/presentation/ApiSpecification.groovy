@@ -70,14 +70,9 @@ class ApiSpecification extends Specification {
 
     when:
     response = close(request(bookingAction.href as String).post(
-        entity(new CreateBookingTransition(
-            roomId: Long.parseLong(bookingAction.fields?.find({ it.name == 'roomId' })?.value as String),
-            data: new BookingData(
-              from: LocalDate.of(2014, 8, 1),
-              to: LocalDate.of(2014, 8, 15),
-              includeBreakfast: true
-            )
-        ), APPLICATION_JSON)))
+        entity(
+            referenceCreateBookingTransition(bookingAction.fields?.find({ it.name == 'roomId' })?.value as Long),
+            APPLICATION_JSON)))
 
     then:
     201 == response.status
@@ -186,19 +181,19 @@ class ApiSpecification extends Specification {
     404 == response.status
   }
 
-  protected Invocation.Builder request(String href) {
+  private Invocation.Builder request(String href) {
     client.target(href).request()
   }
 
-  protected Invocation.Builder request(URI uri) {
+  private Invocation.Builder request(URI uri) {
     client.target(uri).request()
   }
 
-  protected static String uri(String relative = '') {
+  private static String uri(String relative = '') {
     "http://localhost:8080$relative"
   }
 
-  protected static String loadTemplate(String name, Map binding) {
+  private static String loadTemplate(String name, Map binding) {
     new SimpleTemplateEngine().createTemplate(ApiSpecification.getResource(name)).make(binding).toString()
   }
 
@@ -214,6 +209,17 @@ class ApiSpecification extends Specification {
 
   private static toJson(String text) {
     new JsonSlurper().parseText(text)
+  }
+
+  private static CreateBookingTransition referenceCreateBookingTransition(final Long roomId = 1L) {
+    new CreateBookingTransition(
+        roomId: roomId,
+        data: new BookingData(
+            from: LocalDate.of(2014, 8, 1),
+            to: LocalDate.of(2014, 8, 15),
+            includeBreakfast: true
+        )
+    )
   }
 
 }
