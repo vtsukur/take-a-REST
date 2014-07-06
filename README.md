@@ -39,9 +39,9 @@ previously produced build caches and output directories, use the following comma
 `./gradlew integrationTest`
 
 `integrationTest` task starts Tomcat container, runs integration tests and
-closes Tomcat once tests have finished running.
+stop Tomcat once tests have finished running.
 
-Right now stop command produces the following exception:
+Right now procedure of stopping Tomcat is accompanied with the following exception:
 
     Failed to check for ThreadLocal references for web application [/let-us-take-a-REST]
     java.lang.NullPointerException
@@ -66,13 +66,14 @@ Right now stop command produces the following exception:
             at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:112)
             at org.gradle.api.plugins.tomcat.internal.ShutdownMonitor.run(ShutdownMonitor.groovy:75)
 
-This exception refers to a memory leak that is relevant for redeployment scenario.
+This exception refers to a memory leak actual for redeployment scenario.
 Read more about it [here](http://stackoverflow.com/questions/7788280/memory-leak-when-redeploying-application-in-tomcat)
 and [here](http://stackoverflow.com/questions/9992526/what-are-these-warnings-in-catalina-out)
 
-This is NOT a severe problem for the purpose of this example project and it does not affect status of the build.
-Successful build should finish with 0 process exit code and `BUILD SUCCESSFUL` message 
-(usually seen BEFORE `NullPointerException`).
+This is NOT a severe problem for the purpose of this example project.
+It does not affect status of the build.
+Successful build should finish with 0 process exit code and `BUILD SUCCESSFUL` message,
+usually seen right BEFORE `NullPointerException`.
 
 # Setting up Project in IntelliJ IDEA
 
@@ -88,8 +89,8 @@ to run Apache Tomcat directly from IntelliJ IDEA.
 
  * Open IntelliJ IDEA.
  * Import Gradle project using *File > Import Project* menu:
- ** Point to a project's *build.gradle* file in *Select File or Directory to Import* screen. 
- ** Choose *Use customizable gradle wrapper* in *Import Project from Gradle* screen.
+     * Point to a project's *build.gradle* file in *Select File or Directory to Import* screen. 
+     * Choose *Use customizable gradle wrapper* in *Import Project from Gradle* screen.
  * Make sure that *Project SDK* is set to JDK 8 and project language level is set to *8.0*.
  * Enable Lombok support and annotation processing for the compiler in project settings.
  * Build the project from the IDE.
