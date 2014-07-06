@@ -9,7 +9,7 @@ Version of the Gradle used during build is specified in
 [gradle-wrapper.properties](https://github.com/flushdia/let-us-take-a-REST/blob/master/gradle/wrapper/gradle-wrapper.properties).
 
 It is assumed that commands below are run from the root of the project, i.e. root of the cloned repository.
-README refers to this directory as a `$PROJECT_DIR`.
+We'll refer to this directory with `$PROJECT_DIR` variable later in this document.
 
 All commands are \*nix-specific. Use `gradlew` instead of `./gradlew` to run Gradle on Windows.
 
