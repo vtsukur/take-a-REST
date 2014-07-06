@@ -38,12 +38,12 @@ previously produced build caches and output directories, use the following comma
 
 `./gradlew integrationTest`
 
-`integrationTest` task starts Tomcat container, runs integration tests and
-stop Tomcat once tests have finished running.
+`integrationTest` task starts Apache Tomcat web container, runs integration tests and
+then stops container once tests have finished running.
 
-Right now procedure of stopping Tomcat is accompanied with the following exception:
+Right now procedure of stopping Apache Tomcat is accompanied with the following exception:
 
-    Failed to check for ThreadLocal references for web application [/let-us-take-a-REST]
+    Failed to check for ThreadLocal references for web application []
     java.lang.NullPointerException
             at org.apache.catalina.loader.WebappClassLoader.loadedByThisOrChild(WebappClassLoader.java:2636)
             at org.apache.catalina.loader.WebappClassLoader.checkThreadLocalMapForLeaks(WebappClassLoader.java:2552)
@@ -79,14 +79,14 @@ usually seen right BEFORE `NullPointerException`.
 
 `./gradlew tomcatRunWar`
 
-`tomcatRunWar` task starts Tomcat container with the deployed web application,
-accessible under [http://localhost:8080/let-us-take-a-REST](http://localhost:8080/let-us-take-a-REST) URL.
+`tomcatRunWar` task starts Apache Tomcat web container with the deployed web application,
+accessible under [http://localhost:8080](http://localhost:8080) URL.
 
-Entry point service resides under [http://localhost:8080/let-us-take-a-REST/api](http://localhost:8080/let-us-take-a-REST/api) URL.
+API entry point resides under [http://localhost:8080/api](http://localhost:8080/api) URL.
 
 Container can be stopped by hitting CTRL+C.
 
-Guidelines for changing Tomcat configuration can be found [here](https://github.com/bmuschko/gradle-tomcat-plugin).
+Guidelines for changing Apache Tomcat configuration can be found [here](https://github.com/bmuschko/gradle-tomcat-plugin).
 
 # Setting up Project in IntelliJ IDEA
 
@@ -126,11 +126,9 @@ to run Apache Tomcat directly from IntelliJ IDEA.
  * Configure deployment:
      * Run configuration will warn that no deployment artifacts are marked for deployment.
 Click *Fix* button choosing one of the suggested Gradle WAR artifacts.
-     * Once deployment artifact is selected, application context has to be changed to a non-conflicting
-one. Default application context is set to `/`, change it to something like `/let-us-take-a-REST` 
  * (Optional) Specify name of the run configuration.
- * (Optional) Configure correct URL path to open the browser after launch.
 
 ### Run Web Application
 
  * Choose prepared configuration and execute it by doing a *Run* or *Debug*.
+ * Application should be deployed to the root context URL: [http://localhost:8080](http://localhost:8080).

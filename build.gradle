@@ -91,6 +91,10 @@ task integrationTomcatStop(type: org.gradle.api.plugins.tomcat.tasks.TomcatStop)
   stopKey = tomcatStopKey
 }
 
+def contextPath = '/'
+tomcatRunWar.contextPath = contextPath
+integrationTomcatRunWar.contextPath = contextPath
+
 task integrationTest(type: Test) {
   description = "Runs integration tests"
   testClassesDir = sourceSets.integrationTest.output.classesDir
