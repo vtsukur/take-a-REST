@@ -41,7 +41,7 @@ public class BookingResource {
         }
     }
 
-    @POST
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
     public Entity update(final UpdateBookingTransition transition, @Context final UriInfo uriInfo) {

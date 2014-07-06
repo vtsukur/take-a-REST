@@ -8,7 +8,7 @@
     "actions": [
         {
             "name": "update",
-            "method": "POST",
+            "method": "PUT",
             "href": "$bookingURI",
             "class": ["booking"],
             "fields": [

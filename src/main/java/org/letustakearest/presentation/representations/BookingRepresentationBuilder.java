@@ -32,7 +32,7 @@ public class BookingRepresentationBuilder extends BaseBookingRepresentationBuild
                     ActionBuilder.newInstance().
                             setName("update").
                             setComponentClass("booking").
-                            setMethod(ActionImpl.Method.POST).
+                            setMethod(ActionImpl.Method.PUT).
                             setHref(selfHref()).
                             addFields(new SaveBookingFieldsBuilder().build()).
                             build());

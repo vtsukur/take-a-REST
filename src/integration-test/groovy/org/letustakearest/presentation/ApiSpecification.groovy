@@ -29,7 +29,7 @@ class ApiSpecification extends Specification {
     client = ClientBuilder.newClient()
   }
 
-  def 'should find hotel room, book it and then pay for it'() {
+  def 'should find hotel room, book it, update booking and then pay for it'() {
     given:
     def startingPoint = uri('/api')
     def response
@@ -90,14 +90,16 @@ class ApiSpecification extends Specification {
     updateAction
 
     when:
-    def updateBookingPayload = request(updateAction.href as String).post(
-        entity(new UpdateBookingTransition(
-            data: new BookingData(
-                from: LocalDate.of(2014, 8, 1),
-                to: LocalDate.of(2014, 8, 20),
-                includeBreakfast: false
-            )
-        ), APPLICATION_JSON), String)
+    def updateBookingPayload = request(updateAction.href as String).
+        method(
+            updateAction.method as String,
+            entity(new UpdateBookingTransition(
+                data: new BookingData(
+                    from: LocalDate.of(2014, 8, 1),
+                    to: LocalDate.of(2014, 8, 20),
+                    includeBreakfast: false
+                )
+            ), APPLICATION_JSON), String)
 
     then:
     def updatedBooking = assertTemplateNotStrict('booking-updated.json', updateBookingPayload, [
