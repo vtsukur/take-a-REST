@@ -196,7 +196,7 @@ class ApiSpecification extends Specification {
   }
 
   protected static String uri(String relative = '') {
-    "http://localhost:8080/realrest$relative"
+    "http://localhost:8080/let-us-take-a-REST$relative"
   }
 
   protected static String loadTemplate(String name, Map binding) {
