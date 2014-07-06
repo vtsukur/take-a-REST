@@ -140,8 +140,7 @@ class ApiSpecification extends Specification {
     def response
 
     when:
-    response = close(client.target(uri('/api/bookings')).
-        request().
+    response = close(request(uri('/api/bookings')).
         post(entity(new CreateBookingTransition(
             roomId: 1,
             data: new BookingData(
