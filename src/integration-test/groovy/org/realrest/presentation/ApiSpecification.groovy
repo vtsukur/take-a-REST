@@ -23,7 +23,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON
  */
 class ApiSpecification extends Specification {
 
-  protected Client client
+  private Client client
 
   def setup() {
     client = ClientBuilder.newClient()
