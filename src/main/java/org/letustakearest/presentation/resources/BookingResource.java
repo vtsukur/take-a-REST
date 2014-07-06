@@ -31,9 +31,18 @@ public class BookingResource {
     public Response read(@Context final UriInfo uriInfo, @Context final Request request) {
         try {
             final Booking booking = bookingService.findById(id);
-            return Response.ok(new BookingRepresentationBuilder(booking, uriInfo).build()).
-                    tag(String.valueOf(booking.getVersion())).
-                    build();
+            final Response.ResponseBuilder responseBuilder = request.evaluatePreconditions(
+                    new EntityTag(String.valueOf(booking.getVersion()))
+            );
+
+            if (responseBuilder == null) {
+                return Response.ok(new BookingRepresentationBuilder(booking, uriInfo).build()).
+                        tag(String.valueOf(booking.getVersion())).
+                        build();
+            }
+            else {
+                return responseBuilder.build();
+            }
         }
         catch (final EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);

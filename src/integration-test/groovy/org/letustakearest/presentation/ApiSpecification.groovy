@@ -2,9 +2,9 @@ package org.letustakearest.presentation
 
 import groovy.json.JsonSlurper
 import groovy.text.SimpleTemplateEngine
+import org.letustakearest.presentation.transitions.BookingData
 import org.letustakearest.presentation.transitions.CreateBookingTransition
 import org.letustakearest.presentation.transitions.PayForBookingTransition
-import org.letustakearest.presentation.transitions.BookingData
 import org.letustakearest.presentation.transitions.UpdateBookingTransition
 import org.skyscreamer.jsonassert.JSONAssert
 import spock.lang.Specification
@@ -91,6 +91,12 @@ class ApiSpecification extends Specification {
     ])
     def updateAction = createdBooking?.actions?.find({ it.name == 'update' })
     updateAction
+
+    when:
+    response = request(bookingURI).header("If-None-Match", createdBookingETag).get()
+
+    then:
+    Response.Status.NOT_MODIFIED.statusCode == response.status
 
     when:
     def updateBookingPayload = request(updateAction.href as String).
