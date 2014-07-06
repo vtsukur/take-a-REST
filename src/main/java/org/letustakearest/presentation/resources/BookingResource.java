@@ -28,7 +28,9 @@ public class BookingResource {
 
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
-    public Response read(@Context final UriInfo uriInfo, @Context final Request request) {
+    public Response read(
+            @Context final UriInfo uriInfo,
+            @Context final Request request) {
         try {
             final Booking booking = bookingService.findById(id);
             final Response.ResponseBuilder responseBuilder = request.evaluatePreconditions(entityTag(booking));
@@ -50,7 +52,8 @@ public class BookingResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
-    public Response update(final UpdateBookingTransition transition,
+    public Response update(
+            final UpdateBookingTransition transition,
             @Context final UriInfo uriInfo,
             @Context final Request request) {
         try {
@@ -76,12 +79,23 @@ public class BookingResource {
     @Path("/payment")
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response pay(@Context final UriInfo uriInfo, final PayForBookingTransition data) {
+    public Response pay(
+            final PayForBookingTransition transition,
+            @Context final UriInfo uriInfo,
+            @Context final Request request) {
         try {
-            final Booking booking = bookingService.pay(id, data);
-            return Response.ok(new BookingRepresentationBuilder(booking, uriInfo).build()).
-                    tag(entityTag(booking)).
-                    build();
+            Booking booking = bookingService.findById(id);
+            final Response.ResponseBuilder responseBuilder = request.evaluatePreconditions(entityTag(booking));
+
+            if (responseBuilder == null) {
+                booking = bookingService.pay(id, transition);
+                return Response.ok(new BookingRepresentationBuilder(booking, uriInfo).build()).
+                        tag(entityTag(booking)).
+                        build();
+            }
+            else {
+                return responseBuilder.build();
+            }
         }
         catch (final EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
