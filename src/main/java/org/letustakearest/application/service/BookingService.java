@@ -15,13 +15,13 @@ public interface BookingService {
 
     Booking create(CreateBookingTransition data) throws EntityNotFoundException;
 
-    Booking update(Long id, UpdateBookingTransition transition) throws EntityNotFoundException;
+    Booking update(Booking booking, UpdateBookingTransition transition);
 
     Booking findById(Long id) throws EntityNotFoundException;
 
     Collection<Booking> findAll();
 
-    Booking pay(Long id, PayForBookingTransition data) throws EntityNotFoundException;
+    Booking pay(Booking booking, PayForBookingTransition data);
 
     void delete(Long id);
 
