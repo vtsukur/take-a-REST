@@ -10,10 +10,7 @@ import org.letustakearest.presentation.transitions.PayForBookingTransition;
 import org.letustakearest.presentation.transitions.UpdateBookingTransition;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 
 /**
  * @author volodymyr.tsukur
@@ -31,10 +28,12 @@ public class BookingResource {
 
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
-    public Entity read(@Context final UriInfo uriInfo) {
+    public Response read(@Context final UriInfo uriInfo, @Context final Request request) {
         try {
             final Booking booking = bookingService.findById(id);
-            return new BookingRepresentationBuilder(booking, uriInfo).build();
+            return Response.ok(new BookingRepresentationBuilder(booking, uriInfo).build()).
+                    tag(String.valueOf(booking.getVersion())).
+                    build();
         }
         catch (final EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);

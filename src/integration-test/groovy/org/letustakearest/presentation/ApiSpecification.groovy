@@ -80,7 +80,10 @@ class ApiSpecification extends Specification {
     bookingURI
 
     when:
-    def createdBookingPayload = request(bookingURI).get(String)
+    response = request(bookingURI).get()
+    def createdBookingPayload = response.readEntity(String)
+    def createdBookingETag = response.entityTag.value
+    createdBookingETag
 
     then:
     def createdBooking = assertTemplateNotStrict('booking-created.json', createdBookingPayload, [
