@@ -37,8 +37,13 @@ public class DefaultBookingService implements BookingService {
     @Inject
     private PaymentGateway paymentGateway;
 
+    @Inject
+    private Validation validation;
+
     @Override
     public Booking create(final CreateBookingTransition transition) throws EntityNotFoundException {
+        validation.validate(transition);
+
         final Room room = roomRepository.findById(transition.getRoomId());
         final Booking booking = map(new Booking(), transition.getData());
         booking.setState(Booking.State.CREATED);
