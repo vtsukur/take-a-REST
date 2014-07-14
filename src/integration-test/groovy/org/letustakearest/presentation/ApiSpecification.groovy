@@ -192,6 +192,21 @@ class ApiSpecification extends Specification {
     404 == response.status
   }
 
+  def 'should forbid creation of invalid booking'() {
+    given:
+    def response
+
+    when:
+    response = close(request(uri('/api/bookings')).
+        post(entity(new CreateBookingTransition(
+            roomId: null,
+            data: null
+        ), APPLICATION_JSON)))
+
+    then:
+    500 == response.status
+  }
+
   def 'should respond with 404 when booking does not exist'() {
     when:
     def response = request(uri('/api/bookings/0')).get()
