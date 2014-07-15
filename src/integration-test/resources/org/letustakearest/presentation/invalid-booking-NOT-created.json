@@ -1,0 +1,6 @@
+{
+    "type": "ValidationException",
+    "message": null,
+    "action": "create-booking",
+    "link": null
+}

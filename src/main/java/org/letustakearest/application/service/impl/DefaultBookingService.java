@@ -42,7 +42,7 @@ public class DefaultBookingService implements BookingService {
 
     @Override
     public Booking create(final CreateBookingTransition transition) throws EntityNotFoundException {
-        validation.validate(transition);
+        validation.validate(transition, "create-booking");
 
         final Room room = roomRepository.findById(transition.getRoomId());
         final Booking booking = map(new Booking(), transition.getData());

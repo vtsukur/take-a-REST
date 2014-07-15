@@ -1,2 +1,2 @@
-org.letustakearest.infrastructure.jaxrs.ConstraintViolationExceptionMapper
+org.letustakearest.infrastructure.jaxrs.ValidationExceptionMapper
 org.letustakearest.infrastructure.jaxrs.CustomObjectMapperContextResolver
