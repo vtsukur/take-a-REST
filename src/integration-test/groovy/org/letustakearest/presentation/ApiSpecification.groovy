@@ -197,14 +197,16 @@ class ApiSpecification extends Specification {
     def response
 
     when:
-    response = close(request(uri('/api/bookings')).
+    response = request(uri('/api/bookings')).
         post(entity(new CreateBookingTransition(
             roomId: null,
             data: null
-        ), APPLICATION_JSON)))
+        ), APPLICATION_JSON))
+    def bookingCreationErrorPayload = response.readEntity(String)
 
     then:
     400 == response.status
+    assertTemplateNotStrict('invalid-booking-NOT-created.json', bookingCreationErrorPayload)
   }
 
   def 'should respond with 404 when booking does not exist'() {
