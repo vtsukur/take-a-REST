@@ -2,5 +2,5 @@
     "type": "ValidationException",
     "message": null,
     "action": "create-booking",
-    "link": null
+    "link": "$baseURI/api/error/create-booking"
 }
