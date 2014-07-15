@@ -204,7 +204,7 @@ class ApiSpecification extends Specification {
         ), APPLICATION_JSON)))
 
     then:
-    500 == response.status
+    400 == response.status
   }
 
   def 'should respond with 404 when booking does not exist'() {
