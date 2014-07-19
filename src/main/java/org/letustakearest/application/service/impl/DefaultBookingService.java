@@ -5,10 +5,10 @@ import org.letustakearest.application.service.PaymentGateway;
 import org.letustakearest.domain.Booking;
 import org.letustakearest.domain.EntityNotFoundException;
 import org.letustakearest.domain.Payment;
-import org.letustakearest.domain.Room;
+import org.letustakearest.domain.Place;
 import org.letustakearest.domain.repository.BookingRepository;
 import org.letustakearest.domain.repository.PaymentRepository;
-import org.letustakearest.domain.repository.RoomRepository;
+import org.letustakearest.domain.repository.PlaceRepository;
 import org.letustakearest.presentation.transitions.BookingData;
 import org.letustakearest.presentation.transitions.CreateBookingTransition;
 import org.letustakearest.presentation.transitions.PayForBookingTransition;
@@ -29,7 +29,7 @@ public class DefaultBookingService implements BookingService {
     private BookingRepository bookingRepository;
 
     @Inject
-    private RoomRepository roomRepository;
+    private PlaceRepository placeRepository;
 
     @Inject
     private PaymentRepository paymentRepository;
@@ -44,10 +44,10 @@ public class DefaultBookingService implements BookingService {
     public Booking create(final CreateBookingTransition transition) throws EntityNotFoundException {
         validation.validate(transition, "create-booking");
 
-        final Room room = roomRepository.findById(transition.getRoomId());
+        final Place place = placeRepository.findById(transition.getRoomId());
         final Booking booking = map(new Booking(), transition.getData());
         booking.setState(Booking.State.CREATED);
-        booking.setRoom(room);
+        booking.setPlace(place);
         return bookingRepository.create(booking);
     }
 
@@ -88,7 +88,7 @@ public class DefaultBookingService implements BookingService {
         Payment payment = new Payment();
         payment.setCardholdersName(data.getCardholdersName());
         payment.setCreditCardNumber(data.getCreditCardNumber());
-        payment.setAmount(booking.getRoom().getPrice() *
+        payment.setAmount(booking.getPlace().getPrice() *
                 Period.between(booking.getFrom(), booking.getTo()).getDays());
 
         payment = paymentRepository.create(payment);

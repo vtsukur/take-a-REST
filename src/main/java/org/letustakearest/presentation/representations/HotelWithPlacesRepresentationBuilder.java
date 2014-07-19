@@ -17,23 +17,24 @@ import java.util.stream.Collectors;
 /**
  * @author volodymyr.tsukur
  */
-public class HotelRepresentationBuilder extends BaseHotelRepresentationBuilder {
+public class HotelWithPlacesRepresentationBuilder extends BaseHotelRepresentationBuilder {
 
-    public HotelRepresentationBuilder(final Hotel hotel, final UriInfo uriInfo) {
+    public HotelWithPlacesRepresentationBuilder(final Hotel hotel, final UriInfo uriInfo) {
         super(hotel, uriInfo);
     }
 
     public Entity build() {
         return builder().
-                addSubEntities(rooms()).
+                addSubEntities(places()).
                 build();
     }
 
-    private List<Entity> rooms() {
+    private List<Entity> places() {
         return hotel.getPlaces().stream().
                 map(room -> EntityBuilder.newInstance().
-                        setRelationship("hotel-room").
-                        addProperty("type", room.getCategory().name().toLowerCase()).
+                        setRelationship("hotel-place").
+                        addProperty("type", room.getType().name().toLowerCase()).
+                        addProperty("category", room.getCategory().name().toLowerCase()).
                         addProperty("price", room.getPrice()).
                         addAction(ActionBuilder.newInstance().
                                 setName("book").

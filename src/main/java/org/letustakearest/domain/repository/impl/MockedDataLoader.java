@@ -2,10 +2,10 @@ package org.letustakearest.domain.repository.impl;
 
 import org.letustakearest.domain.City;
 import org.letustakearest.domain.Hotel;
-import org.letustakearest.domain.Room;
+import org.letustakearest.domain.Place;
 import org.letustakearest.domain.repository.CityRepository;
 import org.letustakearest.domain.repository.HotelRepository;
-import org.letustakearest.domain.repository.RoomRepository;
+import org.letustakearest.domain.repository.PlaceRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -23,7 +23,7 @@ public class MockedDataLoader {
     private CityRepository cityRepository;
 
     @Inject
-    private RoomRepository roomRepository;
+    private PlaceRepository placeRepository;
 
     public void load() {
         saveCitiesAndHotels();
@@ -41,29 +41,29 @@ public class MockedDataLoader {
         final Hotel vintageBoutique = new Hotel();
         vintageBoutique.setName("Vintage Boutique Hotel");
         vintageBoutique.setCity(lviv);
-        vintageBoutique.getRooms().add(roomRepository.create(new Room(Room.Type.SINGLE, 500)));
-        vintageBoutique.getRooms().add(roomRepository.create(new Room(Room.Type.DOUBLE, 800)));
+        vintageBoutique.getPlaces().add(placeRepository.create(new Place(Place.Type.APARTMENT, Place.Category.SINGLE, 500)));
+        vintageBoutique.getPlaces().add(placeRepository.create(new Place(Place.Category.DOUBLE, 800)));
         hotelRepository.create(vintageBoutique);
 
         final Hotel nobilis = new Hotel();
         nobilis.setName("Nobilis");
         nobilis.setCity(lviv);
-        nobilis.getRooms().add(roomRepository.create(new Room(Room.Type.JUNIOR_SUITE, 2500)));
-        nobilis.getRooms().add(roomRepository.create(new Room(Room.Type.SUITE, 4500)));
+        nobilis.getPlaces().add(placeRepository.create(new Place(Place.Category.JUNIOR_SUITE, 2500)));
+        nobilis.getPlaces().add(placeRepository.create(new Place(Place.Category.SUITE, 4500)));
         hotelRepository.create(nobilis);
 
         final Hotel premierPalace = new Hotel();
         premierPalace.setName("Premier Palace");
         premierPalace.setCity(kyiv);
-        premierPalace.getRooms().add(roomRepository.create(new Room(Room.Type.SINGLE, 1000)));
-        premierPalace.getRooms().add(roomRepository.create(new Room(Room.Type.DOUBLE, 1500)));
+        premierPalace.getPlaces().add(placeRepository.create(new Place(Place.Category.SINGLE, 1000)));
+        premierPalace.getPlaces().add(placeRepository.create(new Place(Place.Category.DOUBLE, 1500)));
         hotelRepository.create(premierPalace);
 
         final Hotel fairmontGrandHotelKyiv = new Hotel();
         fairmontGrandHotelKyiv.setName("Fairmont");
         fairmontGrandHotelKyiv.setCity(kyiv);
-        fairmontGrandHotelKyiv.getRooms().add(roomRepository.create(new Room(Room.Type.DOUBLE, 3000)));
-        fairmontGrandHotelKyiv.getRooms().add(roomRepository.create(new Room(Room.Type.KING, 6000)));
+        fairmontGrandHotelKyiv.getPlaces().add(placeRepository.create(new Place(Place.Category.DOUBLE, 3000)));
+        fairmontGrandHotelKyiv.getPlaces().add(placeRepository.create(new Place(Place.Category.KING, 6000)));
         hotelRepository.create(fairmontGrandHotelKyiv);
     }
 
