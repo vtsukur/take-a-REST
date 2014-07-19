@@ -9,10 +9,7 @@ import org.letustakearest.domain.Place;
 import org.letustakearest.domain.repository.BookingRepository;
 import org.letustakearest.domain.repository.PaymentRepository;
 import org.letustakearest.domain.repository.PlaceRepository;
-import org.letustakearest.presentation.transitions.BookingData;
-import org.letustakearest.presentation.transitions.CreateBookingTransition;
-import org.letustakearest.presentation.transitions.PayForBookingTransition;
-import org.letustakearest.presentation.transitions.UpdateBookingTransition;
+import org.letustakearest.presentation.transitions.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -45,6 +42,17 @@ public class DefaultBookingService implements BookingService {
         validation.validate(transition, "create-booking");
 
         final Place place = placeRepository.findById(transition.getRoomId());
+        final Booking booking = map(new Booking(), transition.getData());
+        booking.setState(Booking.State.CREATED);
+        booking.setPlace(place);
+        return bookingRepository.create(booking);
+    }
+
+    @Override
+    public Booking create(CreateBookingAsPlaceTransition transition) throws EntityNotFoundException {
+        validation.validate(transition, "create-booking-as-place");
+
+        final Place place = placeRepository.findById(transition.getPlaceId());
         final Booking booking = map(new Booking(), transition.getData());
         booking.setState(Booking.State.CREATED);
         booking.setPlace(place);

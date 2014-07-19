@@ -40,6 +40,36 @@
                         }
                     ],
                     "class": ["booking"]
+                },
+                {
+                    "name": "book-as-place",
+                    "method": "POST",
+                    "href": "$baseURI/api/bookings",
+                    "type": "application/json",
+                    "fields": [
+                        {
+                            "name": "placeId",
+                            "type": "TEXT",
+                            "value": "5",
+                            "required": false
+                        },
+                        {
+                            "name": "data.from",
+                            "type": "DATE",
+                            "required": false
+                        },
+                        {
+                            "name": "data.to",
+                            "type": "DATE",
+                            "required": false
+                        },
+                        {
+                            "name": "data.includeBreakfast",
+                            "type": "CHECKBOX",
+                            "required": false
+                        }
+                    ],
+                    "class": ["booking"]
                 }
             ]
         },
@@ -58,6 +88,36 @@
                     "fields": [
                         {
                             "name": "roomId",
+                            "type": "TEXT",
+                            "value": "6",
+                            "required": false
+                        },
+                        {
+                            "name": "data.from",
+                            "type": "DATE",
+                            "required": false
+                        },
+                        {
+                            "name": "data.to",
+                            "type": "DATE",
+                            "required": false
+                        },
+                        {
+                            "name": "data.includeBreakfast",
+                            "type": "CHECKBOX",
+                            "required": false
+                        }
+                    ],
+                    "class": ["booking"]
+                },
+                {
+                    "name": "book-as-place",
+                    "method": "POST",
+                    "href": "$baseURI/api/bookings",
+                    "type": "application/json",
+                    "fields": [
+                        {
+                            "name": "placeId",
                             "type": "TEXT",
                             "value": "6",
                             "required": false

@@ -7,6 +7,7 @@ import org.letustakearest.domain.EntityNotFoundException;
 import org.letustakearest.presentation.cache.CacheControlFactory;
 import org.letustakearest.presentation.representations.BookingRepresentationBuilder;
 import org.letustakearest.presentation.representations.BookingsRepresentationBuilder;
+import org.letustakearest.presentation.transitions.CreateBookingAsPlaceTransition;
 import org.letustakearest.presentation.transitions.CreateBookingTransition;
 
 import javax.inject.Inject;
@@ -39,6 +40,20 @@ public class BookingsResource {
     @Produces({ Siren4J.JSON_MEDIATYPE })
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(final CreateBookingTransition transition, @Context final UriInfo uriInfo) {
+        final Booking result;
+        try {
+            result = bookingService.create(transition);
+        } catch (EntityNotFoundException e) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        final URI bookingURI = BookingRepresentationBuilder.selfURI(result, uriInfo);
+        return Response.created(bookingURI).build();
+    }
+
+    @POST
+    @Produces({ Siren4J.JSON_MEDIATYPE })
+    @Consumes("application/vnd.booking.v2+json")
+    public Response create(final CreateBookingAsPlaceTransition transition, @Context final UriInfo uriInfo) {
         final Booking result;
         try {
             result = bookingService.create(transition);

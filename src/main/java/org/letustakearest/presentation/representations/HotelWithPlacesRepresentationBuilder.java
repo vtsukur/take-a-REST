@@ -50,6 +50,20 @@ public class HotelWithPlacesRepresentationBuilder extends BaseHotelRepresentatio
                                                 build()).
                                 addFields(new SaveBookingFieldsBuilder().build()).
                                 build()).
+                        addAction(ActionBuilder.newInstance().
+                                setName("book-as-place").
+                                setComponentClass("booking").
+                                setMethod(ActionImpl.Method.POST).
+                                setHref(uriInfo.getBaseUriBuilder().path(BookingsResource.class).build().toString()).
+                                setType(MediaType.APPLICATION_JSON).
+                                addField(
+                                        FieldBuilder.newInstance().
+                                                setName("placeId").
+                                                setType(FieldType.TEXT).
+                                                setValue(room.getId().toString()).
+                                                build()).
+                                addFields(new SaveBookingFieldsBuilder().build()).
+                                build()).
                         build()).
                 collect(Collectors.toList());
     }
