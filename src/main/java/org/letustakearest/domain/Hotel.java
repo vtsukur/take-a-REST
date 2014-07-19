@@ -17,6 +17,6 @@ public final class Hotel extends IdentifiableAndVersioned {
 
     private String name;
 
-    private Set<Room> rooms = new HashSet<>();
+    private Set<Place> places = new HashSet<>();
 
 }

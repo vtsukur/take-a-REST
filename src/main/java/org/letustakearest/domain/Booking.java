@@ -14,7 +14,7 @@ public final class Booking extends IdentifiableAndVersioned {
 
     private User user;
 
-    private Room room;
+    private Place place;
 
     private LocalDate from;
 
