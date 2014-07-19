@@ -9,7 +9,6 @@ import org.letustakearest.presentation.representations.HotelsRepresentationBuild
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -22,7 +21,7 @@ public class HotelsResource {
     private HotelService hotelService;
 
     @GET
-    @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
+    @Produces({ Siren4J.JSON_MEDIATYPE })
     public Entity browse(@Context final UriInfo uriInfo,
                       @QueryParam("offset") final Integer offset,
                       @QueryParam("limit") final Integer limit) {

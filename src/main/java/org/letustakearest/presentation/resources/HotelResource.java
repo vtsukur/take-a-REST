@@ -7,9 +7,10 @@ import org.letustakearest.domain.EntityNotFoundException;
 import org.letustakearest.domain.Hotel;
 import org.letustakearest.presentation.representations.HotelRepresentationBuilder;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -28,7 +29,7 @@ public class HotelResource {
     }
 
     @GET
-    @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
+    @Produces({ Siren4J.JSON_MEDIATYPE })
     public Entity read(@Context final UriInfo uriInfo) {
         try {
             final Hotel hotel = hotelService.findById(id);

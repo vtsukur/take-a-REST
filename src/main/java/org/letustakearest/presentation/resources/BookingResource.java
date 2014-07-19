@@ -27,7 +27,7 @@ public class BookingResource {
     }
 
     @GET
-    @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
+    @Produces({ Siren4J.JSON_MEDIATYPE })
     public Response read(
             @Context final UriInfo uriInfo,
             @Context final Request request) {
@@ -51,7 +51,7 @@ public class BookingResource {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
+    @Produces({ Siren4J.JSON_MEDIATYPE })
     public Response update(
             final UpdateBookingTransition transition,
             @Context final UriInfo uriInfo,
@@ -77,7 +77,7 @@ public class BookingResource {
 
     @POST
     @Path("/payment")
-    @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
+    @Produces({ Siren4J.JSON_MEDIATYPE })
     @Consumes(MediaType.APPLICATION_JSON)
     public Response pay(
             final PayForBookingTransition transition,

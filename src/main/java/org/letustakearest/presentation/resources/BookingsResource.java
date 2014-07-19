@@ -27,7 +27,7 @@ public class BookingsResource {
     private BookingService bookingService;
 
     @GET
-    @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
+    @Produces({ Siren4J.JSON_MEDIATYPE })
     public Response browse(@Context final UriInfo uriInfo) {
         return Response.
                 ok(new BookingsRepresentationBuilder(bookingService.findAll(), uriInfo).build()).
@@ -36,7 +36,7 @@ public class BookingsResource {
     }
 
     @POST
-    @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
+    @Produces({ Siren4J.JSON_MEDIATYPE })
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(final CreateBookingTransition transition, @Context final UriInfo uriInfo) {
         final Booking result;

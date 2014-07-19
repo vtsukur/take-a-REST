@@ -8,7 +8,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -19,7 +18,7 @@ import javax.ws.rs.core.UriInfo;
 public class EntryPointResource {
 
     @GET
-    @Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
+    @Produces({ Siren4J.JSON_MEDIATYPE })
     public Response services(@Context final UriInfo uriInfo) {
         return Response.
                 ok(new EntryPointRepresentationBuilder(uriInfo).build()).
