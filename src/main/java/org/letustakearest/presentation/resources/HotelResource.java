@@ -9,6 +9,7 @@ import org.letustakearest.presentation.representations.HotelWithPlacesRepresenta
 import org.letustakearest.presentation.representations.HotelRepresentationBuilder;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
@@ -32,21 +33,31 @@ public class HotelResource {
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE })
     public Entity read(@Context final UriInfo uriInfo) {
-        try {
-            final Hotel hotel = hotelService.findById(id);
-            return new HotelRepresentationBuilder(hotel, uriInfo).build();
-        }
-        catch (final EntityNotFoundException e) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
+        final Hotel hotel = findHotel();
+        return new HotelRepresentationBuilder(hotel, uriInfo).build();
     }
 
     @GET
     @Produces({ "application/vnd.siren.hotel.v2+json" })
     public Entity readWithPlaces(@Context final UriInfo uriInfo) {
+        return prepareHotelAsPlaceRepresentation(uriInfo);
+    }
+
+    @GET
+    @Path("/as-place")
+    @Produces({ Siren4J.JSON_MEDIATYPE })
+    public Entity readWithPlacesViaURI(@Context final UriInfo uriInfo) {
+        return prepareHotelAsPlaceRepresentation(uriInfo);
+    }
+
+    private Entity prepareHotelAsPlaceRepresentation(UriInfo uriInfo) {
+        final Hotel hotel = findHotel();
+        return new HotelWithPlacesRepresentationBuilder(hotel, uriInfo).build();
+    }
+
+    private Hotel findHotel() throws WebApplicationException {
         try {
-            final Hotel hotel = hotelService.findById(id);
-            return new HotelWithPlacesRepresentationBuilder(hotel, uriInfo).build();
+            return hotelService.findById(id);
         }
         catch (final EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);

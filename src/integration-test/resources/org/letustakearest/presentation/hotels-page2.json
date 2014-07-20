@@ -20,7 +20,12 @@
                 {
                     "rel": ["hotel-as-place-via-media-type"],
                     "href": "$baseURI/api/hotels/3"
-                }            ]
+                },
+                {
+                    "rel": ["hotel-as-place-via-uri"],
+                    "href": "$baseURI/api/hotels/3/as-place"
+                }
+            ]
         },
         {
             "class": ["hotel"],
@@ -36,6 +41,10 @@
                 {
                     "rel": ["hotel-as-place-via-media-type"],
                     "href": "$baseURI/api/hotels/4"
+                },
+                {
+                    "rel": ["hotel-as-place-via-uri"],
+                    "href": "$baseURI/api/hotels/4/as-place"
                 }
             ]
         }

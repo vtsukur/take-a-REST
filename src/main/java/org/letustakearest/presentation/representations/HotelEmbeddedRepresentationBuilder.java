@@ -3,8 +3,10 @@ package org.letustakearest.presentation.representations;
 import com.google.code.siren4j.component.Entity;
 import com.google.code.siren4j.component.builder.LinkBuilder;
 import org.letustakearest.domain.Hotel;
+import org.letustakearest.presentation.resources.HotelsResource;
 
 import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 
 /**
  * @author volodymyr.tsukur
@@ -22,6 +24,26 @@ public class HotelEmbeddedRepresentationBuilder extends BaseHotelRepresentationB
                         setHref(selfHref()).
                         setRelationship("hotel-as-place-via-media-type").
                         build()).
+                addLink(LinkBuilder.newInstance().
+                        setHref(selfHrefAsPlace()).
+                        setRelationship("hotel-as-place-via-uri").
+                        build()).
+                build();
+    }
+
+    protected String selfHrefAsPlace() {
+        return selfURIAsPlace().toString();
+    }
+
+    private URI selfURIAsPlace() {
+        return selfURIAsPlace(hotel, uriInfo);
+    }
+
+    static URI selfURIAsPlace(final Hotel hotel, final UriInfo uriInfo) {
+        return uriInfo.getBaseUriBuilder().
+                path(HotelsResource.class).
+                path(hotel.getId().toString()).
+                path("as-place").
                 build();
     }
 
