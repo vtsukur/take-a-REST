@@ -5,6 +5,7 @@ import org.letustakearest.application.service.BookingService;
 import org.letustakearest.domain.Booking;
 import org.letustakearest.domain.EntityNotFoundException;
 import org.letustakearest.presentation.cache.EntityTagFactory;
+import org.letustakearest.presentation.representations.BaseBookingRepresentationBuilder;
 import org.letustakearest.presentation.representations.BookingRepresentationBuilder;
 import org.letustakearest.presentation.transitions.PayForBookingTransition;
 import org.letustakearest.presentation.transitions.UpdateBookingTransition;
@@ -137,6 +138,29 @@ public class BookingResource {
                     asyncResponse.resume(response);
                 }
             }, 2000);
+        }
+        catch (final EntityNotFoundException e) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+    }
+
+    @POST
+    @Path("/payment-fully-async")
+    @Produces({ Siren4J.JSON_MEDIATYPE })
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response payFullyAsync(
+            final PayForBookingTransition transition,
+            @Context final UriInfo uriInfo,
+            @Context final Request request) {
+        try {
+            final Booking booking = bookingService.findById(id);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    bookingService.pay(booking, transition);
+                }
+            }, 20000);
+            return Response.accepted().location(BaseBookingRepresentationBuilder.selfURI(booking, uriInfo)).build();
         }
         catch (final EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
