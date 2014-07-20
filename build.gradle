@@ -48,6 +48,7 @@ dependencies {
   compile('org.jboss.resteasy:resteasy-cdi:3.0.8.Final')
   compile('org.jboss.resteasy:resteasy-jackson2-provider:3.0.8.Final')
   compile('org.jboss.resteasy:resteasy-servlet-initializer:3.0.8.Final')
+  compile('org.jboss.resteasy:async-http-servlet-3.0:3.0.8.Final')
   compile('org.jboss.weld.servlet:weld-servlet:2.2.1.Final')
   compile('log4j:log4j:1.2.14')
   compile('org.projectlombok:lombok:1.14.2')
