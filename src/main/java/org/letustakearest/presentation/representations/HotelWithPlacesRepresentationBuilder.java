@@ -37,22 +37,8 @@ public class HotelWithPlacesRepresentationBuilder extends BaseHotelRepresentatio
                         addProperty("category", room.getCategory().name().toLowerCase()).
                         addProperty("price", room.getPrice()).
                         addAction(ActionBuilder.newInstance().
-                                setName("book").
-                                setComponentClass("booking").
-                                setMethod(ActionImpl.Method.POST).
-                                setHref(uriInfo.getBaseUriBuilder().path(BookingsResource.class).build().toString()).
-                                setType(MediaType.APPLICATION_JSON).
-                                addField(
-                                        FieldBuilder.newInstance().
-                                                setName("roomId").
-                                                setType(FieldType.TEXT).
-                                                setValue(room.getId().toString()).
-                                                build()).
-                                addFields(new SaveBookingFieldsBuilder().build()).
-                                build()).
-                        addAction(ActionBuilder.newInstance().
                                 setName("book-as-place").
-                                setComponentClass("booking").
+                                setComponentClass("booking-place").
                                 setMethod(ActionImpl.Method.POST).
                                 setHref(uriInfo.getBaseUriBuilder().path(BookingsResource.class).build().toString()).
                                 setType(MediaType.APPLICATION_JSON).
