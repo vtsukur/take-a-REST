@@ -12,7 +12,7 @@ import java.net.URI;
 /**
  * @author volodymyr.tsukur
  */
-abstract class BaseBookingRepresentationBuilder {
+public abstract class BaseBookingRepresentationBuilder {
 
     protected final Booking booking;
 
