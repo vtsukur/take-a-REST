@@ -10,7 +10,12 @@ import org.letustakearest.presentation.transitions.PayForBookingTransition;
 import org.letustakearest.presentation.transitions.UpdateBookingTransition;
 
 import javax.ws.rs.*;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.*;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author volodymyr.tsukur
@@ -96,6 +101,42 @@ public class BookingResource {
             else {
                 return responseBuilder.build();
             }
+        }
+        catch (final EntityNotFoundException e) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+    }
+
+    @POST
+    @Path("/payment-async")
+    @Produces({ Siren4J.JSON_MEDIATYPE })
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void pay(
+            final PayForBookingTransition transition,
+            @Suspended final AsyncResponse asyncResponse,
+            @Context final UriInfo uriInfo,
+            @Context final Request request) {
+        try {
+            Booking booking = bookingService.findById(id);
+            final Response.ResponseBuilder responseBuilder = request.evaluatePreconditions(entityTag(booking));
+
+            final Response response;
+            if (responseBuilder == null) {
+                booking = bookingService.pay(booking, transition);
+                response = Response.ok(new BookingRepresentationBuilder(booking, uriInfo).build()).
+                        tag(entityTag(booking)).
+                        build();
+            }
+            else {
+                response = responseBuilder.build();
+            }
+            asyncResponse.setTimeout(5000, TimeUnit.MILLISECONDS);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    asyncResponse.resume(response);
+                }
+            }, 2000);
         }
         catch (final EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
