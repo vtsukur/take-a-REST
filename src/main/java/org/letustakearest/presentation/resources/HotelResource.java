@@ -56,7 +56,13 @@ public class HotelResource {
             return Response.notAcceptable(variants).build();
         }
         else {
-            return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo), variant).build();
+            final Hotel hotel = findHotel();
+            if (variant.getMediaType().equals(MediaType.valueOf("application/vnd.siren.hotel.v2+json"))) {
+                return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo), variant).build();
+            }
+            else {
+                return Response.ok(new HotelRepresentationBuilder(hotel, uriInfo).build(), variant).build();
+            }
         }
     }
 
