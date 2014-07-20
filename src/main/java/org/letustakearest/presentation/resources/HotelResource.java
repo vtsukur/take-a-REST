@@ -67,6 +67,21 @@ public class HotelResource {
     }
 
     @GET
+    @Produces({ Siren4J.JSON_MEDIATYPE })
+    @Path("/versioning-by-header")
+    public Response readViaRuntimeContentNegotiation(
+            @Context final UriInfo uriInfo,
+            @Context final HttpHeaders httpHeaders) {
+        final Hotel hotel = findHotel();
+        if ("2".equals(httpHeaders.getHeaderString("X-Version"))) {
+            return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo)).build();
+        }
+        else {
+            return Response.ok(new HotelRepresentationBuilder(hotel, uriInfo).build()).build();
+        }
+    }
+
+    @GET
     @Path("/as-place")
     @Produces({ Siren4J.JSON_MEDIATYPE })
     public Entity readWithPlacesViaURI(@Context final UriInfo uriInfo) {
