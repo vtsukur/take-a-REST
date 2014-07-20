@@ -1,6 +1,7 @@
 package org.letustakearest.presentation.representations;
 
 import com.google.code.siren4j.component.Entity;
+import com.google.code.siren4j.component.builder.LinkBuilder;
 import org.letustakearest.domain.Hotel;
 
 import javax.ws.rs.core.UriInfo;
@@ -17,6 +18,10 @@ public class HotelEmbeddedRepresentationBuilder extends BaseHotelRepresentationB
     public Entity build() {
         return builder().
                 setRelationship("hotel").
+                addLink(LinkBuilder.newInstance().
+                        setHref(selfHref()).
+                        setRelationship("hotel-as-place-via-media-type").
+                        build()).
                 build();
     }
 

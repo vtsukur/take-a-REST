@@ -16,6 +16,10 @@
                 {
                     "rel": ["self"],
                     "href": "$baseURI/api/hotels/1"
+                },
+                {
+                    "rel": ["hotel-as-place-via-media-type"],
+                    "href": "$baseURI/api/hotels/1"
                 }
             ]
         },
@@ -28,6 +32,10 @@
             "links": [
                 {
                     "rel": ["self"],
+                    "href": "$baseURI/api/hotels/2"
+                },
+                {
+                    "rel": ["hotel-as-place-via-media-type"],
                     "href": "$baseURI/api/hotels/2"
                 }
             ]
