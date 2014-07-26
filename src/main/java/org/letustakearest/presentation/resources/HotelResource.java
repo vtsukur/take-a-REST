@@ -6,7 +6,7 @@ import org.letustakearest.application.service.HotelService;
 import org.letustakearest.domain.EntityNotFoundException;
 import org.letustakearest.domain.Hotel;
 import org.letustakearest.presentation.representations.HotelRepresentationAssembler;
-import org.letustakearest.presentation.representations.HotelWithPlacesRepresentationBuilder;
+import org.letustakearest.presentation.representations.siren.HotelWithPlacesRepresentationBuilder;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
