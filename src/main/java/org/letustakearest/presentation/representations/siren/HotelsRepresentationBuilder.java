@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * @author volodymyr.tsukur
  */
-public class HotelsRepresentationBuilder {
+class HotelsRepresentationBuilder {
 
     private final PaginatedResult<Hotel> hotels;
 

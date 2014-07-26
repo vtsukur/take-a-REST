@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author volodymyr.tsukur
  */
-public class SaveBookingFieldsBuilder {
+class SaveBookingFieldsBuilder {
 
     public List<Field> build() {
         return Arrays.asList(
