@@ -10,6 +10,8 @@ import org.letustakearest.presentation.representations.cdi.SelectByAcceptHeader;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 
 /**
  * @author volodymyr.tsukur
@@ -40,6 +42,12 @@ public class HotelsResource {
     @Path("/{id}")
     public HotelResource item(@PathParam("id") final Long id) {
         return new HotelResource(id, hotelService, hotelRepresentationAssembler);
+    }
+
+    public static URI selfURI(final UriInfo uriInfo) {
+        return uriInfo.getBaseUriBuilder().
+                path(HotelsResource.class).
+                build();
     }
 
 }

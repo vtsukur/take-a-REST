@@ -78,4 +78,10 @@ public class BookingsResource {
         return new BookingResource(id, bookingService, bookingRepresentationAssembler);
     }
 
+    public static URI selfURI(final UriInfo uriInfo) {
+        return uriInfo.getBaseUriBuilder().
+                path(BookingsResource.class).
+                build();
+    }
+
 }

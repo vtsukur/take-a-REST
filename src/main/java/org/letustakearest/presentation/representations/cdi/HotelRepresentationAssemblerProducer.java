@@ -19,6 +19,11 @@ public class HotelRepresentationAssemblerProducer
     }
 
     @Override
+    protected HotelRepresentationAssembler hal(final UriInfo uriInfo) {
+        return null;
+    }
+
+    @Override
     protected HotelRepresentationAssembler siren(final UriInfo uriInfo) {
         return new SirenHotelRepresentationAssembler(uriInfo);
     }

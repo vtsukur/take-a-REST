@@ -8,7 +8,6 @@ import org.letustakearest.domain.Booking;
 import org.letustakearest.presentation.resources.BookingsResource;
 
 import javax.ws.rs.core.UriInfo;
-import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,17 +43,7 @@ class BookingsRepresentationBuilder {
     }
 
     private String selfHref() {
-        return selfURI().toString();
-    }
-
-    private URI selfURI() {
-        return selfURI(uriInfo);
-    }
-
-    static URI selfURI(final UriInfo uriInfo) {
-        return uriInfo.getBaseUriBuilder().
-                path(BookingsResource.class).
-                build();
+        return BookingsResource.selfURI(uriInfo).toString();
     }
 
 }
