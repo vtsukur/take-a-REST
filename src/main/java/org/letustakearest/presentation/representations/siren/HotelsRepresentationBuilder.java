@@ -10,7 +10,6 @@ import org.letustakearest.domain.PaginatedResult;
 import org.letustakearest.presentation.resources.HotelsResource;
 
 import javax.ws.rs.core.UriInfo;
-import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,25 +82,15 @@ class HotelsRepresentationBuilder {
 
     private String hrefWithOffset(final int offset) {
         if (offset != 0) {
-            return String.format("%s?offset=%d", baseSelfHref(), offset);
+            return String.format("%s?offset=%d", selfHref(), offset);
         }
         else {
-            return baseSelfHref();
+            return selfHref();
         }
     }
 
-    private String baseSelfHref() {
-        return baseSelfURI().toString();
-    }
-
-    private URI baseSelfURI() {
-        return baseSelfURI(uriInfo);
-    }
-
-    static URI baseSelfURI(final UriInfo uriInfo) {
-        return uriInfo.getBaseUriBuilder().
-                path(HotelsResource.class).
-                build();
+    private String selfHref() {
+        return HotelsResource.selfURI(uriInfo).toString();
     }
 
 }

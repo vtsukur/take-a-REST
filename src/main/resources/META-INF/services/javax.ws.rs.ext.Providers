@@ -1,2 +1,3 @@
-org.letustakearest.infrastructure.jaxrs.ValidationExceptionMapper
 org.letustakearest.infrastructure.jaxrs.CustomObjectMapperContextResolver
+org.letustakearest.infrastructure.jaxrs.HalMessageBodyWriter
+org.letustakearest.infrastructure.jaxrs.ValidationExceptionMapper
