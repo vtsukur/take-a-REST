@@ -1,9 +1,9 @@
 package org.letustakearest.presentation.representations.siren;
 
-import com.google.code.siren4j.component.Entity;
 import com.google.code.siren4j.component.Link;
 import com.google.code.siren4j.component.builder.EntityBuilder;
 import com.google.code.siren4j.component.builder.LinkBuilder;
+import org.letustakearest.presentation.representations.EntryPointRepresentationAssembler;
 import org.letustakearest.presentation.resources.EntryPointResource;
 
 import javax.ws.rs.core.UriInfo;
@@ -12,15 +12,14 @@ import java.net.URI;
 /**
  * @author volodymyr.tsukur
  */
-public class EntryPointRepresentationBuilder {
+public class SirenEntryPointRepresentationAssembler extends BaseSirenRepresentationAssembler
+        implements EntryPointRepresentationAssembler {
 
-    private UriInfo uriInfo;
-
-    public EntryPointRepresentationBuilder(final UriInfo uriInfo) {
-        this.uriInfo = uriInfo;
+    public SirenEntryPointRepresentationAssembler(final UriInfo uriInfo) {
+        super(uriInfo);
     }
 
-    public Entity build() {
+    public Object assemble() {
         return EntityBuilder.newInstance().
                 setComponentClass("entry-point").
                 addLink(LinkBuilder.newInstance().
