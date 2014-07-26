@@ -58,6 +58,8 @@ dependencies {
   compile('javax.validation:validation-api:1.1.0.Final')
   compile('org.hibernate:hibernate-validator:5.1.1.Final')
   compile('org.hibernate:hibernate-validator-cdi:5.1.1.Final')
+  compile('com.theoryinpractise:halbuilder-standard:3.0.1')
+  compile('com.google.guava:guava:17.0')
 
   def tomcatVersion = '7.0.54'
   tomcat("org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}")
