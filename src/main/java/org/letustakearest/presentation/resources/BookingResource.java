@@ -5,8 +5,8 @@ import org.letustakearest.application.service.BookingService;
 import org.letustakearest.domain.Booking;
 import org.letustakearest.domain.EntityNotFoundException;
 import org.letustakearest.presentation.cache.EntityTagFactory;
-import org.letustakearest.presentation.representations.BaseBookingRepresentationBuilder;
-import org.letustakearest.presentation.representations.BookingRepresentationBuilder;
+import org.letustakearest.presentation.representations.siren.BaseBookingRepresentationBuilder;
+import org.letustakearest.presentation.representations.siren.BookingRepresentationBuilder;
 import org.letustakearest.presentation.transitions.PayForBookingTransition;
 import org.letustakearest.presentation.transitions.UpdateBookingTransition;
 

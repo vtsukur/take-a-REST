@@ -1,6 +1,7 @@
-package org.letustakearest.presentation.representations;
+package org.letustakearest.presentation.representations.siren;
 
 import org.letustakearest.domain.Hotel;
+import org.letustakearest.presentation.representations.HotelRepresentationAssembler;
 
 import javax.ws.rs.core.UriInfo;
 

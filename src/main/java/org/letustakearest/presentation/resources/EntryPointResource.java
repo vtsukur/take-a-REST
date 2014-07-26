@@ -2,7 +2,7 @@ package org.letustakearest.presentation.resources;
 
 import com.google.code.siren4j.Siren4J;
 import org.letustakearest.presentation.cache.CacheControlFactory;
-import org.letustakearest.presentation.representations.EntryPointRepresentationBuilder;
+import org.letustakearest.presentation.representations.siren.EntryPointRepresentationBuilder;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

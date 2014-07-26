@@ -2,7 +2,7 @@ package org.letustakearest.presentation.representations.cdi;
 
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.letustakearest.presentation.representations.HotelRepresentationAssembler;
-import org.letustakearest.presentation.representations.SirenHotelRepresentationAssembler;
+import org.letustakearest.presentation.representations.siren.SirenHotelRepresentationAssembler;
 
 import javax.enterprise.inject.Produces;
 import javax.ws.rs.core.MediaType;

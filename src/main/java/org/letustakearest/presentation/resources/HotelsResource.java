@@ -4,7 +4,7 @@ import com.google.code.siren4j.Siren4J;
 import org.letustakearest.application.service.HotelService;
 import org.letustakearest.application.service.Pagination;
 import org.letustakearest.presentation.representations.HotelRepresentationAssembler;
-import org.letustakearest.presentation.representations.HotelsRepresentationBuilder;
+import org.letustakearest.presentation.representations.siren.HotelsRepresentationBuilder;
 import org.letustakearest.presentation.representations.cdi.SelectByAcceptHeader;
 
 import javax.inject.Inject;

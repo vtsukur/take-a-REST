@@ -1,4 +1,4 @@
-package org.letustakearest.presentation.representations;
+package org.letustakearest.presentation.representations.siren;
 
 import com.google.code.siren4j.component.Entity;
 import com.google.code.siren4j.component.Link;
