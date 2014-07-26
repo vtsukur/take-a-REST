@@ -8,12 +8,11 @@ import javax.ws.rs.core.UriInfo;
 /**
  * @author volodymyr.tsukur
  */
-public class SirenHotelRepresentationAssembler implements HotelRepresentationAssembler {
+public class SirenHotelRepresentationAssembler extends BaseSirenRepresentationAssembler
+        implements HotelRepresentationAssembler {
 
-    private UriInfo uriInfo;
-
-    public SirenHotelRepresentationAssembler(UriInfo uriInfo) {
-        this.uriInfo = uriInfo;
+    public SirenHotelRepresentationAssembler(final UriInfo uriInfo) {
+        super(uriInfo);
     }
 
     @Override

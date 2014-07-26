@@ -1,5 +1,6 @@
 package org.letustakearest.presentation
 
+import com.google.code.siren4j.Siren4J
 import groovy.json.JsonSlurper
 import groovy.text.SimpleTemplateEngine
 import org.letustakearest.presentation.transitions.BookingData
@@ -218,11 +219,11 @@ class ApiSpecification extends Specification {
   }
 
   private Invocation.Builder request(String href) {
-    client.target(href).request()
+    client.target(href).request().accept(Siren4J.JSON_MEDIATYPE)
   }
 
   private Invocation.Builder request(URI uri) {
-    client.target(uri).request()
+    client.target(uri).request().accept(Siren4J.JSON_MEDIATYPE)
   }
 
   private static String uri(String relative = '') {

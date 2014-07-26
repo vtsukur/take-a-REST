@@ -4,14 +4,12 @@ import com.google.code.siren4j.Siren4J;
 import org.letustakearest.application.service.HotelService;
 import org.letustakearest.application.service.Pagination;
 import org.letustakearest.presentation.representations.HotelRepresentationAssembler;
-import org.letustakearest.presentation.representations.siren.HotelsRepresentationBuilder;
+import org.letustakearest.presentation.representations.HotelsRepresentationAssembler;
 import org.letustakearest.presentation.representations.cdi.SelectByAcceptHeader;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 /**
  * @author volodymyr.tsukur
@@ -23,17 +21,20 @@ public class HotelsResource {
     private HotelService hotelService;
 
     @Inject @SelectByAcceptHeader
+    private HotelsRepresentationAssembler hotelsRepresentationAssembler;
+
+    @Inject @SelectByAcceptHeader
     private HotelRepresentationAssembler hotelRepresentationAssembler;
 
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE })
-    public Response browse(@Context final UriInfo uriInfo,
-                      @QueryParam("offset") final Integer offset,
-                      @QueryParam("limit") final Integer limit) {
+    public Response browse(
+            @QueryParam("offset") final Integer offset,
+            @QueryParam("limit") final Integer limit) {
         final Pagination pagination = Pagination.getPagination(offset, limit);
-        return Response.ok(new HotelsRepresentationBuilder(
-                hotelService.findSeveral(pagination),
-                uriInfo).build()).build();
+        return Response.ok(
+                hotelsRepresentationAssembler.from(hotelService.findSeveral(pagination))).
+                build();
     }
 
     @Path("/{id}")
