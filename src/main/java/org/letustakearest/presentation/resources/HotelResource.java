@@ -92,7 +92,7 @@ public class HotelResource {
         return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo)).build();
     }
 
-    private Entity prepareHotelAsPlaceRepresentation(UriInfo uriInfo) {
+    private Entity prepareHotelAsPlaceRepresentation(final UriInfo uriInfo) {
         final Hotel hotel = findHotel();
         return new HotelWithPlacesRepresentationBuilder(hotel, uriInfo).build();
     }
