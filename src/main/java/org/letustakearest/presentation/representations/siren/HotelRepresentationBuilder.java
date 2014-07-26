@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 /**
  * @author volodymyr.tsukur
  */
-public class HotelRepresentationBuilder extends BaseHotelRepresentationBuilder {
+class HotelRepresentationBuilder extends BaseHotelRepresentationBuilder {
 
-    public HotelRepresentationBuilder(final Hotel hotel, final UriInfo uriInfo) {
+    HotelRepresentationBuilder(final Hotel hotel, final UriInfo uriInfo) {
         super(hotel, uriInfo);
     }
 
