@@ -5,7 +5,7 @@ import com.google.code.siren4j.component.Entity;
 import org.letustakearest.application.service.HotelService;
 import org.letustakearest.domain.EntityNotFoundException;
 import org.letustakearest.domain.Hotel;
-import org.letustakearest.presentation.representations.HotelRepresentationBuilder;
+import org.letustakearest.presentation.representations.HotelRepresentationAssembler;
 import org.letustakearest.presentation.representations.HotelWithPlacesRepresentationBuilder;
 
 import javax.ws.rs.GET;
@@ -24,16 +24,20 @@ public class HotelResource {
 
     private HotelService hotelService;
 
-    public HotelResource(final Long id, final HotelService hotelService) {
+    private HotelRepresentationAssembler hotelRepresentationAssembler;
+
+    public HotelResource(final Long id, final HotelService hotelService,
+            final HotelRepresentationAssembler hotelRepresentationAssembler) {
         this.id = id;
         this.hotelService = hotelService;
+        this.hotelRepresentationAssembler = hotelRepresentationAssembler;
     }
 
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE })
-    public Response read(@Context final UriInfo uriInfo) {
+    public Response read() {
         final Hotel hotel = findHotel();
-        return Response.ok(new HotelRepresentationBuilder(hotel, uriInfo).build()).build();
+        return Response.ok(hotelRepresentationAssembler.from(hotel)).build();
     }
 
     @GET
@@ -61,7 +65,7 @@ public class HotelResource {
                 return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo), variant).build();
             }
             else {
-                return Response.ok(new HotelRepresentationBuilder(hotel, uriInfo).build(), variant).build();
+                return Response.ok(hotelRepresentationAssembler.from(hotel), variant).build();
             }
         }
     }
@@ -77,7 +81,7 @@ public class HotelResource {
             return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo)).build();
         }
         else {
-            return Response.ok(new HotelRepresentationBuilder(hotel, uriInfo).build()).build();
+            return Response.ok(hotelRepresentationAssembler.from(hotel)).build();
         }
     }
 
