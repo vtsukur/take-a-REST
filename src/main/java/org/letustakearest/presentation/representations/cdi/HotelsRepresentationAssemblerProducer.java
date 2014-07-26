@@ -9,7 +9,8 @@ import javax.ws.rs.core.UriInfo;
 /**
  * @author volodymyr.tsukur
  */
-public class HotelsRepresentationAssemblerProducer extends BaseAssemblerProducer<HotelsRepresentationAssembler> {
+public class HotelsRepresentationAssemblerProducer
+        extends BaseAssemblerProducer<HotelsRepresentationAssembler> {
 
     @Produces
     @SelectByAcceptHeader

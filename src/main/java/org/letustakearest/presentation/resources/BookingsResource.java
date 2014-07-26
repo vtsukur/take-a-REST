@@ -5,8 +5,9 @@ import org.letustakearest.application.service.BookingService;
 import org.letustakearest.domain.Booking;
 import org.letustakearest.domain.EntityNotFoundException;
 import org.letustakearest.presentation.cache.CacheControlFactory;
+import org.letustakearest.presentation.representations.BookingsRepresentationAssembler;
+import org.letustakearest.presentation.representations.cdi.SelectByAcceptHeader;
 import org.letustakearest.presentation.representations.siren.BookingRepresentationBuilder;
-import org.letustakearest.presentation.representations.siren.BookingsRepresentationBuilder;
 import org.letustakearest.presentation.transitions.CreateBookingAsPlaceTransition;
 import org.letustakearest.presentation.transitions.CreateBookingTransition;
 
@@ -27,11 +28,15 @@ public class BookingsResource {
     @Inject
     private BookingService bookingService;
 
+    @Inject
+    @SelectByAcceptHeader
+    private BookingsRepresentationAssembler bookingsRepresentationAssembler;
+
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE })
-    public Response browse(@Context final UriInfo uriInfo) {
+    public Response browse() {
         return Response.
-                ok(new BookingsRepresentationBuilder(bookingService.findAll(), uriInfo).build()).
+                ok(bookingsRepresentationAssembler.from(bookingService.findAll())).
                 cacheControl(CacheControlFactory.oneMinute()).
                 build();
     }

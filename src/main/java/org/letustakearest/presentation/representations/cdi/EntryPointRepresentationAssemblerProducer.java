@@ -9,7 +9,8 @@ import javax.ws.rs.core.UriInfo;
 /**
  * @author volodymyr.tsukur
  */
-public class EntryPointRepresentationAssemblerProducer extends BaseAssemblerProducer<EntryPointRepresentationAssembler> {
+public class EntryPointRepresentationAssemblerProducer
+        extends BaseAssemblerProducer<EntryPointRepresentationAssembler> {
 
     @Produces
     @SelectByAcceptHeader
