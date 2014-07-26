@@ -11,7 +11,7 @@ import java.net.URI;
 /**
  * @author volodymyr.tsukur
  */
-public class HotelEmbeddedRepresentationBuilder extends BaseHotelRepresentationBuilder {
+class HotelEmbeddedRepresentationBuilder extends BaseHotelRepresentationBuilder {
 
     public HotelEmbeddedRepresentationBuilder(final Hotel hotel, final UriInfo uriInfo) {
         super(hotel, uriInfo);
