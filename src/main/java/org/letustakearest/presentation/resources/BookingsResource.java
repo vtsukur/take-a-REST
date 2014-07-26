@@ -5,9 +5,9 @@ import org.letustakearest.application.service.BookingService;
 import org.letustakearest.domain.Booking;
 import org.letustakearest.domain.EntityNotFoundException;
 import org.letustakearest.presentation.cache.CacheControlFactory;
+import org.letustakearest.presentation.representations.BookingRepresentationAssembler;
 import org.letustakearest.presentation.representations.BookingsRepresentationAssembler;
 import org.letustakearest.presentation.representations.cdi.SelectByAcceptHeader;
-import org.letustakearest.presentation.representations.siren.BookingRepresentationBuilder;
 import org.letustakearest.presentation.transitions.CreateBookingAsPlaceTransition;
 import org.letustakearest.presentation.transitions.CreateBookingTransition;
 
@@ -32,6 +32,10 @@ public class BookingsResource {
     @SelectByAcceptHeader
     private BookingsRepresentationAssembler bookingsRepresentationAssembler;
 
+    @Inject
+    @SelectByAcceptHeader
+    private BookingRepresentationAssembler bookingRepresentationAssembler;
+
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE })
     public Response browse() {
@@ -51,7 +55,7 @@ public class BookingsResource {
         } catch (EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        final URI bookingURI = BookingRepresentationBuilder.selfURI(result, uriInfo);
+        final URI bookingURI = BookingResource.selfURI(result, uriInfo);
         return Response.created(bookingURI).build();
     }
 
@@ -65,13 +69,13 @@ public class BookingsResource {
         } catch (EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        final URI bookingURI = BookingRepresentationBuilder.selfURI(result, uriInfo);
+        final URI bookingURI = BookingResource.selfURI(result, uriInfo);
         return Response.created(bookingURI).build();
     }
 
     @Path("/{id}")
     public BookingResource item(@PathParam("id") final Long id) {
-        return new BookingResource(id, bookingService);
+        return new BookingResource(id, bookingService, bookingRepresentationAssembler);
     }
 
 }

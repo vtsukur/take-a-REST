@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * @author volodymyr.tsukur
  */
-public class BookingsRepresentationBuilder {
+class BookingsRepresentationBuilder {
 
     private final Collection<Booking> bookings;
 

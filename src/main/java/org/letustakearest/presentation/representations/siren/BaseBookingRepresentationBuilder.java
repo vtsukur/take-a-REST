@@ -4,7 +4,7 @@ import com.google.code.siren4j.component.Link;
 import com.google.code.siren4j.component.builder.EntityBuilder;
 import com.google.code.siren4j.component.builder.LinkBuilder;
 import org.letustakearest.domain.Booking;
-import org.letustakearest.presentation.resources.BookingsResource;
+import org.letustakearest.presentation.resources.BookingResource;
 
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
@@ -12,7 +12,7 @@ import java.net.URI;
 /**
  * @author volodymyr.tsukur
  */
-public abstract class BaseBookingRepresentationBuilder {
+abstract class BaseBookingRepresentationBuilder {
 
     protected final Booking booking;
 
@@ -40,14 +40,7 @@ public abstract class BaseBookingRepresentationBuilder {
     }
 
     private URI selfURI() {
-        return selfURI(booking, uriInfo);
-    }
-
-    public static URI selfURI(final Booking booking, final UriInfo uriInfo) {
-        return uriInfo.getBaseUriBuilder().
-                path(BookingsResource.class).
-                path(booking.getId().toString()).
-                build();
+        return BookingResource.selfURI(booking, uriInfo);
     }
 
 }
