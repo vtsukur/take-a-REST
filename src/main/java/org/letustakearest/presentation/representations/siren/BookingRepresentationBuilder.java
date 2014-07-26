@@ -13,7 +13,7 @@ import javax.ws.rs.core.UriInfo;
 /**
  * @author volodymyr.tsukur
  */
-public class BookingRepresentationBuilder extends BaseBookingRepresentationBuilder {
+class BookingRepresentationBuilder extends BaseBookingRepresentationBuilder {
 
     public BookingRepresentationBuilder(final Booking booking, final UriInfo uriInfo) {
         super(booking, uriInfo);

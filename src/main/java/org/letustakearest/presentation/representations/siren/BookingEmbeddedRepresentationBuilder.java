@@ -8,7 +8,7 @@ import javax.ws.rs.core.UriInfo;
 /**
  * @author volodymyr.tsukur
  */
-public class BookingEmbeddedRepresentationBuilder extends BaseBookingRepresentationBuilder {
+class BookingEmbeddedRepresentationBuilder extends BaseBookingRepresentationBuilder {
 
     public BookingEmbeddedRepresentationBuilder(final Booking booking, final UriInfo uriInfo) {
         super(booking, uriInfo);
