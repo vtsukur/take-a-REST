@@ -1,7 +1,6 @@
 package org.letustakearest.presentation.resources;
 
 import com.google.code.siren4j.Siren4J;
-import com.google.code.siren4j.component.Entity;
 import org.letustakearest.application.service.HotelService;
 import org.letustakearest.application.service.Pagination;
 import org.letustakearest.presentation.representations.HotelsRepresentationBuilder;
@@ -9,6 +8,7 @@ import org.letustakearest.presentation.representations.HotelsRepresentationBuild
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -22,13 +22,13 @@ public class HotelsResource {
 
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE })
-    public Entity browse(@Context final UriInfo uriInfo,
+    public Response browse(@Context final UriInfo uriInfo,
                       @QueryParam("offset") final Integer offset,
                       @QueryParam("limit") final Integer limit) {
         final Pagination pagination = Pagination.getPagination(offset, limit);
-        return new HotelsRepresentationBuilder(
+        return Response.ok(new HotelsRepresentationBuilder(
                 hotelService.findSeveral(pagination),
-                uriInfo).build();
+                uriInfo).build()).build();
     }
 
     @Path("/{id}")

@@ -31,15 +31,15 @@ public class HotelResource {
 
     @GET
     @Produces({ Siren4J.JSON_MEDIATYPE })
-    public Entity read(@Context final UriInfo uriInfo) {
+    public Response read(@Context final UriInfo uriInfo) {
         final Hotel hotel = findHotel();
-        return new HotelRepresentationBuilder(hotel, uriInfo).build();
+        return Response.ok(new HotelRepresentationBuilder(hotel, uriInfo).build()).build();
     }
 
     @GET
     @Produces({ "application/vnd.siren.hotel.v2+json" })
-    public Entity readWithPlaces(@Context final UriInfo uriInfo) {
-        return prepareHotelAsPlaceRepresentation(uriInfo);
+    public Response readWithPlaces(@Context final UriInfo uriInfo) {
+        return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo)).build();
     }
 
     @GET
@@ -84,8 +84,8 @@ public class HotelResource {
     @GET
     @Path("/as-place")
     @Produces({ Siren4J.JSON_MEDIATYPE })
-    public Entity readWithPlacesViaURI(@Context final UriInfo uriInfo) {
-        return prepareHotelAsPlaceRepresentation(uriInfo);
+    public Response readWithPlacesViaURI(@Context final UriInfo uriInfo) {
+        return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo)).build();
     }
 
     private Entity prepareHotelAsPlaceRepresentation(UriInfo uriInfo) {
