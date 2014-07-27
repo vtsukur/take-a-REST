@@ -40,7 +40,7 @@ class ApiSpecification extends Specification {
     def entryPointPayload = request(startingPoint, JSON_MEDIATYPE).get(String)
 
     then:
-    def entryPoint = assertTemplateNotStrict('entryPoint.json', 'siren', entryPointPayload)
+    def entryPoint = assertTemplateNotStrict('entryPoint.json', JSON_MEDIATYPE, entryPointPayload)
     def hotelsURI = entryPoint.links?.find({ it.rel.contains('hotels') })?.href as String
     hotelsURI
     def bookingsURI = entryPoint.links?.find({ it.rel.contains('bookings') })?.href as String
@@ -50,7 +50,7 @@ class ApiSpecification extends Specification {
     def hotelsPage1Payload = request(hotelsURI, JSON_MEDIATYPE).get(String)
 
     then:
-    def hotelsPage1 = assertTemplateNotStrict('hotels-page1.json', 'siren', hotelsPage1Payload)
+    def hotelsPage1 = assertTemplateNotStrict('hotels-page1.json', JSON_MEDIATYPE, hotelsPage1Payload)
     def nextHotelsPageURI = hotelsPage1.links?.find({ it.rel.contains('next') })?.href as String
     nextHotelsPageURI
 
@@ -58,7 +58,7 @@ class ApiSpecification extends Specification {
     def hotelsPage2Payload = request(nextHotelsPageURI, JSON_MEDIATYPE).get(String)
 
     then:
-    def hotelsPage2 = assertTemplateNotStrict('hotels-page2.json', 'siren', hotelsPage2Payload)
+    def hotelsPage2 = assertTemplateNotStrict('hotels-page2.json', JSON_MEDIATYPE, hotelsPage2Payload)
     def hotelURI = hotelsPage2.entities?.get(0)?.links?.find({ it.rel.contains('self') })?.href as String
     hotelURI
 
@@ -66,7 +66,7 @@ class ApiSpecification extends Specification {
     def hotelPayload = request(hotelURI, JSON_MEDIATYPE).get(String)
 
     then:
-    def hotel = assertTemplateNotStrict('hotel.json', 'siren', hotelPayload)
+    def hotel = assertTemplateNotStrict('hotel.json', JSON_MEDIATYPE, hotelPayload)
     def bookingAction = hotel.entities?.get(0)?.actions?.find({ it.name == 'book' })
     bookingAction
 
@@ -88,7 +88,7 @@ class ApiSpecification extends Specification {
     def createdBookingPayload = response.readEntity(String)
     def createdBookingETag = response.entityTag.value
     createdBookingETag
-    def createdBooking = assertTemplateNotStrict('booking-created.json', 'siren', createdBookingPayload, [
+    def createdBooking = assertTemplateNotStrict('booking-created.json', JSON_MEDIATYPE, createdBookingPayload, [
         bookingURI: bookingURI
     ])
     def updateAction = createdBooking?.actions?.find({ it.name == 'update' })
@@ -117,7 +117,7 @@ class ApiSpecification extends Specification {
     def updatedBookingETag = response.entityTag.value
     createdBookingETag != updatedBookingETag
     def updatedBookingPayload = response.readEntity(String)
-    def updatedBooking = assertTemplateNotStrict('booking-updated.json', 'siren', updatedBookingPayload, [
+    def updatedBooking = assertTemplateNotStrict('booking-updated.json', JSON_MEDIATYPE, updatedBookingPayload, [
         bookingURI: bookingURI
     ])
     def paymentAction = updatedBooking?.actions?.find({ it.name == 'pay' })
@@ -136,7 +136,7 @@ class ApiSpecification extends Specification {
     def paidBookingETag = response.entityTag.value
     updatedBookingETag != paidBookingETag
     def paidBookingPayload = response.readEntity(String)
-        assertTemplateNotStrict('booking-paid.json', 'siren', paidBookingPayload, [
+        assertTemplateNotStrict('booking-paid.json', JSON_MEDIATYPE, paidBookingPayload, [
         bookingURI: bookingURI
     ])
 
@@ -160,7 +160,7 @@ class ApiSpecification extends Specification {
     def entryPointPayload = request(startingPoint, HAL_JSON).get(String)
 
     then:
-    def entryPoint = assertTemplateNotStrict('entryPoint.json', 'hal', entryPointPayload)
+    def entryPoint = assertTemplateNotStrict('entryPoint.json', HAL_JSON, entryPointPayload)
     def hotelsURI = entryPoint._links?.get('get-some-rest:hotels')?.href as String
     hotelsURI
     def bookingsURI = entryPoint._links?.get('get-some-rest:bookings')?.href as String
@@ -170,7 +170,7 @@ class ApiSpecification extends Specification {
     def hotelsPage1Payload = request(hotelsURI, HAL_JSON).get(String)
 
     then:
-    def hotelsPage1 = assertTemplateNotStrict('hotels-page1.json', 'hal', hotelsPage1Payload)
+    def hotelsPage1 = assertTemplateNotStrict('hotels-page1.json', HAL_JSON, hotelsPage1Payload)
     def nextHotelsPageURI = hotelsPage1._links?.get('next')?.href as String
     nextHotelsPageURI
 
@@ -178,7 +178,7 @@ class ApiSpecification extends Specification {
     def hotelsPage2Payload = request(nextHotelsPageURI, HAL_JSON).get(String)
 
     then:
-    def hotelsPage2 = assertTemplateNotStrict('hotels-page2.json', 'hal', hotelsPage2Payload)
+    def hotelsPage2 = assertTemplateNotStrict('hotels-page2.json', HAL_JSON, hotelsPage2Payload)
     def hotelURI = (hotelsPage2._embedded?.get('get-some-rest:hotel') as List)[0]._links?.get('self')?.href as String
     hotelURI
 
@@ -186,7 +186,7 @@ class ApiSpecification extends Specification {
     def hotelPayload = request(hotelURI, JSON_MEDIATYPE).get(String)
 
     then:
-    def hotel = assertTemplateNotStrict('hotel.json', 'siren', hotelPayload)
+    def hotel = assertTemplateNotStrict('hotel.json', JSON_MEDIATYPE, hotelPayload)
     def bookingAction = hotel.entities?.get(0)?.actions?.find({ it.name == 'book' })
     bookingAction
 
@@ -208,7 +208,7 @@ class ApiSpecification extends Specification {
     def createdBookingPayload = response.readEntity(String)
     def createdBookingETag = response.entityTag.value
     createdBookingETag
-    def createdBooking = assertTemplateNotStrict('booking-created.json', 'siren', createdBookingPayload, [
+    def createdBooking = assertTemplateNotStrict('booking-created.json', JSON_MEDIATYPE, createdBookingPayload, [
         bookingURI: bookingURI
     ])
     def updateAction = createdBooking?.actions?.find({ it.name == 'update' })
@@ -237,7 +237,7 @@ class ApiSpecification extends Specification {
     def updatedBookingETag = response.entityTag.value
     createdBookingETag != updatedBookingETag
     def updatedBookingPayload = response.readEntity(String)
-    def updatedBooking = assertTemplateNotStrict('booking-updated.json', 'siren', updatedBookingPayload, [
+    def updatedBooking = assertTemplateNotStrict('booking-updated.json', JSON_MEDIATYPE, updatedBookingPayload, [
         bookingURI: bookingURI
     ])
     def paymentAction = updatedBooking?.actions?.find({ it.name == 'pay' })
@@ -256,7 +256,7 @@ class ApiSpecification extends Specification {
     def paidBookingETag = response.entityTag.value
     updatedBookingETag != paidBookingETag
     def paidBookingPayload = response.readEntity(String)
-        assertTemplateNotStrict('booking-paid.json', 'siren', paidBookingPayload, [
+        assertTemplateNotStrict('booking-paid.json', JSON_MEDIATYPE, paidBookingPayload, [
         bookingURI: bookingURI
     ])
 
@@ -295,7 +295,7 @@ class ApiSpecification extends Specification {
     def createdBookingPayload = request(bookingURI, JSON_MEDIATYPE).get(String)
 
     then:
-    def createdBooking = assertTemplateNotStrict('booking-created.json', 'siren', createdBookingPayload, [
+    def createdBooking = assertTemplateNotStrict('booking-created.json', JSON_MEDIATYPE, createdBookingPayload, [
         bookingURI: bookingURI
     ])
     def cancelAction = createdBooking?.actions?.find({ it.name == 'cancel'})
@@ -328,7 +328,7 @@ class ApiSpecification extends Specification {
 
     then:
     400 == response.status
-    assertTemplateNotStrict('invalid-booking-NOT-created.json', 'siren', bookingCreationErrorPayload)
+    assertTemplateNotStrict('invalid-booking-NOT-created.json', JSON_MEDIATYPE, bookingCreationErrorPayload)
   }
 
   def 'should respond with 404 when booking does not exist'() {
@@ -357,7 +357,11 @@ class ApiSpecification extends Specification {
   }
 
   private static String loadTemplate(String name, String mediaType, Map binding) {
-    new SimpleTemplateEngine().createTemplate(ApiSpecification.getResource("$mediaType/$name")).make(binding).toString()
+    new SimpleTemplateEngine().createTemplate(ApiSpecification.getResource("${mediaTypeToDirName(mediaType)}/$name")).make(binding).toString()
+  }
+
+  private static String mediaTypeToDirName(String mediaType) {
+    HAL_JSON.equals(mediaType) ? 'hal' : 'siren'
   }
 
   private static Response close(Response response) {
