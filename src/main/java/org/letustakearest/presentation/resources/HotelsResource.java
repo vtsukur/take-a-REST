@@ -1,6 +1,7 @@
 package org.letustakearest.presentation.resources;
 
 import com.google.code.siren4j.Siren4J;
+import com.theoryinpractise.halbuilder.api.RepresentationFactory;
 import org.letustakearest.application.service.HotelService;
 import org.letustakearest.application.service.Pagination;
 import org.letustakearest.presentation.representations.HotelRepresentationAssembler;
@@ -29,7 +30,7 @@ public class HotelsResource {
     private HotelRepresentationAssembler hotelRepresentationAssembler;
 
     @GET
-    @Produces({ Siren4J.JSON_MEDIATYPE })
+    @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
     public Response browse(
             @QueryParam("offset") final Integer offset,
             @QueryParam("limit") final Integer limit) {

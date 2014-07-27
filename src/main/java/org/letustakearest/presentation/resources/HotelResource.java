@@ -13,6 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.*;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -104,6 +105,13 @@ public class HotelResource {
         catch (final EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
+    }
+
+    public static URI selfURI(final Hotel hotel, final UriInfo uriInfo) {
+        return uriInfo.getBaseUriBuilder().
+                path(HotelsResource.class).
+                path(hotel.getId().toString()).
+                build();
     }
 
 }

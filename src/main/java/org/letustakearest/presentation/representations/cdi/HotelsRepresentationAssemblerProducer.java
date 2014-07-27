@@ -1,6 +1,7 @@
 package org.letustakearest.presentation.representations.cdi;
 
 import org.letustakearest.presentation.representations.HotelsRepresentationAssembler;
+import org.letustakearest.presentation.representations.hal.HalHotelsRepresentationAssembler;
 import org.letustakearest.presentation.representations.siren.SirenHotelsRepresentationAssembler;
 
 import javax.enterprise.inject.Produces;
@@ -20,7 +21,7 @@ public class HotelsRepresentationAssemblerProducer
 
     @Override
     protected HotelsRepresentationAssembler hal(final UriInfo uriInfo) {
-        return null;
+        return new HalHotelsRepresentationAssembler(uriInfo);
     }
 
     @Override

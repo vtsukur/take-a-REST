@@ -1,0 +1,38 @@
+{
+    "_links": {
+        "curies": {
+            "href": "$baseURI/api/doc/{rel}",
+            "name": "get-some-rest",
+            "templated": true
+        },
+        "self": {
+            "href": "$baseURI/api/hotels"
+        },
+        "next": {
+            "href": "$baseURI/api/hotels?offset=2"
+        }
+    },
+    "limit": 2,
+    "offset": 0,
+    "total": 4,
+    "_embedded": {
+        "get-some-rest:hotel": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "$baseURI/api/hotels/1"
+                    }
+                },
+                "name": "Vintage Boutique Hotel"
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "$baseURI/api/hotels/2"
+                    }
+                },
+                "name": "Nobilis"
+            }
+        ]
+    }
+}
