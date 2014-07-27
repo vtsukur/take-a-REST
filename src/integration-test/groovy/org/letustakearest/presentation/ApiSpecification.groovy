@@ -1,6 +1,7 @@
 package org.letustakearest.presentation
 
 import com.google.code.siren4j.Siren4J
+import com.theoryinpractise.halbuilder.api.RepresentationFactory
 import groovy.json.JsonSlurper
 import groovy.text.SimpleTemplateEngine
 import org.letustakearest.presentation.transitions.BookingData
@@ -9,6 +10,7 @@ import org.letustakearest.presentation.transitions.PayForBookingTransition
 import org.letustakearest.presentation.transitions.UpdateBookingTransition
 import org.skyscreamer.jsonassert.JSONAssert
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.ClientBuilder
@@ -16,6 +18,8 @@ import javax.ws.rs.client.Invocation
 import javax.ws.rs.core.Response
 import java.time.LocalDate
 
+import static com.google.code.siren4j.Siren4J.JSON_MEDIATYPE
+import static com.theoryinpractise.halbuilder.api.RepresentationFactory.HAL_JSON
 import static javax.ws.rs.client.Entity.entity
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON
 
@@ -30,13 +34,13 @@ class ApiSpecification extends Specification {
     client = ClientBuilder.newClient()
   }
 
-  def 'should find hotel room, book it, update booking and then pay for it'() {
+  def 'should find hotel room, book it, update booking and then pay for it using Siren'() {
     given:
     def startingPoint = uri('/api')
     def response
 
     when:
-    def entryPointPayload = request(startingPoint).get(String)
+    def entryPointPayload = request(startingPoint, JSON_MEDIATYPE).get(String)
 
     then:
     def entryPoint = assertTemplateNotStrict('entryPoint.json', 'siren', entryPointPayload)
@@ -46,7 +50,7 @@ class ApiSpecification extends Specification {
     bookingsURI
 
     when:
-    def hotelsPage1Payload = request(hotelsURI).get(String)
+    def hotelsPage1Payload = request(hotelsURI, JSON_MEDIATYPE).get(String)
 
     then:
     def hotelsPage1 = assertTemplateNotStrict('hotels-page1.json', 'siren', hotelsPage1Payload)
@@ -54,7 +58,7 @@ class ApiSpecification extends Specification {
     nextHotelsPageURI
 
     when:
-    def hotelsPage2Payload = request(nextHotelsPageURI).get(String)
+    def hotelsPage2Payload = request(nextHotelsPageURI, JSON_MEDIATYPE).get(String)
 
     then:
     def hotelsPage2 = assertTemplateNotStrict('hotels-page2.json', 'siren', hotelsPage2Payload)
@@ -62,7 +66,7 @@ class ApiSpecification extends Specification {
     hotelURI
 
     when:
-    def hotelPayload = request(hotelURI).get(String)
+    def hotelPayload = request(hotelURI, JSON_MEDIATYPE).get(String)
 
     then:
     def hotel = assertTemplateNotStrict('hotel.json', 'siren', hotelPayload)
@@ -70,7 +74,7 @@ class ApiSpecification extends Specification {
     bookingAction
 
     when:
-    response = close(request(bookingAction.href as String).post(
+    response = close(request(bookingAction.href as String, JSON_MEDIATYPE).post(
         entity(
             referenceCreateBookingTransition(bookingAction.fields?.find({ it.name == 'roomId' })?.value as Long),
             APPLICATION_JSON)))
@@ -81,7 +85,7 @@ class ApiSpecification extends Specification {
     bookingURI
 
     when:
-    response = request(bookingURI).get()
+    response = request(bookingURI, JSON_MEDIATYPE).get()
 
     then:
     def createdBookingPayload = response.readEntity(String)
@@ -94,13 +98,13 @@ class ApiSpecification extends Specification {
     updateAction
 
     when:
-    response = request(bookingURI).header("If-None-Match", createdBookingETag).get()
+    response = request(bookingURI, JSON_MEDIATYPE).header("If-None-Match", createdBookingETag).get()
 
     then:
     Response.Status.NOT_MODIFIED.statusCode == response.status
 
     when:
-    response = request(updateAction.href as String).
+    response = request(updateAction.href as String, JSON_MEDIATYPE).
         header('If-Match', createdBookingETag).
         method(
             updateAction.method as String,
@@ -123,7 +127,7 @@ class ApiSpecification extends Specification {
     paymentAction
 
     when:
-    response = request(paymentAction.href as String).
+    response = request(paymentAction.href as String, JSON_MEDIATYPE).
         header('If-Match', updatedBookingETag).
         method(paymentAction.method as String, entity(new PayForBookingTransition(
             cardholdersName: 'Viktor Yanukovych',
@@ -140,7 +144,127 @@ class ApiSpecification extends Specification {
     ])
 
     when:
-    def bookings = toJson(request(bookingsURI).get(String))
+    def bookings = toJson(request(bookingsURI, JSON_MEDIATYPE).get(String))
+
+    then:
+    bookings.entities?.find({
+      it.links?.find({
+        it.rel?.contains('self') && it.href == bookingURI.toString()
+      })
+    })
+  }
+
+  def 'should find hotel room, book it, update booking and then pay for it using HAL'() {
+    given:
+    def startingPoint = uri('/api')
+    def response
+
+    when:
+    def entryPointPayload = request(startingPoint, HAL_JSON).get(String)
+
+    then:
+    def entryPoint = assertTemplateNotStrict('entryPoint.json', 'hal', entryPointPayload)
+    def hotelsURI = entryPoint._links?.get('get-some-rest:hotels')?.href as String
+    hotelsURI
+    def bookingsURI = entryPoint._links?.get('get-some-rest:bookings')?.href as String
+    bookingsURI
+
+    when:
+    def hotelsPage1Payload = request(hotelsURI, JSON_MEDIATYPE).get(String)
+
+    then:
+    def hotelsPage1 = assertTemplateNotStrict('hotels-page1.json', 'siren', hotelsPage1Payload)
+    def nextHotelsPageURI = hotelsPage1.links?.find({ it.rel.contains('next') })?.href as String
+    nextHotelsPageURI
+
+    when:
+    def hotelsPage2Payload = request(nextHotelsPageURI, JSON_MEDIATYPE).get(String)
+
+    then:
+    def hotelsPage2 = assertTemplateNotStrict('hotels-page2.json', 'siren', hotelsPage2Payload)
+    def hotelURI = hotelsPage2.entities?.get(0)?.links?.find({ it.rel.contains('self') })?.href as String
+    hotelURI
+
+    when:
+    def hotelPayload = request(hotelURI, JSON_MEDIATYPE).get(String)
+
+    then:
+    def hotel = assertTemplateNotStrict('hotel.json', 'siren', hotelPayload)
+    def bookingAction = hotel.entities?.get(0)?.actions?.find({ it.name == 'book' })
+    bookingAction
+
+    when:
+    response = close(request(bookingAction.href as String, JSON_MEDIATYPE).post(
+        entity(
+            referenceCreateBookingTransition(bookingAction.fields?.find({ it.name == 'roomId' })?.value as Long),
+            APPLICATION_JSON)))
+
+    then:
+    201 == response.status
+    def bookingURI = response.location
+    bookingURI
+
+    when:
+    response = request(bookingURI, JSON_MEDIATYPE).get()
+
+    then:
+    def createdBookingPayload = response.readEntity(String)
+    def createdBookingETag = response.entityTag.value
+    createdBookingETag
+    def createdBooking = assertTemplateNotStrict('booking-created.json', 'siren', createdBookingPayload, [
+        bookingURI: bookingURI
+    ])
+    def updateAction = createdBooking?.actions?.find({ it.name == 'update' })
+    updateAction
+
+    when:
+    response = request(bookingURI, JSON_MEDIATYPE).header("If-None-Match", createdBookingETag).get()
+
+    then:
+    Response.Status.NOT_MODIFIED.statusCode == response.status
+
+    when:
+    response = request(updateAction.href as String, JSON_MEDIATYPE).
+        header('If-Match', createdBookingETag).
+        method(
+            updateAction.method as String,
+            entity(new UpdateBookingTransition(
+                data: new BookingData(
+                    from: LocalDate.of(2014, 8, 1),
+                    to: LocalDate.of(2014, 8, 20),
+                    includeBreakfast: false
+                )
+            ), APPLICATION_JSON))
+
+    then:
+    def updatedBookingETag = response.entityTag.value
+    createdBookingETag != updatedBookingETag
+    def updatedBookingPayload = response.readEntity(String)
+    def updatedBooking = assertTemplateNotStrict('booking-updated.json', 'siren', updatedBookingPayload, [
+        bookingURI: bookingURI
+    ])
+    def paymentAction = updatedBooking?.actions?.find({ it.name == 'pay' })
+    paymentAction
+
+    when:
+    response = request(paymentAction.href as String, JSON_MEDIATYPE).
+        header('If-Match', updatedBookingETag).
+        method(paymentAction.method as String, entity(new PayForBookingTransition(
+            cardholdersName: 'Viktor Yanukovych',
+            creditCardNumber: '1234 5678 9012 3456',
+            cvv: 123
+        ), APPLICATION_JSON))
+
+    then:
+    def paidBookingETag = response.entityTag.value
+    updatedBookingETag != paidBookingETag
+    def paidBookingPayload = response.readEntity(String)
+        assertTemplateNotStrict('booking-paid.json', 'siren', paidBookingPayload, [
+        bookingURI: bookingURI
+    ])
+
+    when:
+    def bookings = toJson(request(bookingsURI, JSON_MEDIATYPE).get(String))
 
     then:
     bookings.entities?.find({
@@ -155,7 +279,7 @@ class ApiSpecification extends Specification {
     def response
 
     when:
-    response = close(request(uri('/api/bookings')).
+    response = close(request(uri('/api/bookings'), JSON_MEDIATYPE).
         post(entity(new CreateBookingTransition(
             roomId: 1,
             data: new BookingData(
@@ -171,7 +295,7 @@ class ApiSpecification extends Specification {
     bookingURI
 
     when:
-    def createdBookingPayload = request(bookingURI).get(String)
+    def createdBookingPayload = request(bookingURI, JSON_MEDIATYPE).get(String)
 
     then:
     def createdBooking = assertTemplateNotStrict('booking-created.json', 'siren', createdBookingPayload, [
@@ -181,13 +305,13 @@ class ApiSpecification extends Specification {
     cancelAction
 
     when:
-    response = close(request(cancelAction.href as String).method(cancelAction.method as String))
+    response = close(request(cancelAction.href as String, JSON_MEDIATYPE).method(cancelAction.method as String))
 
     then:
     204 == response.status
 
     when:
-    response = close(request(bookingURI).get())
+    response = close(request(bookingURI, JSON_MEDIATYPE).get())
 
     then:
     404 == response.status
@@ -198,7 +322,7 @@ class ApiSpecification extends Specification {
     def response
 
     when:
-    response = request(uri('/api/bookings')).
+    response = request(uri('/api/bookings'), JSON_MEDIATYPE).
         post(entity(new CreateBookingTransition(
             roomId: null,
             data: null
@@ -212,18 +336,18 @@ class ApiSpecification extends Specification {
 
   def 'should respond with 404 when booking does not exist'() {
     when:
-    def response = request(uri('/api/bookings/0')).get()
+    def response = request(uri('/api/bookings/0'), JSON_MEDIATYPE).get()
 
     then:
     404 == response.status
   }
 
-  private Invocation.Builder request(String href) {
-    client.target(href).request().accept(Siren4J.JSON_MEDIATYPE)
+  private Invocation.Builder request(String href, String mediaType) {
+    client.target(href).request().accept(mediaType)
   }
 
-  private Invocation.Builder request(URI uri) {
-    client.target(uri).request().accept(Siren4J.JSON_MEDIATYPE)
+  private Invocation.Builder request(URI uri, String mediaType) {
+    client.target(uri).request().accept(mediaType)
   }
 
   private static String uri(String relative = '') {
