@@ -63,7 +63,7 @@ public abstract class BaseInMemoryRepository<E extends IdentifiableAndVersioned>
         final int startIndex = startIndex(pagination.getOffset());
         final int endIndex = endIndex(startIndex, pagination.getLimit());
         return new PaginatedResult<>(new ArrayList<>(store.values()).subList(startIndex, endIndex),
-                new Pagination(startIndex, endIndex), totalCount());
+                new Pagination(startIndex, endIndex - startIndex), totalCount());
     }
 
     @Override

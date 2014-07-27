@@ -1,0 +1,38 @@
+{
+    "_links": {
+        "curies": {
+            "href": "$baseURI/api/doc/{rel}",
+            "name": "get-some-rest",
+            "templated": true
+        },
+        "self": {
+            "href": "$baseURI/api/hotels?offset=2"
+        },
+        "previous": {
+            "href": "$baseURI/api/hotels"
+        }
+    },
+    "limit": 2,
+    "offset": 2,
+    "total": 4,
+    "_embedded": {
+        "get-some-rest:hotel": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "$baseURI/api/hotels/3"
+                    }
+                },
+                "name": "Premier Palace"
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "$baseURI/api/hotels/4"
+                    }
+                },
+                "name": "Fairmont"
+            }
+        ]
+    }
+}

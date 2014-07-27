@@ -167,19 +167,19 @@ class ApiSpecification extends Specification {
     bookingsURI
 
     when:
-    def hotelsPage1Payload = request(hotelsURI, JSON_MEDIATYPE).get(String)
+    def hotelsPage1Payload = request(hotelsURI, HAL_JSON).get(String)
 
     then:
-    def hotelsPage1 = assertTemplateNotStrict('hotels-page1.json', 'siren', hotelsPage1Payload)
-    def nextHotelsPageURI = hotelsPage1.links?.find({ it.rel.contains('next') })?.href as String
+    def hotelsPage1 = assertTemplateNotStrict('hotels-page1.json', 'hal', hotelsPage1Payload)
+    def nextHotelsPageURI = hotelsPage1._links?.get('next')?.href as String
     nextHotelsPageURI
 
     when:
-    def hotelsPage2Payload = request(nextHotelsPageURI, JSON_MEDIATYPE).get(String)
+    def hotelsPage2Payload = request(nextHotelsPageURI, HAL_JSON).get(String)
 
     then:
-    def hotelsPage2 = assertTemplateNotStrict('hotels-page2.json', 'siren', hotelsPage2Payload)
-    def hotelURI = hotelsPage2.entities?.get(0)?.links?.find({ it.rel.contains('self') })?.href as String
+    def hotelsPage2 = assertTemplateNotStrict('hotels-page2.json', 'hal', hotelsPage2Payload)
+    def hotelURI = (hotelsPage2._embedded?.get('get-some-rest:hotel') as List)[0]._links?.get('self')?.href as String
     hotelURI
 
     when:

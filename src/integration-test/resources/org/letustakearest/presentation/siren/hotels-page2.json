@@ -2,7 +2,7 @@
     "class": ["hotels"],
     "properties": {
         "offset": 2,
-        "limit": 4,
+        "limit": 2,
         "total": 4
     },
     "entities": [

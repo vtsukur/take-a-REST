@@ -27,6 +27,11 @@ abstract class BaseHalRepresentationAssembler {
                 withNamespace(NAMESPACE, curie());
     }
 
+    protected Representation newRepresentation(final String href) {
+        return representationFactory.newRepresentation(href).
+                withNamespace(NAMESPACE, curie());
+    }
+
     private String curie() {
         return uriInfo.getBaseUriBuilder().segment("doc").build().toString() + "/{rel}";
     }
