@@ -31,7 +31,7 @@ abstract class BaseHalRepresentationAssembler {
         return uriInfo.getBaseUriBuilder().segment("doc").build().toString() + "/{rel}";
     }
 
-    protected String curieRel(final String rel) {
+    protected String rel(final String rel) {
         return NAMESPACE + ":" + rel;
     }
 

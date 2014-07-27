@@ -20,8 +20,8 @@ public class HalEntryPointRepresentationAssembler extends BaseHalRepresentationA
     @Override
     public Object assemble() {
         return newRepresentation(EntryPointResource.selfURI(uriInfo)).
-                withLink(curieRel("hotels"), HotelsResource.selfURI(uriInfo)).
-                withLink(curieRel("bookings"), BookingsResource.selfURI(uriInfo));
+                withLink(rel("hotels"), HotelsResource.selfURI(uriInfo)).
+                withLink(rel("bookings"), BookingsResource.selfURI(uriInfo));
     }
 
 }
