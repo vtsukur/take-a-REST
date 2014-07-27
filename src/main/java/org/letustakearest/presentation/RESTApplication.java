@@ -1,6 +1,7 @@
 package org.letustakearest.presentation;
 
 import org.letustakearest.presentation.resources.BookingsResource;
+import org.letustakearest.presentation.resources.DocResource;
 import org.letustakearest.presentation.resources.EntryPointResource;
 import org.letustakearest.presentation.resources.HotelsResource;
 
@@ -19,6 +20,7 @@ public class RESTApplication extends Application {
 
     public RESTApplication() {
         classes.add(EntryPointResource.class);
+        classes.add(DocResource.class);
         classes.add(HotelsResource.class);
         classes.add(BookingsResource.class);
     }
