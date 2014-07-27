@@ -1,7 +1,5 @@
 package org.letustakearest.presentation
 
-import com.google.code.siren4j.Siren4J
-import com.theoryinpractise.halbuilder.api.RepresentationFactory
 import groovy.json.JsonSlurper
 import groovy.text.SimpleTemplateEngine
 import org.letustakearest.presentation.transitions.BookingData
@@ -10,7 +8,6 @@ import org.letustakearest.presentation.transitions.PayForBookingTransition
 import org.letustakearest.presentation.transitions.UpdateBookingTransition
 import org.skyscreamer.jsonassert.JSONAssert
 import spock.lang.Specification
-import spock.lang.Unroll
 
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.ClientBuilder
