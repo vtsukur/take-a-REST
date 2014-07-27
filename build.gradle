@@ -69,9 +69,6 @@ dependencies {
   }
 
   integrationTestCompile sourceSets.main.output
-  integrationTestCompile sourceSets.test.output
-  integrationTestCompile configurations.testCompile
-  integrationTestRuntime configurations.testRuntime
 
   integrationTestCompile 'org.codehaus.groovy:groovy-all:2.3.3'
   integrationTestCompile('org.spockframework:spock-core:0.7-groovy-2.0') {
