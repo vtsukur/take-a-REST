@@ -39,7 +39,7 @@ class ApiSpecification extends Specification {
     def entryPointPayload = request(startingPoint).get(String)
 
     then:
-    def entryPoint = assertTemplateNotStrict('entryPoint.json', entryPointPayload)
+    def entryPoint = assertTemplateNotStrict('entryPoint.json', 'siren', entryPointPayload)
     def hotelsURI = entryPoint.links?.find({ it.rel.contains('hotels') })?.href as String
     hotelsURI
     def bookingsURI = entryPoint.links?.find({ it.rel.contains('bookings') })?.href as String
@@ -49,7 +49,7 @@ class ApiSpecification extends Specification {
     def hotelsPage1Payload = request(hotelsURI).get(String)
 
     then:
-    def hotelsPage1 = assertTemplateNotStrict('hotels-page1.json', hotelsPage1Payload)
+    def hotelsPage1 = assertTemplateNotStrict('hotels-page1.json', 'siren', hotelsPage1Payload)
     def nextHotelsPageURI = hotelsPage1.links?.find({ it.rel.contains('next') })?.href as String
     nextHotelsPageURI
 
@@ -57,7 +57,7 @@ class ApiSpecification extends Specification {
     def hotelsPage2Payload = request(nextHotelsPageURI).get(String)
 
     then:
-    def hotelsPage2 = assertTemplateNotStrict('hotels-page2.json', hotelsPage2Payload)
+    def hotelsPage2 = assertTemplateNotStrict('hotels-page2.json', 'siren', hotelsPage2Payload)
     def hotelURI = hotelsPage2.entities?.get(0)?.links?.find({ it.rel.contains('self') })?.href as String
     hotelURI
 
@@ -65,7 +65,7 @@ class ApiSpecification extends Specification {
     def hotelPayload = request(hotelURI).get(String)
 
     then:
-    def hotel = assertTemplateNotStrict('hotel.json', hotelPayload)
+    def hotel = assertTemplateNotStrict('hotel.json', 'siren', hotelPayload)
     def bookingAction = hotel.entities?.get(0)?.actions?.find({ it.name == 'book' })
     bookingAction
 
@@ -87,7 +87,7 @@ class ApiSpecification extends Specification {
     def createdBookingPayload = response.readEntity(String)
     def createdBookingETag = response.entityTag.value
     createdBookingETag
-    def createdBooking = assertTemplateNotStrict('booking-created.json', createdBookingPayload, [
+    def createdBooking = assertTemplateNotStrict('booking-created.json', 'siren', createdBookingPayload, [
         bookingURI: bookingURI
     ])
     def updateAction = createdBooking?.actions?.find({ it.name == 'update' })
@@ -116,7 +116,7 @@ class ApiSpecification extends Specification {
     def updatedBookingETag = response.entityTag.value
     createdBookingETag != updatedBookingETag
     def updatedBookingPayload = response.readEntity(String)
-    def updatedBooking = assertTemplateNotStrict('booking-updated.json', updatedBookingPayload, [
+    def updatedBooking = assertTemplateNotStrict('booking-updated.json', 'siren', updatedBookingPayload, [
         bookingURI: bookingURI
     ])
     def paymentAction = updatedBooking?.actions?.find({ it.name == 'pay' })
@@ -135,7 +135,7 @@ class ApiSpecification extends Specification {
     def paidBookingETag = response.entityTag.value
     updatedBookingETag != paidBookingETag
     def paidBookingPayload = response.readEntity(String)
-        assertTemplateNotStrict('booking-paid.json', paidBookingPayload, [
+        assertTemplateNotStrict('booking-paid.json', 'siren', paidBookingPayload, [
         bookingURI: bookingURI
     ])
 
@@ -174,7 +174,7 @@ class ApiSpecification extends Specification {
     def createdBookingPayload = request(bookingURI).get(String)
 
     then:
-    def createdBooking = assertTemplateNotStrict('booking-created.json', createdBookingPayload, [
+    def createdBooking = assertTemplateNotStrict('booking-created.json', 'siren', createdBookingPayload, [
         bookingURI: bookingURI
     ])
     def cancelAction = createdBooking?.actions?.find({ it.name == 'cancel'})
@@ -207,7 +207,7 @@ class ApiSpecification extends Specification {
 
     then:
     400 == response.status
-    assertTemplateNotStrict('invalid-booking-NOT-created.json', bookingCreationErrorPayload)
+    assertTemplateNotStrict('invalid-booking-NOT-created.json', 'siren', bookingCreationErrorPayload)
   }
 
   def 'should respond with 404 when booking does not exist'() {
@@ -230,13 +230,13 @@ class ApiSpecification extends Specification {
     "http://localhost:8080$relative"
   }
 
-  private static String loadTemplate(String name, Map binding) {
-    new SimpleTemplateEngine().createTemplate(ApiSpecification.getResource(name)).make(binding).toString()
+  private static assertTemplateNotStrict(String template, String mediaType, String payload, Map binding = [:]) {
+    JSONAssert.assertEquals(loadTemplate(template, mediaType, [ baseURI: uri() ] << binding), payload, false)
+    toJson(payload)
   }
 
-  private static assertTemplateNotStrict(String template, String payload, Map binding = [:]) {
-    JSONAssert.assertEquals(loadTemplate(template, [ baseURI: uri() ] << binding), payload, false)
-    toJson(payload)
+  private static String loadTemplate(String name, String mediaType, Map binding) {
+    new SimpleTemplateEngine().createTemplate(ApiSpecification.getResource("$mediaType/$name")).make(binding).toString()
   }
 
   private static Response close(Response response) {
