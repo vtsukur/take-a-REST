@@ -20,13 +20,17 @@ public class CustomObjectMapperContextResolver implements ContextResolver<Object
     private final ObjectMapper mapper;
 
     public CustomObjectMapperContextResolver() {
-        mapper = new ObjectMapper();
-        mapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector());
-        mapper.registerModule(new JSR310Module());
+        mapper = customize(new ObjectMapper());
     }
 
     @Override
     public ObjectMapper getContext(final Class<?> type) {
+        return mapper;
+    }
+
+    static ObjectMapper customize(final ObjectMapper mapper) {
+        mapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector());
+        mapper.registerModule(new JSR310Module());
         return mapper;
     }
 

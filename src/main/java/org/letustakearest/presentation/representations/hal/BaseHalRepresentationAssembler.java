@@ -2,7 +2,7 @@ package org.letustakearest.presentation.representations.hal;
 
 import com.theoryinpractise.halbuilder.api.Representation;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;
-import com.theoryinpractise.halbuilder.standard.StandardRepresentationFactory;
+import org.letustakearest.infrastructure.jaxrs.CustomRepresentationFactory;
 
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
@@ -16,7 +16,7 @@ abstract class BaseHalRepresentationAssembler {
 
     protected final UriInfo uriInfo;
 
-    protected final RepresentationFactory representationFactory = new StandardRepresentationFactory();
+    protected final RepresentationFactory representationFactory = new CustomRepresentationFactory();
 
     public BaseHalRepresentationAssembler(final UriInfo uriInfo) {
         this.uriInfo = uriInfo;
