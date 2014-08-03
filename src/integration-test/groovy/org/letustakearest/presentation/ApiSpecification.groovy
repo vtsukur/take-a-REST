@@ -264,13 +264,11 @@ class ApiSpecification extends Specification {
     ])
 
     when:
-    def bookings = toJson(request(bookingsURI, JSON_MEDIATYPE).get(String))
+    def bookings = toJson(request(bookingsURI, HAL_JSON).get(String))
 
     then:
-    bookings.entities?.find({
-      it.links?.find({
-        it.rel?.contains('self') && it.href == bookingURI.toString()
-      })
+    bookings._embedded?.get('get-some-rest:booking')?.find({
+      it._links?.self?.href == bookingURI.toString()
     })
   }
 
