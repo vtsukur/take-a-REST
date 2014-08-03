@@ -95,7 +95,7 @@ class ApiSpecification extends Specification {
     updateAction
 
     when:
-    response = request(bookingURI, JSON_MEDIATYPE).header("If-None-Match", createdBookingETag).get()
+    response = request(bookingURI, JSON_MEDIATYPE).header('If-None-Match', createdBookingETag).get()
 
     then:
     Response.Status.NOT_MODIFIED.statusCode == response.status
@@ -190,11 +190,11 @@ class ApiSpecification extends Specification {
     hotel
     def room = (hotel?._embedded?.get('get-some-rest:room') as List)[0]
     room
-    def bookingsLink = room?._links?.get('get-some-rest:bookings')?.href as String
+    def bookingsLink = room?._links?.get('get-some-rest:bookings')
     bookingsLink
 
     when:
-    response = close(request(bookingsLink, HAL_JSON).post(
+    response = close(request(bookingsLink.href as String, HAL_JSON).post(
         entity(
             referenceCreateBookingTransition(room.id as Long),
             APPLICATION_JSON)))
@@ -205,29 +205,29 @@ class ApiSpecification extends Specification {
     bookingURI
 
     when:
-    response = request(bookingURI, JSON_MEDIATYPE).get()
+    response = request(bookingURI, HAL_JSON).get()
 
     then:
     def createdBookingPayload = response.readEntity(String)
     def createdBookingETag = response.entityTag.value
     createdBookingETag
-    def createdBooking = assertTemplateNotStrict('booking-created.json', JSON_MEDIATYPE, createdBookingPayload, [
+    def createdBooking = assertTemplateNotStrict('booking-created.json', HAL_JSON, createdBookingPayload, [
         bookingURI: bookingURI
     ])
-    def updateAction = createdBooking?.actions?.find({ it.name == 'update' })
-    updateAction
+    def updateLink = createdBooking?._links?.get('get-some-rest:booking-update')
+    updateLink
 
     when:
-    response = request(bookingURI, JSON_MEDIATYPE).header("If-None-Match", createdBookingETag).get()
+    response = request(bookingURI, HAL_JSON).header("If-None-Match", createdBookingETag).get()
 
     then:
     Response.Status.NOT_MODIFIED.statusCode == response.status
 
     when:
-    response = request(updateAction.href as String, JSON_MEDIATYPE).
+    response = request(updateLink.href as String, HAL_JSON).
         header('If-Match', createdBookingETag).
         method(
-            updateAction.method as String,
+            'PUT',
             entity(new UpdateBookingTransition(
                 data: new BookingData(
                     from: LocalDate.of(2014, 8, 1),
@@ -240,16 +240,16 @@ class ApiSpecification extends Specification {
     def updatedBookingETag = response.entityTag.value
     createdBookingETag != updatedBookingETag
     def updatedBookingPayload = response.readEntity(String)
-    def updatedBooking = assertTemplateNotStrict('booking-updated.json', JSON_MEDIATYPE, updatedBookingPayload, [
+    def updatedBooking = assertTemplateNotStrict('booking-updated.json', HAL_JSON, updatedBookingPayload, [
         bookingURI: bookingURI
     ])
-    def paymentAction = updatedBooking?.actions?.find({ it.name == 'pay' })
+    def paymentAction = updatedBooking?._links?.get('get-some-rest:booking-payment')
     paymentAction
 
     when:
-    response = request(paymentAction.href as String, JSON_MEDIATYPE).
+    response = request(paymentAction.href as String, HAL_JSON).
         header('If-Match', updatedBookingETag).
-        method(paymentAction.method as String, entity(new PayForBookingTransition(
+        method('POST', entity(new PayForBookingTransition(
             cardholdersName: 'Viktor Yanukovych',
             creditCardNumber: '1234 5678 9012 3456',
             cvv: 123
@@ -259,7 +259,7 @@ class ApiSpecification extends Specification {
     def paidBookingETag = response.entityTag.value
     updatedBookingETag != paidBookingETag
     def paidBookingPayload = response.readEntity(String)
-        assertTemplateNotStrict('booking-paid.json', JSON_MEDIATYPE, paidBookingPayload, [
+        assertTemplateNotStrict('booking-paid.json', HAL_JSON, paidBookingPayload, [
         bookingURI: bookingURI
     ])
 

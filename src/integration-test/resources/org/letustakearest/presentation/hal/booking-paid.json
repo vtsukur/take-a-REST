@@ -1,0 +1,18 @@
+{
+    "_links": {
+        "curies": {
+            "href": "$baseURI/api/doc/{rel}",
+            "name": "get-some-rest",
+            "templated": true
+        },
+        "self": {
+            "href": "$bookingURI"
+        },
+        "get-some-rest:booking-cancellation": {
+            "href": "$bookingURI"
+        }
+    },
+    "from": [2014, 8, 1],
+    "includeBreakfast": false,
+    "to": [2014, 8, 20]
+}

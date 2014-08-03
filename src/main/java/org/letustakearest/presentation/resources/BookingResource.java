@@ -1,6 +1,7 @@
 package org.letustakearest.presentation.resources;
 
 import com.google.code.siren4j.Siren4J;
+import com.theoryinpractise.halbuilder.api.RepresentationFactory;
 import org.letustakearest.application.service.BookingService;
 import org.letustakearest.domain.Booking;
 import org.letustakearest.domain.EntityNotFoundException;
@@ -37,7 +38,7 @@ public class BookingResource {
     }
 
     @GET
-    @Produces({ Siren4J.JSON_MEDIATYPE })
+    @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
     public Response read(@Context final Request request) {
         try {
             final Booking booking = bookingService.findById(id);
@@ -59,7 +60,7 @@ public class BookingResource {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({ Siren4J.JSON_MEDIATYPE })
+    @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
     public Response update(
             final UpdateBookingTransition transition,
             @Context final Request request) {
@@ -84,7 +85,7 @@ public class BookingResource {
 
     @POST
     @Path("/payment")
-    @Produces({ Siren4J.JSON_MEDIATYPE })
+    @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
     @Consumes(MediaType.APPLICATION_JSON)
     public Response pay(
             final PayForBookingTransition transition,
@@ -110,7 +111,7 @@ public class BookingResource {
 
     @POST
     @Path("/payment-async")
-    @Produces({ Siren4J.JSON_MEDIATYPE })
+    @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
     @Consumes(MediaType.APPLICATION_JSON)
     public void pay(
             final PayForBookingTransition transition,
@@ -145,7 +146,7 @@ public class BookingResource {
 
     @POST
     @Path("/payment-fully-async")
-    @Produces({ Siren4J.JSON_MEDIATYPE })
+    @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
     @Consumes(MediaType.APPLICATION_JSON)
     public Response payFullyAsync(
             final PayForBookingTransition transition,
