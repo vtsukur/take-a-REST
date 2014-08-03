@@ -1,6 +1,7 @@
 package org.letustakearest.presentation.resources;
 
 import com.google.code.siren4j.Siren4J;
+import com.theoryinpractise.halbuilder.api.RepresentationFactory;
 import org.letustakearest.application.service.BookingService;
 import org.letustakearest.domain.Booking;
 import org.letustakearest.domain.EntityNotFoundException;
@@ -46,7 +47,7 @@ public class BookingsResource {
     }
 
     @POST
-    @Produces({ Siren4J.JSON_MEDIATYPE })
+    @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(final CreateBookingTransition transition, @Context final UriInfo uriInfo) {
         final Booking result;

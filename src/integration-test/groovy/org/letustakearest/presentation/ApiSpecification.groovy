@@ -194,7 +194,7 @@ class ApiSpecification extends Specification {
     bookingsLink
 
     when:
-    response = close(request(bookingsLink, JSON_MEDIATYPE).post(
+    response = close(request(bookingsLink, HAL_JSON).post(
         entity(
             referenceCreateBookingTransition(room.id as Long),
             APPLICATION_JSON)))
