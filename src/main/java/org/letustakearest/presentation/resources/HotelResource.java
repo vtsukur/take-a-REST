@@ -2,6 +2,7 @@ package org.letustakearest.presentation.resources;
 
 import com.google.code.siren4j.Siren4J;
 import com.google.code.siren4j.component.Entity;
+import com.theoryinpractise.halbuilder.api.RepresentationFactory;
 import org.letustakearest.application.service.HotelService;
 import org.letustakearest.domain.EntityNotFoundException;
 import org.letustakearest.domain.Hotel;
@@ -35,7 +36,7 @@ public class HotelResource {
     }
 
     @GET
-    @Produces({ Siren4J.JSON_MEDIATYPE })
+    @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
     public Response read() {
         final Hotel hotel = findHotel();
         return Response.ok(hotelRepresentationAssembler.from(hotel)).build();

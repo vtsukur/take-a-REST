@@ -183,17 +183,20 @@ class ApiSpecification extends Specification {
     hotelURI
 
     when:
-    def hotelPayload = request(hotelURI, JSON_MEDIATYPE).get(String)
+    def hotelPayload = request(hotelURI, HAL_JSON).get(String)
 
     then:
-    def hotel = assertTemplateNotStrict('hotel.json', JSON_MEDIATYPE, hotelPayload)
-    def bookingAction = hotel.entities?.get(0)?.actions?.find({ it.name == 'book' })
-    bookingAction
+    def hotel = assertTemplateNotStrict('hotel.json', HAL_JSON, hotelPayload)
+    hotel
+    def room = (hotel?._embedded?.get('get-some-rest:room') as List)[0]
+    room
+    def bookingsLink = room?._links?.get('get-some-rest:bookings')?.href as String
+    bookingsLink
 
     when:
-    response = close(request(bookingAction.href as String, JSON_MEDIATYPE).post(
+    response = close(request(bookingsLink, JSON_MEDIATYPE).post(
         entity(
-            referenceCreateBookingTransition(bookingAction.fields?.find({ it.name == 'roomId' })?.value as Long),
+            referenceCreateBookingTransition(room.id as Long),
             APPLICATION_JSON)))
 
     then:

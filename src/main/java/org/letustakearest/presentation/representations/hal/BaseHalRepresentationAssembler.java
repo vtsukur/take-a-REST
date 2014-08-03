@@ -22,6 +22,10 @@ abstract class BaseHalRepresentationAssembler {
         this.uriInfo = uriInfo;
     }
 
+    protected Representation newRepresentation() {
+        return representationFactory.newRepresentation();
+    }
+
     protected Representation newRepresentation(final URI uri) {
         return representationFactory.newRepresentation(uri).
                 withNamespace(NAMESPACE, curie());
