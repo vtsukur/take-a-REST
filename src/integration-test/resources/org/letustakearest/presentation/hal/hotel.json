@@ -1,0 +1,37 @@
+{
+    "_links": {
+        "curies": {
+            "href": "$baseURI/api/doc/{rel}",
+            "name": "get-some-rest",
+            "templated": true
+        },
+        "self": {
+            "href": "$baseURI/api/hotels/3"
+        }
+    },
+    "name": "Premier Palace",
+    "_embedded": {
+        "get-some-rest:room": [
+            {
+                "_links": {
+                    "get-some-rest:bookings": {
+                        "href": "$baseURI/api/bookings"
+                    }
+                },
+                "id": 5,
+                "price": 1000,
+                "type": "SINGLE"
+            },
+            {
+                "_links": {
+                    "get-some-rest:bookings": {
+                        "href": "$baseURI/api/bookings"
+                    }
+                },
+                "id": 6,
+                "price": 1500,
+                "type": "DOUBLE"
+            }
+        ]
+    }
+}
