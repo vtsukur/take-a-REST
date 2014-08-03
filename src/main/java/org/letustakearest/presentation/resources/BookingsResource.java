@@ -38,7 +38,7 @@ public class BookingsResource {
     private BookingRepresentationAssembler bookingRepresentationAssembler;
 
     @GET
-    @Produces({ Siren4J.JSON_MEDIATYPE })
+    @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
     public Response browse() {
         return Response.
                 ok(bookingsRepresentationAssembler.from(bookingService.findAll())).
