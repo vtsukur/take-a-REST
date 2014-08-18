@@ -18,7 +18,7 @@ import java.net.URI;
  * @author volodymyr.tsukur
  */
 @Path("/hotels")
-public class HotelsResource {
+public class _HotelsResource {
 
     @Inject
     private HotelService hotelService;
@@ -41,13 +41,13 @@ public class HotelsResource {
     }
 
     @Path("/{id}")
-    public HotelResource item(@PathParam("id") final Long id) {
-        return new HotelResource(id, hotelService, hotelRepresentationAssembler);
+    public _HotelResource item(@PathParam("id") final Long id) {
+        return new _HotelResource(id, hotelService, hotelRepresentationAssembler);
     }
 
     public static URI selfURI(final UriInfo uriInfo) {
         return uriInfo.getBaseUriBuilder().
-                path(HotelsResource.class).
+                path(_HotelsResource.class).
                 build();
     }
 

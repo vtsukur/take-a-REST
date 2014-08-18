@@ -7,7 +7,7 @@ import com.google.code.siren4j.component.builder.FieldBuilder;
 import com.google.code.siren4j.component.impl.ActionImpl;
 import com.google.code.siren4j.meta.FieldType;
 import org.letustakearest.domain.Hotel;
-import org.letustakearest.presentation.resources.BookingsResource;
+import org.letustakearest.presentation.resources._BookingsResource;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
@@ -39,7 +39,7 @@ class HotelRepresentationBuilder extends BaseHotelRepresentationBuilder {
                                 setName("book").
                                 setComponentClass("booking").
                                 setMethod(ActionImpl.Method.POST).
-                                setHref(uriInfo.getBaseUriBuilder().path(BookingsResource.class).build().toString()).
+                                setHref(uriInfo.getBaseUriBuilder().path(_BookingsResource.class).build().toString()).
                                 setType(MediaType.APPLICATION_JSON).
                                 addField(
                                         FieldBuilder.newInstance().

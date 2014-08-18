@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author volodymyr.tsukur
  */
-public class HotelResource {
+public class _HotelResource {
 
     private Long id;
 
@@ -28,8 +28,8 @@ public class HotelResource {
 
     private HotelRepresentationAssembler hotelRepresentationAssembler;
 
-    public HotelResource(final Long id, final HotelService hotelService,
-            final HotelRepresentationAssembler hotelRepresentationAssembler) {
+    public _HotelResource(final Long id, final HotelService hotelService,
+                          final HotelRepresentationAssembler hotelRepresentationAssembler) {
         this.id = id;
         this.hotelService = hotelService;
         this.hotelRepresentationAssembler = hotelRepresentationAssembler;
@@ -79,7 +79,7 @@ public class HotelResource {
             @Context final UriInfo uriInfo,
             @Context final HttpHeaders httpHeaders) {
         final Hotel hotel = findHotel();
-        if ("2".equals(httpHeaders.getHeaderString("X-Version"))) {
+        if (httpHeaders.getRequestHeader("X-Version").contains("2")) {
             return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo)).build();
         }
         else {
@@ -110,7 +110,7 @@ public class HotelResource {
 
     public static URI selfURI(final Hotel hotel, final UriInfo uriInfo) {
         return uriInfo.getBaseUriBuilder().
-                path(HotelsResource.class).
+                path(_HotelsResource.class).
                 path(hotel.getId().toString()).
                 build();
     }

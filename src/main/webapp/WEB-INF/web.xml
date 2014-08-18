@@ -1,44 +1,31 @@
 <web-app>
-  <display-name>Real REST. Theory and Practice in Java</display-name>
+  <!--<display-name>Take a REST!</display-name>-->
 
-  <servlet>
-    <servlet-name>rest-api</servlet-name>
-    <servlet-class>
-      org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
-    </servlet-class>
-    <init-param>
-      <param-name>javax.ws.rs.Application</param-name>
-      <param-value>org.letustakearest.presentation.RESTApplication</param-value>
-    </init-param>
-    <init-param>
-      <param-name>resteasy.servlet.mapping.prefix</param-name>
-      <param-value>api</param-value>
-    </init-param>
-  </servlet>
+  <!--<servlet>-->
+    <!--<servlet-name>rest-api</servlet-name>-->
+    <!--<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>-->
+    <!--<init-param>-->
+      <!--<param-name>resteasy.servlet.mapping.prefix</param-name>-->
+      <!--<param-value>api</param-value>-->
+    <!--</init-param>-->
+    <!--<init-param>-->
+      <!--<param-name>javax.ws.rs.Application</param-name>-->
+      <!--<param-value>org.letustakearest.demo.presentation.RESTApplication</param-value>-->
+    <!--</init-param>-->
+  <!--</servlet>-->
 
-  <servlet-mapping>
-    <servlet-name>rest-api</servlet-name>
-    <url-pattern>/api/*</url-pattern>
-  </servlet-mapping>
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>rest-api</servlet-name>-->
+    <!--<url-pattern>/api/*</url-pattern>-->
+  <!--</servlet-mapping>-->
 
-  <servlet>
-    <servlet-name>index</servlet-name>
-    <servlet-class>
-      org.letustakearest.infrastructure.web.servlet.IndexServlet
-    </servlet-class>
-  </servlet>
+  <!--<listener>-->
+    <!--<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>-->
+  <!--</listener>-->
 
-  <servlet-mapping>
-    <servlet-name>index</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>
+  <!--<context-param>-->
+    <!--<param-name>resteasy.injector.factory</param-name>-->
+    <!--<param-value>org.jboss.resteasy.cdi.CdiInjectorFactory</param-value>-->
+  <!--</context-param>-->
 
-  <listener>
-    <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
-  </listener>
-
-  <context-param>
-    <param-name>resteasy.injector.factory</param-name>
-    <param-value>org.jboss.resteasy.cdi.CdiInjectorFactory</param-value>
-  </context-param>
 </web-app>

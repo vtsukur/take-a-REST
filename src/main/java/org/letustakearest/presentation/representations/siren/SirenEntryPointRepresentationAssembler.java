@@ -4,9 +4,9 @@ import com.google.code.siren4j.component.Link;
 import com.google.code.siren4j.component.builder.EntityBuilder;
 import com.google.code.siren4j.component.builder.LinkBuilder;
 import org.letustakearest.presentation.representations.EntryPointRepresentationAssembler;
-import org.letustakearest.presentation.resources.BookingsResource;
-import org.letustakearest.presentation.resources.EntryPointResource;
-import org.letustakearest.presentation.resources.HotelsResource;
+import org.letustakearest.presentation.resources._BookingsResource;
+import org.letustakearest.presentation.resources._EntryPointResource;
+import org.letustakearest.presentation.resources._HotelsResource;
 
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
@@ -29,11 +29,11 @@ public class SirenEntryPointRepresentationAssembler extends BaseSirenRepresentat
                         setRelationship(Link.RELATIONSHIP_SELF).
                         build()).
                 addLink(LinkBuilder.newInstance().
-                        setHref(HotelsResource.selfURI(uriInfo).toString()).
+                        setHref(_HotelsResource.selfURI(uriInfo).toString()).
                         setRelationship("hotels").
                         build()).
                 addLink(LinkBuilder.newInstance().
-                        setHref(BookingsResource.selfURI(uriInfo).toString()).
+                        setHref(_BookingsResource.selfURI(uriInfo).toString()).
                         setRelationship("bookings").
                         build()).
                 build();
@@ -44,7 +44,7 @@ public class SirenEntryPointRepresentationAssembler extends BaseSirenRepresentat
     }
 
     private URI selfURI() {
-        return EntryPointResource.selfURI(uriInfo);
+        return _EntryPointResource.selfURI(uriInfo);
     }
 
 }

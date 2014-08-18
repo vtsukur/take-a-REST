@@ -349,7 +349,7 @@ class ApiSpecification extends Specification {
   }
 
   private static String uri(String relative = '') {
-    "http://localhost:8080$relative"
+    "http://localhost:8080/let-us-take-a-REST-1.0$relative"
   }
 
   private static assertTemplateNotStrict(String template, String mediaType, String payload, Map binding = [:]) {

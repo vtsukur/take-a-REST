@@ -4,7 +4,7 @@ import com.google.code.siren4j.component.Link;
 import com.google.code.siren4j.component.builder.EntityBuilder;
 import com.google.code.siren4j.component.builder.LinkBuilder;
 import org.letustakearest.domain.Hotel;
-import org.letustakearest.presentation.resources.HotelResource;
+import org.letustakearest.presentation.resources._HotelResource;
 
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
@@ -42,7 +42,7 @@ class BaseHotelRepresentationBuilder {
     }
 
     static URI selfURI(final Hotel hotel, final UriInfo uriInfo) {
-        return HotelResource.selfURI(hotel, uriInfo);
+        return _HotelResource.selfURI(hotel, uriInfo);
     }
 
 }

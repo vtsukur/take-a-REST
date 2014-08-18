@@ -3,7 +3,7 @@ package org.letustakearest.presentation.representations.siren;
 import com.google.code.siren4j.component.Entity;
 import com.google.code.siren4j.component.builder.LinkBuilder;
 import org.letustakearest.domain.Hotel;
-import org.letustakearest.presentation.resources.HotelsResource;
+import org.letustakearest.presentation.resources._HotelsResource;
 
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
@@ -41,7 +41,7 @@ class HotelEmbeddedRepresentationBuilder extends BaseHotelRepresentationBuilder 
 
     static URI selfURIAsPlace(final Hotel hotel, final UriInfo uriInfo) {
         return uriInfo.getBaseUriBuilder().
-                path(HotelsResource.class).
+                path(_HotelsResource.class).
                 path(hotel.getId().toString()).
                 path("as-place").
                 build();

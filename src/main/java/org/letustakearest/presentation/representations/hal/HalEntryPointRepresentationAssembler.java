@@ -1,9 +1,9 @@
 package org.letustakearest.presentation.representations.hal;
 
 import org.letustakearest.presentation.representations.EntryPointRepresentationAssembler;
-import org.letustakearest.presentation.resources.BookingsResource;
-import org.letustakearest.presentation.resources.EntryPointResource;
-import org.letustakearest.presentation.resources.HotelsResource;
+import org.letustakearest.presentation.resources._BookingsResource;
+import org.letustakearest.presentation.resources._EntryPointResource;
+import org.letustakearest.presentation.resources._HotelsResource;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -19,9 +19,9 @@ public class HalEntryPointRepresentationAssembler extends BaseHalRepresentationA
 
     @Override
     public Object assemble() {
-        return newRepresentation(EntryPointResource.selfURI(uriInfo)).
-                withLink(rel("hotels"), HotelsResource.selfURI(uriInfo)).
-                withLink(rel("bookings"), BookingsResource.selfURI(uriInfo));
+        return newRepresentation(_EntryPointResource.selfURI(uriInfo)).
+                withLink(rel("hotels"), _HotelsResource.selfURI(uriInfo)).
+                withLink(rel("bookings"), _BookingsResource.selfURI(uriInfo));
     }
 
 }

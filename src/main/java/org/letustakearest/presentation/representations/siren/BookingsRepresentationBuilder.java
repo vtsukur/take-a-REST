@@ -5,7 +5,7 @@ import com.google.code.siren4j.component.Link;
 import com.google.code.siren4j.component.builder.EntityBuilder;
 import com.google.code.siren4j.component.builder.LinkBuilder;
 import org.letustakearest.domain.Booking;
-import org.letustakearest.presentation.resources.BookingsResource;
+import org.letustakearest.presentation.resources._BookingsResource;
 
 import javax.ws.rs.core.UriInfo;
 import java.util.Collection;
@@ -43,7 +43,7 @@ class BookingsRepresentationBuilder {
     }
 
     private String selfHref() {
-        return BookingsResource.selfURI(uriInfo).toString();
+        return _BookingsResource.selfURI(uriInfo).toString();
     }
 
 }

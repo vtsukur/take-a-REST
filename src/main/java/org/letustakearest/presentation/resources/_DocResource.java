@@ -10,7 +10,7 @@ import java.io.InputStream;
  * @author volodymyr.tsukur
  */
 @Path("/doc")
-public class DocResource {
+public class _DocResource {
 
     @GET
     @Path("/{rel}")

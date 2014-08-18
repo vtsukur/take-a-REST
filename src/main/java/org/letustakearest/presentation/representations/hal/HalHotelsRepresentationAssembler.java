@@ -5,8 +5,8 @@ import org.letustakearest.application.service.Pagination;
 import org.letustakearest.domain.Hotel;
 import org.letustakearest.domain.PaginatedResult;
 import org.letustakearest.presentation.representations.HotelsRepresentationAssembler;
-import org.letustakearest.presentation.resources.HotelResource;
-import org.letustakearest.presentation.resources.HotelsResource;
+import org.letustakearest.presentation.resources._HotelResource;
+import org.letustakearest.presentation.resources._HotelsResource;
 
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
@@ -69,7 +69,7 @@ public class HalHotelsRepresentationAssembler extends BaseHalRepresentationAssem
     }
 
     private Representation newEmbeddedHotelRepresentation(final Hotel hotel) {
-        return newRepresentation(HotelResource.selfURI(hotel, uriInfo)).
+        return newRepresentation(_HotelResource.selfURI(hotel, uriInfo)).
                 withProperty("name", hotel.getName());
     }
 
@@ -83,7 +83,7 @@ public class HalHotelsRepresentationAssembler extends BaseHalRepresentationAssem
     }
 
     private String selfHref() {
-        return HotelsResource.selfURI(uriInfo).toString();
+        return _HotelsResource.selfURI(uriInfo).toString();
     }
 
 }

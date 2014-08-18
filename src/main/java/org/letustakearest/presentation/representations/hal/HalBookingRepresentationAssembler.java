@@ -3,7 +3,7 @@ package org.letustakearest.presentation.representations.hal;
 import com.theoryinpractise.halbuilder.api.Representation;
 import org.letustakearest.domain.Booking;
 import org.letustakearest.presentation.representations.BookingRepresentationAssembler;
-import org.letustakearest.presentation.resources.BookingResource;
+import org.letustakearest.presentation.resources._BookingResource;
 
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
@@ -72,7 +72,7 @@ public class HalBookingRepresentationAssembler extends BaseHalRepresentationAsse
         }
 
         private URI selfURI(final Booking booking) {
-            return BookingResource.selfURI(booking, uriInfo);
+            return _BookingResource.selfURI(booking, uriInfo);
         }
 
     }

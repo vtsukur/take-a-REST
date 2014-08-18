@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author volodymyr.tsukur
  */
-public class BookingResource {
+public class _BookingResource {
 
     private final Long id;
 
@@ -30,8 +30,8 @@ public class BookingResource {
 
     private final BookingRepresentationAssembler bookingRepresentationAssembler;
 
-    public BookingResource(final Long id, final BookingService bookingService,
-            final BookingRepresentationAssembler bookingRepresentationAssembler) {
+    public _BookingResource(final Long id, final BookingService bookingService,
+                            final BookingRepresentationAssembler bookingRepresentationAssembler) {
         this.id = id;
         this.bookingService = bookingService;
         this.bookingRepresentationAssembler = bookingRepresentationAssembler;
@@ -160,7 +160,7 @@ public class BookingResource {
                     bookingService.pay(booking, transition);
                 }
             }, 20000);
-            return Response.accepted().location(selfURI(booking, uriInfo)).build();
+            return Response.status(Response.Status.ACCEPTED).location(selfURI(booking, uriInfo)).build();
         }
         catch (final EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -179,7 +179,7 @@ public class BookingResource {
 
     public static URI selfURI(final Booking booking, final UriInfo uriInfo) {
         return uriInfo.getBaseUriBuilder().
-                path(BookingsResource.class).
+                path(_BookingsResource.class).
                 path(booking.getId().toString()).
                 build();
     }

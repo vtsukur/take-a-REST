@@ -21,10 +21,10 @@ import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 
 /**
- * @author volodymyr.tsukur
- */
+* @author volodymyr.tsukur
+*/
 @Path("/bookings")
-public class BookingsResource {
+public class _BookingsResource {
 
     @Inject
     private BookingService bookingService;
@@ -56,7 +56,7 @@ public class BookingsResource {
         } catch (EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        final URI bookingURI = BookingResource.selfURI(result, uriInfo);
+        final URI bookingURI = _BookingResource.selfURI(result, uriInfo);
         return Response.created(bookingURI).build();
     }
 
@@ -70,18 +70,18 @@ public class BookingsResource {
         } catch (EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        final URI bookingURI = BookingResource.selfURI(result, uriInfo);
+        final URI bookingURI = _BookingResource.selfURI(result, uriInfo);
         return Response.created(bookingURI).build();
     }
 
     @Path("/{id}")
-    public BookingResource item(@PathParam("id") final Long id) {
-        return new BookingResource(id, bookingService, bookingRepresentationAssembler);
+    public _BookingResource item(@PathParam("id") final Long id) {
+        return new _BookingResource(id, bookingService, bookingRepresentationAssembler);
     }
 
     public static URI selfURI(final UriInfo uriInfo) {
         return uriInfo.getBaseUriBuilder().
-                path(BookingsResource.class).
+                path(_BookingsResource.class).
                 build();
     }
 

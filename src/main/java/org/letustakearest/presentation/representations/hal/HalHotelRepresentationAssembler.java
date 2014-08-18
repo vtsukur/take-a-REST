@@ -4,8 +4,8 @@ import com.theoryinpractise.halbuilder.api.Representation;
 import org.letustakearest.domain.Hotel;
 import org.letustakearest.domain.Place;
 import org.letustakearest.presentation.representations.HotelRepresentationAssembler;
-import org.letustakearest.presentation.resources.BookingsResource;
-import org.letustakearest.presentation.resources.HotelResource;
+import org.letustakearest.presentation.resources._BookingsResource;
+import org.letustakearest.presentation.resources._HotelResource;
 
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
@@ -41,11 +41,11 @@ public class HalHotelRepresentationAssembler extends BaseHalRepresentationAssemb
                 withProperty("id", place.getId()).
                 withProperty("type", place.getCategory()).
                 withProperty("price", place.getPrice()).
-                withLink(rel("bookings"), BookingsResource.selfURI(uriInfo));
+                withLink(rel("bookings"), _BookingsResource.selfURI(uriInfo));
     }
 
     private URI selfURI(final Hotel hotel) {
-        return HotelResource.selfURI(hotel, uriInfo);
+        return _HotelResource.selfURI(hotel, uriInfo);
     }
 
 }

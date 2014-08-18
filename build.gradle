@@ -43,16 +43,19 @@ sourceSets {
 }
 
 dependencies {
+  providedCompile('org.jboss.resteasy:jaxrs-api:3.0.8.Final')
   providedCompile('javax.servlet:javax.servlet-api:3.1.0')
-  compile('org.jboss.resteasy:resteasy-jaxrs:3.0.8.Final')
-  compile('org.jboss.resteasy:resteasy-cdi:3.0.8.Final')
-  compile('org.jboss.resteasy:resteasy-jackson2-provider:3.0.8.Final')
-  compile('org.jboss.resteasy:resteasy-servlet-initializer:3.0.8.Final')
-  compile('org.jboss.resteasy:async-http-servlet-3.0:3.0.8.Final')
-  compile('org.jboss.weld.servlet:weld-servlet:2.2.1.Final')
+  providedCompile('org.jboss.resteasy:resteasy-jaxrs:3.0.8.Final')
+  providedCompile('org.jboss.resteasy:resteasy-cdi:3.0.8.Final')
+  providedCompile('org.jboss.resteasy:resteasy-jackson2-provider:3.0.8.Final')
+  providedCompile('org.jboss.resteasy:resteasy-servlet-initializer:3.0.8.Final')
+  providedCompile('org.jboss.resteasy:async-http-servlet-3.0:3.0.8.Final')
+  providedCompile('org.jboss.weld.servlet:weld-servlet:2.2.1.Final')
   compile('log4j:log4j:1.2.14')
   compile('org.projectlombok:lombok:1.14.2')
-  compile('com.googlecode.siren4j:siren4j:1.0.14')
+  compile('com.googlecode.siren4j:siren4j:1.0.14') {
+    exclude group: 'com.sun.jersey'
+  }
   compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.4.0')
   compile('org.apache.commons:commons-lang3:3.3.2')
   compile('javax.validation:validation-api:1.1.0.Final')

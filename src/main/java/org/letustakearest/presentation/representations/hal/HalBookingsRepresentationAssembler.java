@@ -3,8 +3,8 @@ package org.letustakearest.presentation.representations.hal;
 import com.theoryinpractise.halbuilder.api.Representation;
 import org.letustakearest.domain.Booking;
 import org.letustakearest.presentation.representations.BookingsRepresentationAssembler;
-import org.letustakearest.presentation.resources.BookingResource;
-import org.letustakearest.presentation.resources.BookingsResource;
+import org.letustakearest.presentation.resources._BookingResource;
+import org.letustakearest.presentation.resources._BookingsResource;
 
 import javax.ws.rs.core.UriInfo;
 import java.util.Collection;
@@ -31,7 +31,7 @@ public class HalBookingsRepresentationAssembler extends BaseHalRepresentationAss
         private final Collection<Booking> bookings;
 
         Builder(final Collection<Booking> bookings) {
-            representation = newRepresentation(BookingsResource.selfURI(uriInfo));
+            representation = newRepresentation(_BookingsResource.selfURI(uriInfo));
             this.bookings = bookings;
         }
 
@@ -48,7 +48,7 @@ public class HalBookingsRepresentationAssembler extends BaseHalRepresentationAss
         }
 
         private Representation toEmbeddedBookingRepresentation(final Booking booking) {
-            return newRepresentation(BookingResource.selfURI(booking, uriInfo));
+            return newRepresentation(_BookingResource.selfURI(booking, uriInfo));
         }
 
     }

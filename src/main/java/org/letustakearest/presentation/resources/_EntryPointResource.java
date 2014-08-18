@@ -18,7 +18,7 @@ import java.net.URI;
  * @author volodymyr.tsukur
  */
 @Path("/")
-public class EntryPointResource {
+public class _EntryPointResource {
 
     @Inject
     @SelectByAcceptHeader
@@ -35,7 +35,7 @@ public class EntryPointResource {
 
     public static URI selfURI(final UriInfo uriInfo) {
         return uriInfo.getBaseUriBuilder().
-                path(EntryPointResource.class).
+                path(_EntryPointResource.class).
                 build();
     }
 

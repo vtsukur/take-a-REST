@@ -7,7 +7,7 @@ import com.google.code.siren4j.component.builder.LinkBuilder;
 import org.letustakearest.application.service.Pagination;
 import org.letustakearest.domain.Hotel;
 import org.letustakearest.domain.PaginatedResult;
-import org.letustakearest.presentation.resources.HotelsResource;
+import org.letustakearest.presentation.resources._HotelsResource;
 
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
@@ -90,7 +90,7 @@ class HotelsRepresentationBuilder {
     }
 
     private String selfHref() {
-        return HotelsResource.selfURI(uriInfo).toString();
+        return _HotelsResource.selfURI(uriInfo).toString();
     }
 
 }
