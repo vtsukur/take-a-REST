@@ -2,16 +2,11 @@ buildscript {
   repositories {
     jcenter()
   }
-
-  dependencies {
-    classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.3'
-  }
 }
 
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'war'
-apply plugin: 'tomcat'
 apply plugin: 'idea'
 
 repositories {
@@ -45,12 +40,9 @@ sourceSets {
 dependencies {
   providedCompile('org.jboss.resteasy:jaxrs-api:3.0.8.Final')
   providedCompile('javax.servlet:javax.servlet-api:3.1.0')
+  providedCompile('javax.enterprise:cdi-api:1.1')
   providedCompile('org.jboss.resteasy:resteasy-jaxrs:3.0.8.Final')
-  providedCompile('org.jboss.resteasy:resteasy-cdi:3.0.8.Final')
   providedCompile('org.jboss.resteasy:resteasy-jackson2-provider:3.0.8.Final')
-  providedCompile('org.jboss.resteasy:resteasy-servlet-initializer:3.0.8.Final')
-  providedCompile('org.jboss.resteasy:async-http-servlet-3.0:3.0.8.Final')
-  providedCompile('org.jboss.weld.servlet:weld-servlet:2.2.1.Final')
   compile('log4j:log4j:1.2.14')
   compile('org.projectlombok:lombok:1.14.2')
   compile('com.googlecode.siren4j:siren4j:1.0.14') {
@@ -64,13 +56,6 @@ dependencies {
   compile('com.theoryinpractise:halbuilder-standard:3.0.1')
   compile('com.google.guava:guava:17.0')
 
-  def tomcatVersion = '7.0.54'
-  tomcat("org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}")
-  tomcat("org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}")
-  tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
-    exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
-  }
-
   integrationTestCompile sourceSets.main.output
 
   integrationTestCompile 'org.codehaus.groovy:groovy-all:2.3.3'
@@ -79,34 +64,6 @@ dependencies {
   }
   integrationTestCompile('org.jboss.resteasy:resteasy-client:3.0.8.Final')
   integrationTestCompile('org.skyscreamer:jsonassert:1.2.3')
-}
-
-ext {
-  tomcatStopPort = 8081
-  tomcatStopKey = 'stopKey'
-}
-
-task integrationTomcatRunWar(type: org.gradle.api.plugins.tomcat.tasks.TomcatRunWar) {
-  stopPort = tomcatStopPort
-  stopKey = tomcatStopKey
-  daemon = true
-}
-
-task integrationTomcatStop(type: org.gradle.api.plugins.tomcat.tasks.TomcatStop) {
-  stopPort = tomcatStopPort
-  stopKey = tomcatStopKey
-}
-
-def contextPath = '/'
-tomcatRunWar.contextPath = contextPath
-integrationTomcatRunWar.contextPath = contextPath
-
-task integrationTest(type: Test) {
-  description = "Runs integration tests"
-  testClassesDir = sourceSets.integrationTest.output.classesDir
-  classpath = sourceSets.integrationTest.runtimeClasspath
-  dependsOn integrationTomcatRunWar
-  finalizedBy integrationTomcatStop
 }
 
 task wrapper(type: Wrapper) {
