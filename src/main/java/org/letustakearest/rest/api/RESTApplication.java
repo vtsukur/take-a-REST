@@ -1,4 +1,4 @@
-package org.letustakearest.demo.presentation;
+package org.letustakearest.rest.api;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -14,7 +14,7 @@ public class RESTApplication extends Application {
     private final Set<Class<?>> classes = new HashSet<>();
 
     public RESTApplication() {
-        classes.add(HelloWorldResource.class);
+        classes.add(EntryPoint.class);
     }
 
     @Override

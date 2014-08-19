@@ -1,4 +1,4 @@
-package org.letustakearest.demo.presentation;
+package org.letustakearest.rest.api;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -7,13 +7,13 @@ import javax.ws.rs.Produces;
 /**
  * @author volodymyr.tsukur
  */
-@Path("/hello-world")
-public class HelloWorldResource {
+@Path("/")
+public class EntryPoint {
 
     @GET
     @Produces("text/plain")
     public String helloWorld() {
-        return "Hello, World!";
+        return "Hello, world!";
     }
 
 }
