@@ -1,13 +1,10 @@
 package org.letustakearest.presentation.resources;
 
-import com.google.code.siren4j.Siren4J;
-import com.google.code.siren4j.component.Entity;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;
 import org.letustakearest.application.service.HotelService;
 import org.letustakearest.domain.EntityNotFoundException;
 import org.letustakearest.domain.Hotel;
 import org.letustakearest.presentation.representations.HotelRepresentationAssembler;
-import org.letustakearest.presentation.representations.siren.HotelWithPlacesRepresentationBuilder;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -36,17 +33,17 @@ public class _HotelResource {
     }
 
     @GET
-    @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
+    @Produces({ RepresentationFactory.HAL_JSON })
     public Response read() {
         final Hotel hotel = findHotel();
         return Response.ok(hotelRepresentationAssembler.from(hotel)).build();
     }
 
-    @GET
-    @Produces({ "application/vnd.siren.hotel.v2+json" })
-    public Response readWithPlaces(@Context final UriInfo uriInfo) {
-        return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo)).build();
-    }
+//    @GET
+//    @Produces({ "application/vnd.siren.hotel.v2+json" })
+//    public Response readWithPlaces(@Context final UriInfo uriInfo) {
+//        return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo)).build();
+//    }
 
     @GET
     @Path("/runtime-content-negotiation")
@@ -54,7 +51,6 @@ public class _HotelResource {
             @Context final UriInfo uriInfo,
             @Context final Request request) {
         final List<Variant> variants = Variant.mediaTypes(
-                MediaType.valueOf(Siren4J.JSON_MEDIATYPE),
                 MediaType.valueOf("application/vnd.siren.hotel.v2+json")
         ).build();
         final Variant variant = request.selectVariant(variants);
@@ -63,41 +59,36 @@ public class _HotelResource {
         }
         else {
             final Hotel hotel = findHotel();
-            if (variant.getMediaType().equals(MediaType.valueOf("application/vnd.siren.hotel.v2+json"))) {
-                return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo), variant).build();
-            }
-            else {
-                return Response.ok(hotelRepresentationAssembler.from(hotel), variant).build();
-            }
+            return Response.ok(hotelRepresentationAssembler.from(hotel), variant).build();
         }
     }
 
-    @GET
-    @Produces({ Siren4J.JSON_MEDIATYPE })
-    @Path("/versioning-by-header")
-    public Response readViaRuntimeContentNegotiation(
-            @Context final UriInfo uriInfo,
-            @Context final HttpHeaders httpHeaders) {
-        final Hotel hotel = findHotel();
-        if (httpHeaders.getRequestHeader("X-Version").contains("2")) {
-            return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo)).build();
-        }
-        else {
-            return Response.ok(hotelRepresentationAssembler.from(hotel)).build();
-        }
-    }
-
-    @GET
-    @Path("/as-place")
-    @Produces({ Siren4J.JSON_MEDIATYPE })
-    public Response readWithPlacesViaURI(@Context final UriInfo uriInfo) {
-        return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo)).build();
-    }
-
-    private Entity prepareHotelAsPlaceRepresentation(final UriInfo uriInfo) {
-        final Hotel hotel = findHotel();
-        return new HotelWithPlacesRepresentationBuilder(hotel, uriInfo).build();
-    }
+//    @GET
+//    @Produces({ Siren4J.JSON_MEDIATYPE })
+//    @Path("/versioning-by-header")
+//    public Response readViaRuntimeContentNegotiation(
+//            @Context final UriInfo uriInfo,
+//            @Context final HttpHeaders httpHeaders) {
+//        final Hotel hotel = findHotel();
+//        if (httpHeaders.getRequestHeader("X-Version").contains("2")) {
+//            return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo)).build();
+//        }
+//        else {
+//            return Response.ok(hotelRepresentationAssembler.from(hotel)).build();
+//        }
+//    }
+//
+//    @GET
+//    @Path("/as-place")
+//    @Produces({ Siren4J.JSON_MEDIATYPE })
+//    public Response readWithPlacesViaURI(@Context final UriInfo uriInfo) {
+//        return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo)).build();
+//    }
+//
+//    private Entity prepareHotelAsPlaceRepresentation(final UriInfo uriInfo) {
+//        final Hotel hotel = findHotel();
+//        return new HotelWithPlacesRepresentationBuilder(hotel, uriInfo).build();
+//    }
 
     private Hotel findHotel() throws WebApplicationException {
         try {

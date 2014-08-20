@@ -1,6 +1,5 @@
 package org.letustakearest.presentation.resources;
 
-import com.google.code.siren4j.Siren4J;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;
 import org.letustakearest.presentation.cache.CacheControlFactory;
 import org.letustakearest.presentation.representations.EntryPointRepresentationAssembler;
@@ -25,7 +24,7 @@ public class _EntryPointResource {
     private EntryPointRepresentationAssembler entryPointRepresentationAssembler;
 
     @GET
-    @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
+    @Produces({ RepresentationFactory.HAL_JSON })
     public Response services() {
         return Response.
                 ok(entryPointRepresentationAssembler.assemble()).

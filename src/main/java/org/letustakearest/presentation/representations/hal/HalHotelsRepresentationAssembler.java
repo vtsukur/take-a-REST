@@ -11,9 +11,6 @@ import org.letustakearest.presentation.resources._HotelsResource;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
-import static com.google.code.siren4j.component.Link.RELATIONSHIP_NEXT;
-import static com.google.code.siren4j.component.Link.RELATIONSHIP_PREVIOUS;
-
 /**
  * @author volodymyr.tsukur
  */
@@ -42,7 +39,7 @@ public class HalHotelsRepresentationAssembler extends BaseHalRepresentationAssem
             final PaginatedResult<Hotel> hotels) {
         if (hotels.getActualPagination().getOffset() > 0) {
             final int prevOffset = Math.max(hotels.getActualPagination().getOffset() - Pagination.DEFAULT.getLimit(), 0);
-            return representation.withLink(RELATIONSHIP_PREVIOUS, hrefWithOffset(prevOffset));
+            return representation.withLink("previous", hrefWithOffset(prevOffset));
         }
         else {
             return representation;
@@ -53,7 +50,7 @@ public class HalHotelsRepresentationAssembler extends BaseHalRepresentationAssem
             final PaginatedResult<Hotel> hotels) {
         final int nextOffset = hotels.getActualPagination().getOffset() + Pagination.DEFAULT.getLimit();
         if (nextOffset < hotels.getTotal()) {
-            return representation.withLink(RELATIONSHIP_NEXT, hrefWithOffset(nextOffset));
+            return representation.withLink("next", hrefWithOffset(nextOffset));
         }
         else {
             return representation;

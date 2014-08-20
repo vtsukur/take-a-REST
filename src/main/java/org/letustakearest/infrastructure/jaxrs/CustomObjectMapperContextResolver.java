@@ -3,7 +3,6 @@ package org.letustakearest.infrastructure.jaxrs;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
-import com.google.code.siren4j.Siren4J;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -14,7 +13,7 @@ import javax.ws.rs.ext.Provider;
  * @author volodymyr.tsukur
  */
 @Provider
-@Produces({ Siren4J.JSON_MEDIATYPE, MediaType.APPLICATION_JSON })
+@Produces({ MediaType.APPLICATION_JSON })
 public class CustomObjectMapperContextResolver implements ContextResolver<ObjectMapper> {
 
     private final ObjectMapper mapper;
