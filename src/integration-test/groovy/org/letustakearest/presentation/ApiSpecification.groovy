@@ -210,14 +210,14 @@ class ApiSpecification extends Specification {
 //    400 == response.status
 //    assertTemplateNotStrict('invalid-booking-NOT-created.json', HAL_JSON, bookingCreationErrorPayload)
 //  }
-
-  def 'should respond with 404 when booking does not exist'() {
-    when:
-    def response = request(uri('/api/bookings/0'), HAL_JSON).get()
-
-    then:
-    404 == response.status
-  }
+//
+//  def 'should respond with 404 when booking does not exist'() {
+//    when:
+//    def response = request(uri('/api/bookings/0'), HAL_JSON).get()
+//
+//    then:
+//    404 == response.status
+//  }
 
   private Invocation.Builder request(String href, String mediaType) {
     client.target(href).request().accept(mediaType)
