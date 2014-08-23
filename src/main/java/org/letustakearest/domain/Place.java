@@ -8,17 +8,20 @@ import lombok.Getter;
 @Getter
 public final class Place extends IdentifiableAndVersioned {
 
+    private Hotel hotel;
+
     private Type type;
 
     private Category category;
 
     private Integer price;
 
-    public Place(Category category, Integer price) {
-        this(Type.ROOM, category, price);
+    public Place(Hotel hotel, Category category, Integer price) {
+        this(hotel, Type.ROOM, category, price);
     }
 
-    public Place(Type type, Category category, Integer price) {
+    public Place(Hotel hotel, Type type, Category category, Integer price) {
+        this.hotel = hotel;
         this.type = type;
         this.category = category;
         this.price = price;

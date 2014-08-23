@@ -5,6 +5,7 @@ import com.google.code.siren4j.component.builder.EntityBuilder;
 import com.google.code.siren4j.component.builder.LinkBuilder;
 import org.letustakearest.domain.Booking;
 import org.letustakearest.presentation.resources.BookingResource;
+import org.letustakearest.presentation.resources.HotelResource;
 
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
@@ -26,12 +27,20 @@ abstract class BaseBookingRepresentationBuilder {
     protected EntityBuilder builder() {
         return EntityBuilder.newInstance().
                 setComponentClass("booking").
+                addProperty("hotel", booking.getPlace().getHotel().getName()).
+                addProperty("city", booking.getPlace().getHotel().getCity().getName()).
+                addProperty("roomType", booking.getPlace().getType().name()).
+                addProperty("price", booking.getPlace().getPrice()).
                 addProperty("from", booking.getFrom()).
                 addProperty("to", booking.getTo()).
                 addProperty("includeBreakfast", booking.isIncludeBreakfast()).
                 addLink(LinkBuilder.newInstance().
                         setHref(selfHref()).
                         setRelationship(Link.RELATIONSHIP_SELF).
+                        build()).
+                addLink(LinkBuilder.newInstance().
+                        setHref(HotelResource.selfURI(booking.getPlace().getHotel(), uriInfo).toString()).
+                        setRelationship("room").
                         build());
     }
 

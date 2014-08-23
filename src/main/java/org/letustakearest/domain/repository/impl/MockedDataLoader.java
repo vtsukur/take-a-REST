@@ -41,29 +41,29 @@ public class MockedDataLoader {
         final Hotel vintageBoutique = new Hotel();
         vintageBoutique.setName("Vintage Boutique Hotel");
         vintageBoutique.setCity(lviv);
-        vintageBoutique.getPlaces().add(placeRepository.create(new Place(Place.Type.APARTMENT, Place.Category.SINGLE, 500)));
-        vintageBoutique.getPlaces().add(placeRepository.create(new Place(Place.Category.DOUBLE, 800)));
+        vintageBoutique.getPlaces().add(placeRepository.create(new Place(vintageBoutique, Place.Type.APARTMENT, Place.Category.SINGLE, 500)));
+        vintageBoutique.getPlaces().add(placeRepository.create(new Place(vintageBoutique, Place.Category.DOUBLE, 800)));
         hotelRepository.create(vintageBoutique);
 
         final Hotel nobilis = new Hotel();
         nobilis.setName("Nobilis");
         nobilis.setCity(lviv);
-        nobilis.getPlaces().add(placeRepository.create(new Place(Place.Category.JUNIOR_SUITE, 2500)));
-        nobilis.getPlaces().add(placeRepository.create(new Place(Place.Category.SUITE, 4500)));
+        nobilis.getPlaces().add(placeRepository.create(new Place(nobilis, Place.Category.JUNIOR_SUITE, 2500)));
+        nobilis.getPlaces().add(placeRepository.create(new Place(nobilis, Place.Category.SUITE, 4500)));
         hotelRepository.create(nobilis);
 
         final Hotel premierPalace = new Hotel();
         premierPalace.setName("Premier Palace");
         premierPalace.setCity(kyiv);
-        premierPalace.getPlaces().add(placeRepository.create(new Place(Place.Category.SINGLE, 1000)));
-        premierPalace.getPlaces().add(placeRepository.create(new Place(Place.Category.DOUBLE, 1500)));
+        premierPalace.getPlaces().add(placeRepository.create(new Place(premierPalace, Place.Category.SINGLE, 1000)));
+        premierPalace.getPlaces().add(placeRepository.create(new Place(premierPalace, Place.Category.DOUBLE, 1500)));
         hotelRepository.create(premierPalace);
 
         final Hotel fairmontGrandHotelKyiv = new Hotel();
         fairmontGrandHotelKyiv.setName("Fairmont");
         fairmontGrandHotelKyiv.setCity(kyiv);
-        fairmontGrandHotelKyiv.getPlaces().add(placeRepository.create(new Place(Place.Category.DOUBLE, 3000)));
-        fairmontGrandHotelKyiv.getPlaces().add(placeRepository.create(new Place(Place.Category.KING, 6000)));
+        fairmontGrandHotelKyiv.getPlaces().add(placeRepository.create(new Place(fairmontGrandHotelKyiv, Place.Category.DOUBLE, 3000)));
+        fairmontGrandHotelKyiv.getPlaces().add(placeRepository.create(new Place(fairmontGrandHotelKyiv, Place.Category.KING, 6000)));
         hotelRepository.create(fairmontGrandHotelKyiv);
     }
 

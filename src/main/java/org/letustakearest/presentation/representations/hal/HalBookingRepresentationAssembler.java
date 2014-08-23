@@ -4,6 +4,7 @@ import com.theoryinpractise.halbuilder.api.Representation;
 import org.letustakearest.domain.Booking;
 import org.letustakearest.presentation.representations.BookingRepresentationAssembler;
 import org.letustakearest.presentation.resources.BookingResource;
+import org.letustakearest.presentation.resources.HotelResource;
 
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
@@ -39,11 +40,22 @@ public class HalBookingRepresentationAssembler extends BaseHalRepresentationAsse
             addUpdateLinkIfAvailable();
             addPaymentLinkIfAvailable();
             addCancellationLinkIfAvailable();
+            addHotelLink();
             return representation;
+        }
+
+        private void addHotelLink() {
+            representation = representation.withLink(
+                    rel("hotel"), HotelResource.selfURI(booking.getPlace().getHotel(), uriInfo)
+            );
         }
 
         private void setProperties() {
             representation = representation.
+                    withProperty("hotel", booking.getPlace().getHotel().getName()).
+                    withProperty("city", booking.getPlace().getHotel().getCity().getName()).
+                    withProperty("roomType", booking.getPlace().getType().name()).
+                    withProperty("price", booking.getPlace().getPrice()).
                     withProperty("from", booking.getFrom()).
                     withProperty("to", booking.getTo()).
                     withProperty("includeBreakfast", booking.isIncludeBreakfast());
