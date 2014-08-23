@@ -2,16 +2,16 @@
     "_links": {
         "curies": {
             "href": "$baseURI/api/doc/{rel}",
-            "name": "get-some-rest",
+            "name": "take-a-rest",
             "templated": true
         },
         "self": {
             "href": "$baseURI/api/"
         },
-        "get-some-rest:bookings": {
+        "take-a-rest:bookings": {
             "href": "$baseURI/api/bookings"
         },
-        "get-some-rest:hotels": {
+        "take-a-rest:hotels": {
             "href": "$baseURI/api/hotels"
         }
     }

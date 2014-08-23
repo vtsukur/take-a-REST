@@ -2,7 +2,7 @@
     "_links": {
         "curies": {
             "href": "$baseURI/api/doc/{rel}",
-            "name": "get-some-rest",
+            "name": "take-a-rest",
             "templated": true
         },
         "self": {
@@ -16,7 +16,7 @@
     "offset": 2,
     "total": 4,
     "_embedded": {
-        "get-some-rest:hotel": [
+        "take-a-rest:hotel": [
             {
                 "_links": {
                     "self": {

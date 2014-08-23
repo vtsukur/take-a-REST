@@ -12,7 +12,7 @@ import java.net.URI;
  */
 abstract class BaseHalRepresentationAssembler {
 
-    protected final static String NAMESPACE = "get-some-rest";
+    protected final static String NAMESPACE = "take-a-rest";
 
     protected final UriInfo uriInfo;
 

@@ -2,19 +2,19 @@
     "_links": {
         "curies": {
             "href": "$baseURI/api/doc/{rel}",
-            "name": "get-some-rest",
+            "name": "take-a-rest",
             "templated": true
         },
         "self": {
             "href": "$bookingURI"
         },
-        "get-some-rest:booking-update": {
+        "take-a-rest:booking-update": {
             "href": "$bookingURI"
         },
-        "get-some-rest:booking-payment": {
+        "take-a-rest:booking-payment": {
             "href": "$bookingURI/payment"
         },
-        "get-some-rest:booking-cancellation": {
+        "take-a-rest:booking-cancellation": {
             "href": "$bookingURI"
         }
     },
