@@ -1,0 +1,70 @@
+package org.takearest.domain.repository.impl;
+
+import org.takearest.domain.City;
+import org.takearest.domain.Hotel;
+import org.takearest.domain.Place;
+import org.takearest.domain.repository.CityRepository;
+import org.takearest.domain.repository.HotelRepository;
+import org.takearest.domain.repository.PlaceRepository;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
+/**
+ * @author volodymyr.tsukur
+ */
+@ApplicationScoped
+public class MockedDataLoader {
+
+    @Inject
+    private HotelRepository hotelRepository;
+
+    @Inject
+    private CityRepository cityRepository;
+
+    @Inject
+    private PlaceRepository placeRepository;
+
+    public void load() {
+        saveCitiesAndHotels();
+    }
+
+    private void saveCitiesAndHotels() {
+        final City lviv = new City();
+        lviv.setName("Lviv");
+        cityRepository.create(lviv);
+
+        final City kyiv = new City();
+        kyiv.setName("Kyiv");
+        cityRepository.create(kyiv);
+
+        final Hotel vintageBoutique = new Hotel();
+        vintageBoutique.setName("Vintage Boutique Hotel");
+        vintageBoutique.setCity(lviv);
+        vintageBoutique.getPlaces().add(placeRepository.create(new Place(Place.Type.APARTMENT, Place.Category.SINGLE, 500)));
+        vintageBoutique.getPlaces().add(placeRepository.create(new Place(Place.Category.DOUBLE, 800)));
+        hotelRepository.create(vintageBoutique);
+
+        final Hotel nobilis = new Hotel();
+        nobilis.setName("Nobilis");
+        nobilis.setCity(lviv);
+        nobilis.getPlaces().add(placeRepository.create(new Place(Place.Category.JUNIOR_SUITE, 2500)));
+        nobilis.getPlaces().add(placeRepository.create(new Place(Place.Category.SUITE, 4500)));
+        hotelRepository.create(nobilis);
+
+        final Hotel premierPalace = new Hotel();
+        premierPalace.setName("Premier Palace");
+        premierPalace.setCity(kyiv);
+        premierPalace.getPlaces().add(placeRepository.create(new Place(Place.Category.SINGLE, 1000)));
+        premierPalace.getPlaces().add(placeRepository.create(new Place(Place.Category.DOUBLE, 1500)));
+        hotelRepository.create(premierPalace);
+
+        final Hotel fairmontGrandHotelKyiv = new Hotel();
+        fairmontGrandHotelKyiv.setName("Fairmont");
+        fairmontGrandHotelKyiv.setCity(kyiv);
+        fairmontGrandHotelKyiv.getPlaces().add(placeRepository.create(new Place(Place.Category.DOUBLE, 3000)));
+        fairmontGrandHotelKyiv.getPlaces().add(placeRepository.create(new Place(Place.Category.KING, 6000)));
+        hotelRepository.create(fairmontGrandHotelKyiv);
+    }
+
+}

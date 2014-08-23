@@ -73,7 +73,7 @@ task wrapper(type: Wrapper) {
   gradleVersion = '1.12'
 }
 
-group = 'org.letustakearest'
+group = 'org.takearest'
 version = '1.0'
 
 sourceCompatibility = JavaVersion.VERSION_1_8

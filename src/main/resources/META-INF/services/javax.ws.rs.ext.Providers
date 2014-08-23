@@ -1,3 +1,3 @@
-org.letustakearest.infrastructure.jaxrs.CustomObjectMapperContextResolver
-org.letustakearest.infrastructure.jaxrs.HalMessageBodyWriter
-org.letustakearest.infrastructure.jaxrs.ValidationExceptionMapper
+takearest.infrastructure.jaxrs.CustomObjectMapperContextResolver
+takearest.infrastructure.jaxrs.HalMessageBodyWriter
+takearest.infrastructure.jaxrs.ValidationExceptionMapper
