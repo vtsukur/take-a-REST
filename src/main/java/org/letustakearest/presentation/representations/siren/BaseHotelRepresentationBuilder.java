@@ -26,6 +26,7 @@ class BaseHotelRepresentationBuilder {
     protected EntityBuilder builder() {
         return EntityBuilder.newInstance().
                 setComponentClass("hotel").
+                addProperty("city", hotel.getCity().getName()).
                 addProperty("name", hotel.getName()).
                 addLink(LinkBuilder.newInstance().
                         setHref(selfHref()).
