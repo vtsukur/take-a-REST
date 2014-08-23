@@ -70,6 +70,7 @@ public class HalHotelsRepresentationAssembler extends BaseHalRepresentationAssem
 
     private Representation newEmbeddedHotelRepresentation(final Hotel hotel) {
         return newRepresentation(HotelResource.selfURI(hotel, uriInfo)).
+                withProperty("city", hotel.getCity().getName()).
                 withProperty("name", hotel.getName());
     }
 

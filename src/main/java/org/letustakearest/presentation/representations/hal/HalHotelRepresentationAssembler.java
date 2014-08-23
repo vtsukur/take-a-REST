@@ -24,6 +24,7 @@ public class HalHotelRepresentationAssembler extends BaseHalRepresentationAssemb
     public Object from(final Hotel hotel) {
         return withRooms(
                 newRepresentation(selfURI(hotel)).
+                        withProperty("city", hotel.getCity().getName()).
                         withProperty("name", hotel.getName()),
                 hotel);
     }
