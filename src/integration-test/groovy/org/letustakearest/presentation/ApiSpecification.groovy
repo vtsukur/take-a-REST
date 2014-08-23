@@ -161,9 +161,9 @@ class ApiSpecification extends Specification {
 
     then:
     def entryPoint = assertTemplateNotStrict('entryPoint.json', HAL_JSON, entryPointPayload)
-    def hotelsURI = entryPoint._links?.get('get-some-rest:hotels')?.href as String
+    def hotelsURI = entryPoint._links?.get('take-a-rest:hotels')?.href as String
     hotelsURI
-    def bookingsURI = entryPoint._links?.get('get-some-rest:bookings')?.href as String
+    def bookingsURI = entryPoint._links?.get('take-a-rest:bookings')?.href as String
     bookingsURI
 
     when:
@@ -179,7 +179,7 @@ class ApiSpecification extends Specification {
 
     then:
     def hotelsPage2 = assertTemplateNotStrict('hotels-page2.json', HAL_JSON, hotelsPage2Payload)
-    def hotelURI = (hotelsPage2._embedded?.get('get-some-rest:hotel') as List)[0]._links?.get('self')?.href as String
+    def hotelURI = (hotelsPage2._embedded?.get('take-a-rest:hotel') as List)[0]._links?.get('self')?.href as String
     hotelURI
 
     when:
@@ -188,9 +188,9 @@ class ApiSpecification extends Specification {
     then:
     def hotel = assertTemplateNotStrict('hotel.json', HAL_JSON, hotelPayload)
     hotel
-    def room = (hotel?._embedded?.get('get-some-rest:room') as List)[0]
+    def room = (hotel?._embedded?.get('take-a-rest:room') as List)[0]
     room
-    def bookingsLink = room?._links?.get('get-some-rest:bookings')
+    def bookingsLink = room?._links?.get('take-a-rest:bookings')
     bookingsLink
 
     when:
@@ -214,7 +214,7 @@ class ApiSpecification extends Specification {
     def createdBooking = assertTemplateNotStrict('booking-created.json', HAL_JSON, createdBookingPayload, [
         bookingURI: bookingURI
     ])
-    def updateLink = createdBooking?._links?.get('get-some-rest:booking-update')
+    def updateLink = createdBooking?._links?.get('take-a-rest:booking-update')
     updateLink
 
     when:
@@ -243,7 +243,7 @@ class ApiSpecification extends Specification {
     def updatedBooking = assertTemplateNotStrict('booking-updated.json', HAL_JSON, updatedBookingPayload, [
         bookingURI: bookingURI
     ])
-    def paymentAction = updatedBooking?._links?.get('get-some-rest:booking-payment')
+    def paymentAction = updatedBooking?._links?.get('take-a-rest:booking-payment')
     paymentAction
 
     when:
@@ -267,7 +267,7 @@ class ApiSpecification extends Specification {
     def bookings = toJson(request(bookingsURI, HAL_JSON).get(String))
 
     then:
-    bookings._embedded?.get('get-some-rest:booking')?.find({
+    bookings._embedded?.get('take-a-rest:booking')?.find({
       it._links?.self?.href == bookingURI.toString()
     })
   }

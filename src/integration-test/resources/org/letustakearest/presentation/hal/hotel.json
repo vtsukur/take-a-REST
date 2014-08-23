@@ -2,7 +2,7 @@
     "_links": {
         "curies": {
             "href": "$baseURI/api/doc/{rel}",
-            "name": "get-some-rest",
+            "name": "take-a-rest",
             "templated": true
         },
         "self": {
@@ -11,10 +11,10 @@
     },
     "name": "Premier Palace",
     "_embedded": {
-        "get-some-rest:room": [
+        "take-a-rest:room": [
             {
                 "_links": {
-                    "get-some-rest:bookings": {
+                    "take-a-rest:bookings": {
                         "href": "$baseURI/api/bookings"
                     }
                 },
@@ -24,7 +24,7 @@
             },
             {
                 "_links": {
-                    "get-some-rest:bookings": {
+                    "take-a-rest:bookings": {
                         "href": "$baseURI/api/bookings"
                     }
                 },
