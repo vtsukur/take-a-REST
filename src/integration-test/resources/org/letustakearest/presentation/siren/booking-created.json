@@ -4,7 +4,6 @@
         "hotel": "Premier Palace",
         "city": "Kyiv",
         "roomType": "ROOM",
-        "price": 1000,
         "paid": false,
         "from": [2014, 8, 1],
         "to": [2014, 8, 15],
