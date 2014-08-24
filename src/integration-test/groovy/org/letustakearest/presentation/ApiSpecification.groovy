@@ -279,7 +279,7 @@ class ApiSpecification extends Specification {
     when:
     response = close(request(uri('/api/bookings'), JSON_MEDIATYPE).
         post(entity(new CreateBookingTransition(
-            roomId: 1,
+            roomId: 6,
             data: new BookingData(
               from: LocalDate.of(2014, 8, 1),
               to: LocalDate.of(2014, 8, 15),
