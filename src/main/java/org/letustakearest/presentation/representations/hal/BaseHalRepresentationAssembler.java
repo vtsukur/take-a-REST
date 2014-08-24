@@ -37,7 +37,7 @@ abstract class BaseHalRepresentationAssembler {
     }
 
     private String curie() {
-        return uriInfo.getBaseUriBuilder().segment("doc").build().toString() + "/{rel}";
+        return uriInfo.getAbsolutePathBuilder().replacePath("doc").build().toString() + "/{rel}.html";
     }
 
     protected String rel(final String rel) {
