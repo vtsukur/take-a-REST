@@ -1,11 +1,9 @@
 package org.letustakearest.presentation
-
 import groovy.json.JsonSlurper
 import groovy.text.SimpleTemplateEngine
 import org.letustakearest.presentation.transitions.BookingData
-import org.letustakearest.presentation.transitions.CreateBookingTransition
 import org.letustakearest.presentation.transitions.PayForBookingTransition
-import org.letustakearest.presentation.transitions.UpdateBookingTransition
+import org.letustakearest.presentation.transitions.SetBookingTransition
 import org.skyscreamer.jsonassert.JSONAssert
 import spock.lang.Specification
 
@@ -19,7 +17,6 @@ import static com.google.code.siren4j.Siren4J.JSON_MEDIATYPE
 import static com.theoryinpractise.halbuilder.api.RepresentationFactory.HAL_JSON
 import static javax.ws.rs.client.Entity.entity
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON
-
 /**
  * @author volodymyr.tsukur
  */
@@ -105,7 +102,8 @@ class ApiSpecification extends Specification {
         header('If-Match', createdBookingETag).
         method(
             updateAction.method as String,
-            entity(new UpdateBookingTransition(
+            entity(new SetBookingTransition(
+                roomId: 5,
                 data: new BookingData(
                     from: LocalDate.of(2014, 8, 1),
                     to: LocalDate.of(2014, 8, 20),
@@ -228,7 +226,8 @@ class ApiSpecification extends Specification {
         header('If-Match', createdBookingETag).
         method(
             'PUT',
-            entity(new UpdateBookingTransition(
+            entity(new SetBookingTransition(
+                roomId: 5,
                 data: new BookingData(
                     from: LocalDate.of(2014, 8, 1),
                     to: LocalDate.of(2014, 8, 20),
@@ -278,8 +277,8 @@ class ApiSpecification extends Specification {
 
     when:
     response = close(request(uri('/api/bookings'), JSON_MEDIATYPE).
-        post(entity(new CreateBookingTransition(
-            roomId: 6,
+        post(entity(new SetBookingTransition(
+            roomId: 5,
             data: new BookingData(
               from: LocalDate.of(2014, 8, 1),
               to: LocalDate.of(2014, 8, 15),
@@ -321,7 +320,7 @@ class ApiSpecification extends Specification {
 
     when:
     response = request(uri('/api/bookings'), JSON_MEDIATYPE).
-        post(entity(new CreateBookingTransition(
+        post(entity(new SetBookingTransition(
             roomId: null,
             data: null
         ), APPLICATION_JSON))
@@ -374,8 +373,8 @@ class ApiSpecification extends Specification {
     new JsonSlurper().parseText(text)
   }
 
-  private static CreateBookingTransition referenceCreateBookingTransition(final Long roomId = 1L) {
-    new CreateBookingTransition(
+  private static SetBookingTransition referenceCreateBookingTransition(final Long roomId = 1L) {
+    new SetBookingTransition(
         roomId: roomId,
         data: new BookingData(
             from: LocalDate.of(2014, 8, 1),

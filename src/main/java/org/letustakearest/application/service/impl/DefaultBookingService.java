@@ -38,7 +38,7 @@ public class DefaultBookingService implements BookingService {
     private Validation validation;
 
     @Override
-    public Booking create(final CreateBookingTransition transition) throws EntityNotFoundException {
+    public Booking create(final SetBookingTransition transition) throws EntityNotFoundException {
         validation.validate(transition, "create-booking");
 
         final Place place = placeRepository.findById(transition.getRoomId());
@@ -60,8 +60,12 @@ public class DefaultBookingService implements BookingService {
     }
 
     @Override
-    public Booking update(final Booking booking, final UpdateBookingTransition transition) {
+    public Booking update(final Booking booking, final SetBookingTransition transition) throws EntityNotFoundException {
+        validation.validate(transition, "update-booking");
+
+        final Place place = placeRepository.findById(transition.getRoomId());
         final Booking mappedBooking = map(booking, transition.getData());
+        booking.setPlace(place);
         bookingRepository.update(mappedBooking);
         return mappedBooking;
     }
