@@ -1,7 +1,7 @@
 {
     "_links": {
         "curies": {
-            "href": "$baseURI/api/doc/{rel}",
+            "href": "$baseURI/doc/{rel}.html",
             "name": "take-a-rest",
             "templated": true
         },
