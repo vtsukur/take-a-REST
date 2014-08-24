@@ -64,6 +64,10 @@
         {
             "rel": ["self"],
             "href": "$bookingURI"
+        },
+        {
+            "rel": ["hotel"],
+            "href": "$baseURI/api/hotels/3"
         }
     ]
 }

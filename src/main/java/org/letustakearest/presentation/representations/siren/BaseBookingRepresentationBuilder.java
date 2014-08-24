@@ -34,13 +34,14 @@ abstract class BaseBookingRepresentationBuilder {
                 addProperty("from", booking.getFrom()).
                 addProperty("to", booking.getTo()).
                 addProperty("includeBreakfast", booking.isIncludeBreakfast()).
+                addProperty("paid", booking.getPayment() != null).
                 addLink(LinkBuilder.newInstance().
                         setHref(selfHref()).
                         setRelationship(Link.RELATIONSHIP_SELF).
                         build()).
                 addLink(LinkBuilder.newInstance().
                         setHref(HotelResource.selfURI(booking.getPlace().getHotel(), uriInfo).toString()).
-                        setRelationship("room").
+                        setRelationship("hotel").
                         build());
     }
 

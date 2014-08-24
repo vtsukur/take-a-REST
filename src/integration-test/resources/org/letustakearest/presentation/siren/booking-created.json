@@ -1,6 +1,11 @@
 {
     "class": ["booking"],
     "properties": {
+        "hotel": "Premier Palace",
+        "city": "Kyiv",
+        "roomType": "ROOM",
+        "price": 1500,
+        "paid": false,
         "from": [2014, 8, 1],
         "to": [2014, 8, 15],
         "includeBreakfast": true
@@ -64,6 +69,10 @@
         {
             "rel": ["self"],
             "href": "$bookingURI"
+        },
+        {
+            "rel": ["hotel"],
+            "href": "$baseURI/api/hotels/3"
         }
     ]
 }
