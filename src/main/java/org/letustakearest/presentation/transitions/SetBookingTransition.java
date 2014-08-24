@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
-public final class CreateBookingTransition {
+public final class SetBookingTransition {
 
     @NotNull
     private Long roomId;

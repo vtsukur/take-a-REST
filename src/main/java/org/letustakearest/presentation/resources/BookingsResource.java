@@ -10,7 +10,7 @@ import org.letustakearest.presentation.representations.BookingRepresentationAsse
 import org.letustakearest.presentation.representations.BookingsRepresentationAssembler;
 import org.letustakearest.presentation.representations.cdi.SelectByAcceptHeader;
 import org.letustakearest.presentation.transitions.CreateBookingAsPlaceTransition;
-import org.letustakearest.presentation.transitions.CreateBookingTransition;
+import org.letustakearest.presentation.transitions.SetBookingTransition;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -49,7 +49,7 @@ public class BookingsResource {
     @POST
     @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(final CreateBookingTransition transition, @Context final UriInfo uriInfo) {
+    public Response create(final SetBookingTransition transition, @Context final UriInfo uriInfo) {
         final Booking result;
         try {
             result = bookingService.create(transition);

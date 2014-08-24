@@ -8,7 +8,7 @@ import org.letustakearest.domain.EntityNotFoundException;
 import org.letustakearest.presentation.cache.EntityTagFactory;
 import org.letustakearest.presentation.representations.BookingRepresentationAssembler;
 import org.letustakearest.presentation.transitions.PayForBookingTransition;
-import org.letustakearest.presentation.transitions.UpdateBookingTransition;
+import org.letustakearest.presentation.transitions.SetBookingTransition;
 
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
@@ -62,7 +62,7 @@ public class BookingResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
     public Response update(
-            final UpdateBookingTransition transition,
+            final SetBookingTransition transition,
             @Context final Request request) {
         try {
             Booking booking = bookingService.findById(id);
