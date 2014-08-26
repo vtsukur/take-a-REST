@@ -4,18 +4,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 /**
  * @author volodymyr.tsukur
  */
 @Getter
 @Setter
-public final class SetBookingTransition {
+public class BookingTransition {
 
     @NotNull
-    private Long roomId;
+    private LocalDate from;
 
     @NotNull
-    private BookingData data;
+    private LocalDate to;
+
+    private Boolean includeBreakfast;
 
 }
