@@ -1,7 +1,7 @@
 <!doctype html>
 <head>
     <meta charset="utf-8">
-    <title>Take a REST! API - 'bookings' Relation</title>
+    <title>Take a REST! API - 'booking-payment' Relation</title>
     <link rel="stylesheet" media="screen" href="css/bootstrap.css" />
     <style type="text/css">
         body {
@@ -20,29 +20,12 @@
 <div class="container-fluid">
     <h1>Take a REST! <small>API</small></h1>
     <hr>
-    <h2>bookings <small>relation</small></h2>
-
-    <div class="well method">
-        <h2>GET</h2>
-        <p class="description">
-            Returns list of bookings
-        </p>
-        <div class="request">
-            <h3>Request</h3>
-            <div class="type">
-                <h4>Headers</h4>
-                <div>
-                    The request should have the Content-Type
-                    <code>application/hal+json</code> or <code>application/vnd.siren+json</code>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h2>booking-payment <small>relation</small></h2>
 
     <div class="well method">
         <h2>POST</h2>
         <p class="description">
-            Create a booking
+            Pays for booking
         </p>
         <div class="request">
             <h3>Request</h3>
@@ -55,18 +38,18 @@
                 <div class="required">
                     <h5>Required properties</h5>
                     <ul>
-                        <li><code>from</code>: array of numbers - check in date (year, month and day)</li>
-                        <li><code>to</code>: array of numbers - check out date (year, month and day)</li>
-                        <li><code>includeBreakfast</code>: boolean</li>
+                        <li><code>cardholdersName</code>: string - first and last name of card owner</li>
+                        <li><code>creditCardNumber</code>: string - 16 digit credit card number</li>
+                        <li><code>cvv</code>: string - 3-digit CVV code</li>
                     </ul>
                 </div>
                 <div class="example">
                     <h5>Example</h5>
         <pre>
 {
-  "from": [ 2014, 10, 1 ],
-  "to": [ 2014, 10, 10 ],
-  "includeBreakfast": true
+  "cardholdersName": "Viktor Yanukovych",
+  "creditCardNumber": "1234 5678 9012 3456",
+  "cvv": "123"
 }</pre>
                 </div>
             </div>
@@ -74,9 +57,12 @@
         <div class="response">
             <h3>Responses</h3>
             <div class="code">
-                <h4>200 OK</h4>
-                <div class="body">
-                    Up-to-date booking state
+                <h4>201 Created</h4>
+                <div class="headers">
+                    <h5>Headers</h5>
+                    <ul>
+                        <li>Location: URI of the created booking</li>
+                    </ul>
                 </div>
             </div>
         </div>
