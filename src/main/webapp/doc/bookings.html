@@ -55,26 +55,18 @@
                 <div class="required">
                     <h5>Required properties</h5>
                     <ul>
-                        <li><code>roomId</code>: number - identifier of the room</li>
-                        <li><code>data</code>: object
-                            <ul>
-                                <li><code>from</code>: array - check in date (numbers representing year, month and day)</li>
-                                <li><code>to</code>: array - check out date  (numbers representing year, month and day)</li>
-                                <li><code>includeBreakfast</code>: boolean</li>
-                            </ul>
-                        </li>
+                        <li><code>from</code>: array of numbers - check in date (year, month and day)</li>
+                        <li><code>to</code>: array of numbers - check out date (year, month and day)</li>
+                        <li><code>includeBreakfast</code>: boolean</li>
                     </ul>
                 </div>
                 <div class="example">
                     <h5>Example</h5>
         <pre>
 {
-  "roomId": 3,
-  "data": {
-    "from": [ 2014, 10, 1 ],
-    "to": [ 2014, 10, 10 ],
-    "includeBreakfast": true
-  }
+  "from": [ 2014, 10, 1 ],
+  "to": [ 2014, 10, 10 ],
+  "includeBreakfast": true
 }</pre>
                 </div>
             </div>
