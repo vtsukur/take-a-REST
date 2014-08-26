@@ -1,9 +1,9 @@
 package org.letustakearest.presentation
+
 import groovy.json.JsonSlurper
 import groovy.text.SimpleTemplateEngine
-import org.letustakearest.presentation.transitions.BookingData
+import org.letustakearest.presentation.transitions.BookingTransition
 import org.letustakearest.presentation.transitions.PayForBookingTransition
-import org.letustakearest.presentation.transitions.SetBookingTransition
 import org.skyscreamer.jsonassert.JSONAssert
 import spock.lang.Specification
 
@@ -70,7 +70,7 @@ class ApiSpecification extends Specification {
     when:
     response = close(request(bookingAction.href as String, JSON_MEDIATYPE).post(
         entity(
-            referenceCreateBookingTransition(bookingAction.fields?.find({ it.name == 'roomId' })?.value as Long),
+            referenceBookingTransition(),
             APPLICATION_JSON)))
 
     then:
@@ -102,14 +102,12 @@ class ApiSpecification extends Specification {
         header('If-Match', createdBookingETag).
         method(
             updateAction.method as String,
-            entity(new SetBookingTransition(
-                roomId: 5,
-                data: new BookingData(
+            entity(
+                new BookingTransition(
                     from: LocalDate.of(2014, 8, 1),
                     to: LocalDate.of(2014, 8, 20),
                     includeBreakfast: false
-                )
-            ), APPLICATION_JSON))
+                ), APPLICATION_JSON))
 
     then:
     def updatedBookingETag = response.entityTag.value
@@ -194,7 +192,7 @@ class ApiSpecification extends Specification {
     when:
     response = close(request(bookingsLink.href as String, HAL_JSON).post(
         entity(
-            referenceCreateBookingTransition(room.id as Long),
+            referenceBookingTransition(),
             APPLICATION_JSON)))
 
     then:
@@ -226,14 +224,12 @@ class ApiSpecification extends Specification {
         header('If-Match', createdBookingETag).
         method(
             'PUT',
-            entity(new SetBookingTransition(
-                roomId: 5,
-                data: new BookingData(
+            entity(
+                new BookingTransition(
                     from: LocalDate.of(2014, 8, 1),
                     to: LocalDate.of(2014, 8, 20),
                     includeBreakfast: false
-                )
-            ), APPLICATION_JSON))
+                ), APPLICATION_JSON))
 
     then:
     def updatedBookingETag = response.entityTag.value
@@ -277,14 +273,12 @@ class ApiSpecification extends Specification {
 
     when:
     response = close(request(uri('/api/hotels/3/rooms/5/booking'), JSON_MEDIATYPE).
-        post(entity(new SetBookingTransition(
-            roomId: 5,
-            data: new BookingData(
-              from: LocalDate.of(2014, 8, 1),
-              to: LocalDate.of(2014, 8, 15),
-              includeBreakfast: true
-            )
-        ), APPLICATION_JSON)))
+        post(entity(
+            new BookingTransition(
+                from: LocalDate.of(2014, 8, 1),
+                to: LocalDate.of(2014, 8, 15),
+                includeBreakfast: true
+            ), APPLICATION_JSON)))
 
     then:
     201 == response.status
@@ -320,10 +314,7 @@ class ApiSpecification extends Specification {
 
     when:
     response = request(uri('/api/hotels/3/rooms/5/booking'), JSON_MEDIATYPE).
-        post(entity(new SetBookingTransition(
-            roomId: null,
-            data: null
-        ), APPLICATION_JSON))
+        post(entity([:], APPLICATION_JSON))
     def bookingCreationErrorPayload = response.readEntity(String)
 
     then:
@@ -373,14 +364,11 @@ class ApiSpecification extends Specification {
     new JsonSlurper().parseText(text)
   }
 
-  private static SetBookingTransition referenceCreateBookingTransition(final Long roomId = 1L) {
-    new SetBookingTransition(
-        roomId: roomId,
-        data: new BookingData(
-            from: LocalDate.of(2014, 8, 1),
-            to: LocalDate.of(2014, 8, 15),
-            includeBreakfast: true
-        )
+  private static BookingTransition referenceBookingTransition() {
+    new BookingTransition(
+        from: LocalDate.of(2014, 8, 1),
+        to: LocalDate.of(2014, 8, 15),
+        includeBreakfast: true
     )
   }
 

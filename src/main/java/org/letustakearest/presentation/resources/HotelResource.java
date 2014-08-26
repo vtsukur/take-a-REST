@@ -12,7 +12,7 @@ import org.letustakearest.domain.Place;
 import org.letustakearest.presentation.representations.HotelRepresentationAssembler;
 import org.letustakearest.presentation.representations.cdi.SelectByAcceptHeader;
 import org.letustakearest.presentation.representations.siren.HotelWithPlacesRepresentationBuilder;
-import org.letustakearest.presentation.transitions.SetBookingTransition;
+import org.letustakearest.presentation.transitions.BookingTransition;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -101,12 +101,11 @@ public class HotelResource {
     @POST
     @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(final SetBookingTransition transition, @Context final UriInfo uriInfo,
+    public Response create(final BookingTransition transition, @Context final UriInfo uriInfo,
                            @PathParam("roomId") final Long roomId) {
         final Booking result;
         try {
-            transition.setRoomId(roomId);
-            result = bookingService.create(transition);
+            result = bookingService.create(roomId, transition);
         } catch (EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }

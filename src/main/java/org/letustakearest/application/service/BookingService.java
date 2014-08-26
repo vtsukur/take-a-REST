@@ -2,9 +2,9 @@ package org.letustakearest.application.service;
 
 import org.letustakearest.domain.Booking;
 import org.letustakearest.domain.EntityNotFoundException;
+import org.letustakearest.presentation.transitions.BookingTransition;
 import org.letustakearest.presentation.transitions.CreateBookingAsPlaceTransition;
 import org.letustakearest.presentation.transitions.PayForBookingTransition;
-import org.letustakearest.presentation.transitions.SetBookingTransition;
 
 import java.util.Collection;
 
@@ -13,11 +13,11 @@ import java.util.Collection;
  */
 public interface BookingService {
 
-    Booking create(SetBookingTransition data) throws EntityNotFoundException;
+    Booking create(Long roomId, BookingTransition data) throws EntityNotFoundException;
 
     Booking create(CreateBookingAsPlaceTransition data) throws EntityNotFoundException;
 
-    Booking update(Booking booking, SetBookingTransition transition) throws EntityNotFoundException;
+    Booking update(Booking booking, BookingTransition data) throws EntityNotFoundException;
 
     Booking findById(Long id) throws EntityNotFoundException;
 

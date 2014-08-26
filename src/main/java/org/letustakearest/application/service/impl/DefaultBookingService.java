@@ -38,11 +38,11 @@ public class DefaultBookingService implements BookingService {
     private Validation validation;
 
     @Override
-    public Booking create(final SetBookingTransition transition) throws EntityNotFoundException {
+    public Booking create(final Long roomId, final BookingTransition transition) throws EntityNotFoundException {
         validation.validate(transition, "create-booking");
 
-        final Place place = placeRepository.findById(transition.getRoomId());
-        final Booking booking = map(new Booking(), transition.getData());
+        final Place place = placeRepository.findById(roomId);
+        final Booking booking = map(new Booking(), transition);
         booking.setState(Booking.State.CREATED);
         booking.setPlace(place);
         return bookingRepository.create(booking);
@@ -60,26 +60,26 @@ public class DefaultBookingService implements BookingService {
     }
 
     @Override
-    public Booking update(final Booking booking, final SetBookingTransition transition) throws EntityNotFoundException {
+    public Booking update(final Booking booking, final BookingTransition transition) throws EntityNotFoundException {
         validation.validate(transition, "update-booking");
 
-        final Place place = placeRepository.findById(transition.getRoomId());
-        final Booking mappedBooking = map(booking, transition.getData());
+        final Place place = placeRepository.findById(booking.getPlace().getId());
+        final Booking mappedBooking = map(booking, transition);
         booking.setPlace(place);
         bookingRepository.update(mappedBooking);
         return mappedBooking;
     }
 
-    private Booking map(final Booking booking, final BookingData bookingData) {
-        if (bookingData != null) {
-            if (bookingData.getFrom() != null) {
-                booking.setFrom(bookingData.getFrom());
+    private Booking map(final Booking booking, final BookingTransition bookingTransition) {
+        if (bookingTransition != null) {
+            if (bookingTransition.getFrom() != null) {
+                booking.setFrom(bookingTransition.getFrom());
             }
-            if (bookingData.getTo() != null) {
-                booking.setTo(bookingData.getTo());
+            if (bookingTransition.getTo() != null) {
+                booking.setTo(bookingTransition.getTo());
             }
-            if (bookingData.getIncludeBreakfast() != null) {
-                booking.setIncludeBreakfast(bookingData.getIncludeBreakfast());
+            if (bookingTransition.getIncludeBreakfast() != null) {
+                booking.setIncludeBreakfast(bookingTransition.getIncludeBreakfast());
             }
         }
         return booking;

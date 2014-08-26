@@ -16,6 +16,6 @@ public final class CreateBookingAsPlaceTransition {
     private Long placeId;
 
     @NotNull
-    private BookingData data;
+    private BookingTransition data;
 
 }
