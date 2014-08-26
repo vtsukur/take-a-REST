@@ -14,7 +14,7 @@
                 {
                     "name": "book",
                     "method": "POST",
-                    "href": "$baseURI/api/bookings",
+                    "href": "$baseURI/api/hotels/3/rooms/5/booking",
                     "type": "application/json",
                     "fields": [
                         {
@@ -53,7 +53,7 @@
                 {
                     "name": "book",
                     "method": "POST",
-                    "href": "$baseURI/api/bookings",
+                    "href": "$baseURI/api/hotels/3/rooms/6/booking",
                     "type": "application/json",
                     "fields": [
                         {

@@ -3,12 +3,16 @@ package org.letustakearest.presentation.resources;
 import com.google.code.siren4j.Siren4J;
 import com.google.code.siren4j.component.Entity;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;
+import org.letustakearest.application.service.BookingService;
 import org.letustakearest.application.service.HotelService;
+import org.letustakearest.domain.Booking;
 import org.letustakearest.domain.EntityNotFoundException;
 import org.letustakearest.domain.Hotel;
+import org.letustakearest.domain.Place;
 import org.letustakearest.presentation.representations.HotelRepresentationAssembler;
 import org.letustakearest.presentation.representations.cdi.SelectByAcceptHeader;
 import org.letustakearest.presentation.representations.siren.HotelWithPlacesRepresentationBuilder;
+import org.letustakearest.presentation.transitions.SetBookingTransition;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -27,6 +31,9 @@ public class HotelResource {
 
     @Inject
     private HotelService hotelService;
+
+    @Inject
+    private BookingService bookingService;
 
     @Inject @SelectByAcceptHeader
     private HotelRepresentationAssembler hotelRepresentationAssembler;
@@ -90,6 +97,23 @@ public class HotelResource {
         return Response.ok(prepareHotelAsPlaceRepresentation(uriInfo)).build();
     }
 
+    @Path("/rooms/{roomId}/booking")
+    @POST
+    @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response create(final SetBookingTransition transition, @Context final UriInfo uriInfo,
+                           @PathParam("roomId") final Long roomId) {
+        final Booking result;
+        try {
+            transition.setRoomId(roomId);
+            result = bookingService.create(transition);
+        } catch (EntityNotFoundException e) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        final URI bookingURI = BookingResource.selfURI(result, uriInfo);
+        return Response.created(bookingURI).build();
+    }
+
     private Entity prepareHotelAsPlaceRepresentation(final UriInfo uriInfo) {
         final Hotel hotel = findHotel();
         return new HotelWithPlacesRepresentationBuilder(hotel, uriInfo).build();
@@ -108,6 +132,16 @@ public class HotelResource {
         return uriInfo.getBaseUriBuilder().
                 path(HotelsResource.class).
                 path(hotel.getId().toString()).
+                build();
+    }
+
+    public static URI bookingURI(final Place room, final UriInfo uriInfo) {
+        return uriInfo.getBaseUriBuilder().
+                path(HotelsResource.class).
+                segment(room.getHotel().getId().toString()).
+                segment("rooms").
+                segment(room.getId().toString()).
+                segment("booking").
                 build();
     }
 

@@ -276,7 +276,7 @@ class ApiSpecification extends Specification {
     def response
 
     when:
-    response = close(request(uri('/api/bookings'), JSON_MEDIATYPE).
+    response = close(request(uri('/api/hotels/3/rooms/5/booking'), JSON_MEDIATYPE).
         post(entity(new SetBookingTransition(
             roomId: 5,
             data: new BookingData(
@@ -319,7 +319,7 @@ class ApiSpecification extends Specification {
     def response
 
     when:
-    response = request(uri('/api/bookings'), JSON_MEDIATYPE).
+    response = request(uri('/api/hotels/3/rooms/5/booking'), JSON_MEDIATYPE).
         post(entity(new SetBookingTransition(
             roomId: null,
             data: null
