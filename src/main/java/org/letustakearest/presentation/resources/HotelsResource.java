@@ -4,12 +4,13 @@ import com.google.code.siren4j.Siren4J;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;
 import org.letustakearest.application.service.HotelService;
 import org.letustakearest.application.service.Pagination;
-import org.letustakearest.presentation.representations.HotelRepresentationAssembler;
 import org.letustakearest.presentation.representations.HotelsRepresentationAssembler;
 import org.letustakearest.presentation.representations.cdi.SelectByAcceptHeader;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.container.ResourceContext;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
@@ -20,14 +21,14 @@ import java.net.URI;
 @Path("/hotels")
 public class HotelsResource {
 
+    @Context
+    private ResourceContext resourceContext;
+
     @Inject
     private HotelService hotelService;
 
     @Inject @SelectByAcceptHeader
     private HotelsRepresentationAssembler hotelsRepresentationAssembler;
-
-    @Inject @SelectByAcceptHeader
-    private HotelRepresentationAssembler hotelRepresentationAssembler;
 
     @GET
     @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
@@ -42,7 +43,7 @@ public class HotelsResource {
 
     @Path("/{id}")
     public HotelResource item(@PathParam("id") final Long id) {
-        return new HotelResource(id, hotelService, hotelRepresentationAssembler);
+        return resourceContext.getResource(HotelResource.class);
     }
 
     public static URI selfURI(final UriInfo uriInfo) {

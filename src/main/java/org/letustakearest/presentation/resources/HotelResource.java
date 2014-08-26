@@ -7,12 +7,11 @@ import org.letustakearest.application.service.HotelService;
 import org.letustakearest.domain.EntityNotFoundException;
 import org.letustakearest.domain.Hotel;
 import org.letustakearest.presentation.representations.HotelRepresentationAssembler;
+import org.letustakearest.presentation.representations.cdi.SelectByAcceptHeader;
 import org.letustakearest.presentation.representations.siren.HotelWithPlacesRepresentationBuilder;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
+import javax.inject.Inject;
+import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.List;
@@ -20,20 +19,17 @@ import java.util.List;
 /**
  * @author volodymyr.tsukur
  */
+@Path("{id}")
 public class HotelResource {
 
+    @PathParam("id")
     private Long id;
 
+    @Inject
     private HotelService hotelService;
 
+    @Inject @SelectByAcceptHeader
     private HotelRepresentationAssembler hotelRepresentationAssembler;
-
-    public HotelResource(final Long id, final HotelService hotelService,
-            final HotelRepresentationAssembler hotelRepresentationAssembler) {
-        this.id = id;
-        this.hotelService = hotelService;
-        this.hotelRepresentationAssembler = hotelRepresentationAssembler;
-    }
 
     @GET
     @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
