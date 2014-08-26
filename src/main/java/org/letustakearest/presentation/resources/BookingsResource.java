@@ -14,6 +14,7 @@ import org.letustakearest.presentation.transitions.SetBookingTransition;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -28,6 +29,9 @@ public class BookingsResource {
 
     @Inject
     private BookingService bookingService;
+
+    @Context
+    private ResourceContext resourceContext;
 
     @Inject
     @SelectByAcceptHeader
@@ -75,8 +79,8 @@ public class BookingsResource {
     }
 
     @Path("/{id}")
-    public BookingResource item(@PathParam("id") final Long id) {
-        return new BookingResource(id, bookingService, bookingRepresentationAssembler);
+    public BookingResource item() {
+        return resourceContext.getResource(BookingResource.class);
     }
 
     public static URI selfURI(final UriInfo uriInfo) {
