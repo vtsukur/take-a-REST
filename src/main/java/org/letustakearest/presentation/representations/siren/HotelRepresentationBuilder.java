@@ -3,9 +3,7 @@ package org.letustakearest.presentation.representations.siren;
 import com.google.code.siren4j.component.Entity;
 import com.google.code.siren4j.component.builder.ActionBuilder;
 import com.google.code.siren4j.component.builder.EntityBuilder;
-import com.google.code.siren4j.component.builder.FieldBuilder;
 import com.google.code.siren4j.component.impl.ActionImpl;
-import com.google.code.siren4j.meta.FieldType;
 import org.letustakearest.domain.Hotel;
 import org.letustakearest.presentation.resources.HotelResource;
 
@@ -41,12 +39,6 @@ class HotelRepresentationBuilder extends BaseHotelRepresentationBuilder {
                                 setMethod(ActionImpl.Method.POST).
                                 setHref(HotelResource.bookingURI(room, uriInfo).toString()).
                                 setType(MediaType.APPLICATION_JSON).
-                                addField(
-                                        FieldBuilder.newInstance().
-                                                setName("roomId").
-                                                setType(FieldType.TEXT).
-                                                setValue(room.getId().toString()).
-                                                build()).
                                 addFields(new SaveBookingFieldsBuilder().build()).
                                 build()).
                         build()).

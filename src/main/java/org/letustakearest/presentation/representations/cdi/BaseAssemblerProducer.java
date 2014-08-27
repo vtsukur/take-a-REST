@@ -1,6 +1,5 @@
 package org.letustakearest.presentation.representations.cdi;
 
-import com.google.code.siren4j.Siren4J;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
@@ -17,10 +16,12 @@ abstract class BaseAssemblerProducer<T> {
 
     private static final MediaType GENERIC_HAL = MediaType.valueOf(RepresentationFactory.HAL_JSON);
 
-    private static final MediaType GENERIC_SIREN = MediaType.valueOf(Siren4J.JSON_MEDIATYPE);
+    private static final MediaType GENERIC_SIREN = MediaType.valueOf("application/vnd.siren+json");
+
+    private static final MediaType HOTEL_SIREN_V2 = MediaType.valueOf("application/vnd.siren.hotel.v2+json");
 
     private static final List<Variant> VARIANTS = Variant.mediaTypes(
-            GENERIC_HAL, GENERIC_SIREN
+            GENERIC_HAL, GENERIC_SIREN, HOTEL_SIREN_V2
     ).build();
 
     protected T doProduce() {

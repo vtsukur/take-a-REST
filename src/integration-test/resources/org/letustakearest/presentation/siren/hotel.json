@@ -18,23 +18,17 @@
                     "type": "application/json",
                     "fields": [
                         {
-                            "name": "roomId",
-                            "type": "TEXT",
-                            "value": "5",
-                            "required": false
-                        },
-                        {
-                            "name": "data.from",
+                            "name": "from",
                             "type": "DATE",
                             "required": false
                         },
                         {
-                            "name": "data.to",
+                            "name": "to",
                             "type": "DATE",
                             "required": false
                         },
                         {
-                            "name": "data.includeBreakfast",
+                            "name": "includeBreakfast",
                             "type": "CHECKBOX",
                             "required": false
                         }
@@ -57,23 +51,17 @@
                     "type": "application/json",
                     "fields": [
                         {
-                            "name": "roomId",
-                            "type": "TEXT",
-                            "value": "6",
-                            "required": false
-                        },
-                        {
-                            "name": "data.from",
+                            "name": "from",
                             "type": "DATE",
                             "required": false
                         },
                         {
-                            "name": "data.to",
+                            "name": "to",
                             "type": "DATE",
                             "required": false
                         },
                         {
-                            "name": "data.includeBreakfast",
+                            "name": "includeBreakfast",
                             "type": "CHECKBOX",
                             "required": false
                         }

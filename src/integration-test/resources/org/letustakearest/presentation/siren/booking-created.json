@@ -12,22 +12,22 @@
     "actions": [
         {
             "name": "update",
-            "method": "PUT",
+            "method": "POST",
             "href": "$bookingURI",
             "class": ["booking"],
             "fields": [
                 {
-                    "name": "data.from",
+                    "name": "from",
                     "type": "DATE",
                     "required": false
                 },
                 {
-                    "name": "data.to",
+                    "name": "to",
                     "type": "DATE",
                     "required": false
                 },
                 {
-                    "name": "data.includeBreakfast",
+                    "name": "includeBreakfast",
                     "type": "CHECKBOX",
                     "required": false
                 }
