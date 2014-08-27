@@ -2,7 +2,6 @@ package org.letustakearest.presentation.resources;
 
 import com.google.code.siren4j.Siren4J;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;
-import org.letustakearest.presentation.cache.CacheControlFactory;
 import org.letustakearest.presentation.representations.EntryPointRepresentationAssembler;
 import org.letustakearest.presentation.representations.cdi.SelectByAcceptHeader;
 
@@ -10,9 +9,11 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
+import java.time.Duration;
 
 /**
  * @author volodymyr.tsukur
@@ -29,7 +30,7 @@ public class EntryPointResource {
     public Response services() {
         return Response.
                 ok(entryPointRepresentationAssembler.assemble()).
-                cacheControl(CacheControlFactory.oneDay()).
+                cacheControl(CacheControl.valueOf("max-age=" + Duration.ofDays(1).getSeconds())).
                 build();
     }
 

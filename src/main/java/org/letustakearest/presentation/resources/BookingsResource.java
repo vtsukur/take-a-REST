@@ -5,7 +5,6 @@ import com.theoryinpractise.halbuilder.api.RepresentationFactory;
 import org.letustakearest.application.service.BookingService;
 import org.letustakearest.domain.Booking;
 import org.letustakearest.domain.EntityNotFoundException;
-import org.letustakearest.presentation.cache.CacheControlFactory;
 import org.letustakearest.presentation.representations.BookingsRepresentationAssembler;
 import org.letustakearest.presentation.representations.cdi.SelectByAcceptHeader;
 import org.letustakearest.presentation.transitions.CreateBookingAsPlaceTransition;
@@ -13,10 +12,12 @@ import org.letustakearest.presentation.transitions.CreateBookingAsPlaceTransitio
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.container.ResourceContext;
+import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
+import java.time.Duration;
 
 /**
  * @author volodymyr.tsukur
@@ -39,7 +40,7 @@ public class BookingsResource {
     public Response browse() {
         return Response.
                 ok(bookingsRepresentationAssembler.from(bookingService.findAll())).
-                cacheControl(CacheControlFactory.oneMinute()).
+                cacheControl(CacheControl.valueOf("max-age=" + Duration.ofMinutes(1).getSeconds())).
                 build();
     }
 
