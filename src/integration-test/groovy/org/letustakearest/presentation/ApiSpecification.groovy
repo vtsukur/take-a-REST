@@ -223,7 +223,7 @@ class ApiSpecification extends Specification {
     response = request(updateLink.href as String, HAL_JSON).
         header('If-Match', createdBookingETag).
         method(
-            'PUT',
+            'POST',
             entity(
                 new BookingTransition(
                     from: LocalDate.of(2014, 8, 1),

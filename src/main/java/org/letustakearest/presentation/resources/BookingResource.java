@@ -2,10 +2,11 @@ package org.letustakearest.presentation.resources;
 
 import com.google.code.siren4j.Siren4J;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.letustakearest.application.service.BookingService;
 import org.letustakearest.domain.Booking;
 import org.letustakearest.domain.EntityNotFoundException;
-import org.letustakearest.presentation.cache.EntityTagFactory;
 import org.letustakearest.presentation.representations.BookingRepresentationAssembler;
 import org.letustakearest.presentation.representations.cdi.SelectByAcceptHeader;
 import org.letustakearest.presentation.transitions.BookingTransition;
@@ -26,6 +27,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Path("/{id}")
 public class BookingResource {
+
+    private static final Log LOG = LogFactory.getLog(BookingResource.class);
 
     @PathParam("id")
     private Long id;
@@ -58,7 +61,7 @@ public class BookingResource {
         }
     }
 
-    @PUT
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
     public Response update(
@@ -145,7 +148,7 @@ public class BookingResource {
     }
 
     @POST
-    @Path("/payment-fully-async")
+    @Path("/payment-async-to-request")
     @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
     @Consumes(MediaType.APPLICATION_JSON)
     public Response payFullyAsync(
@@ -157,6 +160,7 @@ public class BookingResource {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    LOG.info("Payment done asynchronously in 20 seconds after initial request");
                     bookingService.pay(booking, transition);
                 }
             }, 20000);
@@ -174,7 +178,7 @@ public class BookingResource {
     }
 
     private EntityTag entityTag(final Booking booking) {
-        return EntityTagFactory.entityTag(booking.getVersion());
+        return new EntityTag(String.valueOf(booking.getVersion()));
     }
 
     public static URI selfURI(final Booking booking, final UriInfo uriInfo) {
