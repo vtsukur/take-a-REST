@@ -1,6 +1,6 @@
 real-rest
 =========
-![Build status](https://travis-ci.org/flushdia/real-rest.svg?branch=master)
+![Build status](https://travis-ci.org/flushdia/take-a-REST.svg?branch=master)
 
 # Build Guidelines
 
