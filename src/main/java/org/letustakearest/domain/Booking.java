@@ -3,6 +3,7 @@ package org.letustakearest.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -21,6 +22,8 @@ public final class Booking extends IdentifiableAndVersioned {
     private LocalDate checkOut;
 
     private boolean includeBreakfast;
+
+    private BigDecimal price;
 
     private State state;
 

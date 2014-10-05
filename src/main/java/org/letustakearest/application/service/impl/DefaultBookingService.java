@@ -13,6 +13,7 @@ import org.letustakearest.presentation.transitions.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.math.BigDecimal;
 import java.time.Period;
 import java.util.Collection;
 
@@ -44,7 +45,7 @@ public class DefaultBookingService implements BookingService {
         final Place place = placeRepository.findById(roomId);
         final Booking booking = map(new Booking(), transition);
         booking.setState(Booking.State.CREATED);
-        booking.setPlace(place);
+        setupBookingForUpdate(booking, place);
         return bookingRepository.create(booking);
     }
 
@@ -55,7 +56,7 @@ public class DefaultBookingService implements BookingService {
         final Place place = placeRepository.findById(transition.getPlaceId());
         final Booking booking = map(new Booking(), transition.getData());
         booking.setState(Booking.State.CREATED);
-        booking.setPlace(place);
+        setupBookingForUpdate(booking, place);
         return bookingRepository.create(booking);
     }
 
@@ -65,9 +66,15 @@ public class DefaultBookingService implements BookingService {
 
         final Place place = placeRepository.findById(booking.getPlace().getId());
         final Booking mappedBooking = map(booking, transition);
-        booking.setPlace(place);
+        setupBookingForUpdate(booking, place);
         bookingRepository.update(mappedBooking);
         return mappedBooking;
+    }
+
+    private void setupBookingForUpdate(final Booking booking, final Place place) {
+        booking.setPlace(place);
+        final int days = Period.between(booking.getCheckIn(), booking.getCheckOut()).getDays() + 1;
+        booking.setPrice(new BigDecimal(place.getPrice() * days));
     }
 
     private Booking map(final Booking booking, final BookingTransition bookingTransition) {
