@@ -30,7 +30,7 @@ abstract class BaseBookingRepresentationBuilder {
                 addProperty("hotel", booking.getPlace().getHotel().getName()).
                 addProperty("city", booking.getPlace().getHotel().getCity().getName()).
                 addProperty("roomType", booking.getPlace().getType().name()).
-                addProperty("price", booking.getPlace().getPrice()).
+                addProperty("price", booking.getPrice()).
                 addProperty("checkIn", booking.getCheckIn()).
                 addProperty("checkOut", booking.getCheckOut()).
                 addProperty("includeBreakfast", booking.isIncludeBreakfast()).
