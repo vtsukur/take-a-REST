@@ -16,9 +16,9 @@ public final class Booking extends IdentifiableAndVersioned {
 
     private Place place;
 
-    private LocalDate from;
+    private LocalDate checkIn;
 
-    private LocalDate to;
+    private LocalDate checkOut;
 
     private boolean includeBreakfast;
 

@@ -15,11 +15,11 @@ class SaveBookingFieldsBuilder {
     public List<Field> build() {
         return Arrays.asList(
                 FieldBuilder.newInstance().
-                        setName("from").
+                        setName("checkIn").
                         setType(FieldType.DATE).
                         build(),
                 FieldBuilder.newInstance().
-                        setName("to").
+                        setName("checkOut").
                         setType(FieldType.DATE).
                         build(),
                 FieldBuilder.newInstance().

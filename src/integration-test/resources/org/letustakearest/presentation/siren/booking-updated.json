@@ -1,8 +1,8 @@
 {
     "class": ["booking"],
     "properties": {
-        "from": [2014, 8, 1],
-        "to": [2014, 8, 20],
+        "checkIn": [2014, 8, 1],
+        "checkOut": [2014, 8, 20],
         "includeBreakfast": false
     },
     "actions": [
@@ -13,12 +13,12 @@
             "class": ["booking"],
             "fields": [
                 {
-                    "name": "from",
+                    "name": "checkIn",
                     "type": "DATE",
                     "required": false
                 },
                 {
-                    "name": "to",
+                    "name": "checkOut",
                     "type": "DATE",
                     "required": false
                 },

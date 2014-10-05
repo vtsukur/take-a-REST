@@ -56,8 +56,8 @@ public class HalBookingRepresentationAssembler extends BaseHalRepresentationAsse
                     withProperty("city", booking.getPlace().getHotel().getCity().getName()).
                     withProperty("roomType", booking.getPlace().getType().name()).
                     withProperty("price", booking.getPlace().getPrice()).
-                    withProperty("from", booking.getFrom()).
-                    withProperty("to", booking.getTo()).
+                    withProperty("checkIn", booking.getCheckIn()).
+                    withProperty("checkOut", booking.getCheckOut()).
                     withProperty("includeBreakfast", booking.isIncludeBreakfast()).
                     withProperty("paid", booking.getPayment() != null);
         }

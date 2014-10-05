@@ -1,8 +1,8 @@
 {
     "class": ["booking"],
     "properties": {
-        "from": [2014, 8, 1],
-        "to": [2014, 8, 20],
+        "checkIn": [2014, 8, 1],
+        "checkOut": [2014, 8, 20],
         "includeBreakfast": false
     },
     "actions": [

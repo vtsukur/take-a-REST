@@ -104,8 +104,8 @@ class ApiSpecification extends Specification {
             updateAction.method as String,
             entity(
                 new BookingTransition(
-                    from: LocalDate.of(2014, 8, 1),
-                    to: LocalDate.of(2014, 8, 20),
+                    checkIn: LocalDate.of(2014, 8, 1),
+                    checkOut: LocalDate.of(2014, 8, 20),
                     includeBreakfast: false
                 ), APPLICATION_JSON))
 
@@ -226,8 +226,8 @@ class ApiSpecification extends Specification {
             'POST',
             entity(
                 new BookingTransition(
-                    from: LocalDate.of(2014, 8, 1),
-                    to: LocalDate.of(2014, 8, 20),
+                    checkIn: LocalDate.of(2014, 8, 1),
+                    checkOut: LocalDate.of(2014, 8, 20),
                     includeBreakfast: false
                 ), APPLICATION_JSON))
 
@@ -275,8 +275,8 @@ class ApiSpecification extends Specification {
     response = close(request(uri('/api/hotels/3/rooms/5/booking'), JSON_MEDIATYPE).
         post(entity(
             new BookingTransition(
-                from: LocalDate.of(2014, 8, 1),
-                to: LocalDate.of(2014, 8, 15),
+                checkIn: LocalDate.of(2014, 8, 1),
+                checkOut: LocalDate.of(2014, 8, 15),
                 includeBreakfast: true
             ), APPLICATION_JSON)))
 
@@ -366,8 +366,8 @@ class ApiSpecification extends Specification {
 
   private static BookingTransition referenceBookingTransition() {
     new BookingTransition(
-        from: LocalDate.of(2014, 8, 1),
-        to: LocalDate.of(2014, 8, 15),
+        checkIn: LocalDate.of(2014, 8, 1),
+        checkOut: LocalDate.of(2014, 8, 15),
         includeBreakfast: true
     )
   }

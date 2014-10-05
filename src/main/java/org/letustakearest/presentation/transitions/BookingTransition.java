@@ -14,10 +14,10 @@ import java.time.LocalDate;
 public class BookingTransition {
 
     @NotNull
-    private LocalDate from;
+    private LocalDate checkIn;
 
     @NotNull
-    private LocalDate to;
+    private LocalDate checkOut;
 
     private Boolean includeBreakfast;
 
