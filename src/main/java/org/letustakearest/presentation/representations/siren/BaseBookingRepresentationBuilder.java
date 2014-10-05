@@ -31,8 +31,8 @@ abstract class BaseBookingRepresentationBuilder {
                 addProperty("city", booking.getPlace().getHotel().getCity().getName()).
                 addProperty("roomType", booking.getPlace().getType().name()).
                 addProperty("price", booking.getPlace().getPrice()).
-                addProperty("from", booking.getFrom()).
-                addProperty("to", booking.getTo()).
+                addProperty("checkIn", booking.getCheckIn()).
+                addProperty("checkOut", booking.getCheckOut()).
                 addProperty("includeBreakfast", booking.isIncludeBreakfast()).
                 addProperty("paid", booking.getPayment() != null).
                 addLink(LinkBuilder.newInstance().

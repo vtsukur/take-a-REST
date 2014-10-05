@@ -18,12 +18,12 @@
                     "type": "application/json",
                     "fields": [
                         {
-                            "name": "from",
+                            "name": "checkIn",
                             "type": "DATE",
                             "required": false
                         },
                         {
-                            "name": "to",
+                            "name": "checkOut",
                             "type": "DATE",
                             "required": false
                         },
@@ -51,12 +51,12 @@
                     "type": "application/json",
                     "fields": [
                         {
-                            "name": "from",
+                            "name": "checkIn",
                             "type": "DATE",
                             "required": false
                         },
                         {
-                            "name": "to",
+                            "name": "checkOut",
                             "type": "DATE",
                             "required": false
                         },

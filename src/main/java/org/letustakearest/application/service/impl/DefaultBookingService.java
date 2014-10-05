@@ -72,11 +72,11 @@ public class DefaultBookingService implements BookingService {
 
     private Booking map(final Booking booking, final BookingTransition bookingTransition) {
         if (bookingTransition != null) {
-            if (bookingTransition.getFrom() != null) {
-                booking.setFrom(bookingTransition.getFrom());
+            if (bookingTransition.getCheckIn() != null) {
+                booking.setCheckIn(bookingTransition.getCheckIn());
             }
-            if (bookingTransition.getTo() != null) {
-                booking.setTo(bookingTransition.getTo());
+            if (bookingTransition.getCheckOut() != null) {
+                booking.setCheckOut(bookingTransition.getCheckOut());
             }
             if (bookingTransition.getIncludeBreakfast() != null) {
                 booking.setIncludeBreakfast(bookingTransition.getIncludeBreakfast());
@@ -101,7 +101,7 @@ public class DefaultBookingService implements BookingService {
         payment.setCardholdersName(data.getCardholdersName());
         payment.setCreditCardNumber(data.getCreditCardNumber());
         payment.setAmount(booking.getPlace().getPrice() *
-                Period.between(booking.getFrom(), booking.getTo()).getDays());
+                Period.between(booking.getCheckIn(), booking.getCheckOut()).getDays());
 
         payment = paymentRepository.create(payment);
         booking.setPayment(payment);

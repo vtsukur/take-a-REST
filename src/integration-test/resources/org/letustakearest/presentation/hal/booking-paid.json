@@ -12,7 +12,7 @@
             "href": "$bookingURI"
         }
     },
-    "from": [2014, 8, 1],
+    "checkIn": [2014, 8, 1],
     "includeBreakfast": false,
-    "to": [2014, 8, 20]
+    "checkOut": [2014, 8, 20]
 }
