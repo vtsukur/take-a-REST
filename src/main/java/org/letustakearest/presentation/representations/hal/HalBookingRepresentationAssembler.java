@@ -52,9 +52,7 @@ public class HalBookingRepresentationAssembler extends BaseHalRepresentationAsse
 
         private void setProperties() {
             representation = representation.
-                    withProperty("hotel", booking.getPlace().getHotel().getName()).
-                    withProperty("city", booking.getPlace().getHotel().getCity().getName()).
-                    withProperty("roomType", booking.getPlace().getType().name()).
+                    withProperty("roomType", booking.getPlace().getCategory().name()).
                     withProperty("price", booking.getPrice()).
                     withProperty("checkIn", booking.getCheckIn()).
                     withProperty("checkOut", booking.getCheckOut()).

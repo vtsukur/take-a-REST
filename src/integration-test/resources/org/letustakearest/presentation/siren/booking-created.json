@@ -1,9 +1,7 @@
 {
     "class": ["booking"],
     "properties": {
-        "hotel": "Premier Palace",
-        "city": "Kyiv",
-        "roomType": "ROOM",
+        "roomType": "DOUBLE",
         "paid": false,
         "checkIn": [2014, 8, 1],
         "checkOut": [2014, 8, 15],

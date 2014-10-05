@@ -272,7 +272,7 @@ class ApiSpecification extends Specification {
     def response
 
     when:
-    response = close(request(uri('/api/hotels/3/rooms/5/booking'), JSON_MEDIATYPE).
+    response = close(request(uri('/api/hotels/3/rooms/6/booking'), JSON_MEDIATYPE).
         post(entity(
             new BookingTransition(
                 checkIn: LocalDate.of(2014, 8, 1),
