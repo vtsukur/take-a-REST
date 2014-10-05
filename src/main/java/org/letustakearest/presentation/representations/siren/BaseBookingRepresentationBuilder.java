@@ -27,9 +27,7 @@ abstract class BaseBookingRepresentationBuilder {
     protected EntityBuilder builder() {
         return EntityBuilder.newInstance().
                 setComponentClass("booking").
-                addProperty("hotel", booking.getPlace().getHotel().getName()).
-                addProperty("city", booking.getPlace().getHotel().getCity().getName()).
-                addProperty("roomType", booking.getPlace().getType().name()).
+                addProperty("roomType", booking.getPlace().getCategory().name()).
                 addProperty("price", booking.getPrice()).
                 addProperty("checkIn", booking.getCheckIn()).
                 addProperty("checkOut", booking.getCheckOut()).
