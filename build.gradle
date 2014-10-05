@@ -49,6 +49,7 @@ dependencies {
   compile('org.jboss.resteasy:resteasy-jackson2-provider:3.0.8.Final')
   compile('org.jboss.resteasy:resteasy-servlet-initializer:3.0.8.Final')
   compile('org.jboss.resteasy:async-http-servlet-3.0:3.0.8.Final')
+  compile('com.google.guava:guava:17.0')
   compile('org.jboss.weld.servlet:weld-servlet:2.2.1.Final')
   compile('log4j:log4j:1.2.14')
   compile('org.projectlombok:lombok:1.14.2')
@@ -59,7 +60,6 @@ dependencies {
   compile('org.hibernate:hibernate-validator:5.1.1.Final')
   compile('org.hibernate:hibernate-validator-cdi:5.1.1.Final')
   compile('com.theoryinpractise:halbuilder-standard:3.0.1')
-  compile('com.google.guava:guava:17.0')
 
   def tomcatVersion = '7.0.54'
   tomcat("org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}")
