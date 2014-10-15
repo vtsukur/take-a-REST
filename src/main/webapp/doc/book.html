@@ -20,29 +20,12 @@
 <div class="container-fluid">
     <h1>Take a REST! <small>API</small></h1>
     <hr>
-    <h2>bookings <small>relation</small></h2>
-
-    <div class="well method">
-        <h2>GET</h2>
-        <p class="description">
-            Returns list of bookings
-        </p>
-        <div class="request">
-            <h3>Request</h3>
-            <div class="type">
-                <h4>Headers</h4>
-                <div>
-                    The request should have the Content-Type
-                    <code>application/hal+json</code> or <code>application/vnd.siren+json</code>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h2>book <small>relation</small></h2>
 
     <div class="well method">
         <h2>POST</h2>
         <p class="description">
-            Create a booking
+            Create a booking for the room identified by the request URI
         </p>
         <div class="request">
             <h3>Request</h3>
@@ -74,7 +57,7 @@
         <div class="response">
             <h3>Responses</h3>
             <div class="code">
-                <h4>200 OK</h4>
+                <h4>201 Created</h4>
                 <div class="body">
                     Up-to-date booking state
                 </div>
