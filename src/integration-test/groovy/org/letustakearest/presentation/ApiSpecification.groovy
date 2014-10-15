@@ -186,11 +186,11 @@ class ApiSpecification extends Specification {
     hotel
     def room = (hotel?._embedded?.get('take-a-rest:room') as List)[0]
     room
-    def bookingsLink = room?._links?.get('take-a-rest:bookings')
-    bookingsLink
+    def bookLink = room?._links?.get('take-a-rest:book')
+    bookLink
 
     when:
-    response = close(request(bookingsLink.href as String, HAL_JSON).post(
+    response = close(request(bookLink.href as String, HAL_JSON).post(
         entity(
             referenceBookingTransition(),
             APPLICATION_JSON)))

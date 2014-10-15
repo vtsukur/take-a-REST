@@ -14,7 +14,7 @@
         "take-a-rest:room": [
             {
                 "_links": {
-                    "take-a-rest:bookings": {
+                    "take-a-rest:book": {
                         "href": "$baseURI/api/hotels/3/rooms/5/booking"
                     }
                 },
@@ -24,7 +24,7 @@
             },
             {
                 "_links": {
-                    "take-a-rest:bookings": {
+                    "take-a-rest:book": {
                         "href": "$baseURI/api/hotels/3/rooms/6/booking"
                     }
                 },

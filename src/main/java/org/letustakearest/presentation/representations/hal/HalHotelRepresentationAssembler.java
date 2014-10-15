@@ -41,7 +41,7 @@ public class HalHotelRepresentationAssembler extends BaseHalRepresentationAssemb
                 withProperty("id", place.getId()).
                 withProperty("type", place.getCategory()).
                 withProperty("price", place.getPrice()).
-                withLink(rel("bookings"), HotelResource.bookingURI(place, uriInfo));
+                withLink(rel("book"), HotelResource.bookingURI(place, uriInfo));
     }
 
     private URI selfURI(final Hotel hotel) {

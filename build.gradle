@@ -60,6 +60,7 @@ dependencies {
   compile('org.hibernate:hibernate-validator:5.1.1.Final')
   compile('org.hibernate:hibernate-validator-cdi:5.1.1.Final')
   compile('com.theoryinpractise:halbuilder-standard:3.0.1')
+  compile('org.springframework.hateoas:spring-hateoas:0.16.0.RELEASE')
 
   def tomcatVersion = '7.0.54'
   tomcat("org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}")
