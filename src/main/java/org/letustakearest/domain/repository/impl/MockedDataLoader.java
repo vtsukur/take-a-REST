@@ -59,12 +59,12 @@ public class MockedDataLoader {
         premierPalace.getPlaces().add(placeRepository.create(new Place(premierPalace, Place.Category.DOUBLE, 1500)));
         hotelRepository.create(premierPalace);
 
-        final Hotel presidentHotelKyiv = new Hotel();
-        presidentHotelKyiv.setName("President");
-        presidentHotelKyiv.setCity(kyiv);
-        presidentHotelKyiv.getPlaces().add(placeRepository.create(new Place(presidentHotelKyiv, Place.Category.DOUBLE, 1400)));
-        presidentHotelKyiv.getPlaces().add(placeRepository.create(new Place(presidentHotelKyiv, Place.Category.QUEEN, 2200)));
-        hotelRepository.create(presidentHotelKyiv);
+        final Hotel cosmopoliteHotelKyiv = new Hotel();
+        cosmopoliteHotelKyiv.setName("Cosmopolite");
+        cosmopoliteHotelKyiv.setCity(kyiv);
+        cosmopoliteHotelKyiv.getPlaces().add(placeRepository.create(new Place(cosmopoliteHotelKyiv, Place.Category.DOUBLE, 1400)));
+        cosmopoliteHotelKyiv.getPlaces().add(placeRepository.create(new Place(cosmopoliteHotelKyiv, Place.Category.QUEEN, 2200)));
+        hotelRepository.create(cosmopoliteHotelKyiv);
     }
 
 }
