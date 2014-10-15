@@ -3,6 +3,7 @@ package org.letustakearest.presentation.resources;
 import com.google.code.siren4j.Siren4J;
 import com.google.code.siren4j.component.Entity;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;
+import org.apache.commons.io.IOUtils;
 import org.letustakearest.application.service.BookingService;
 import org.letustakearest.application.service.HotelService;
 import org.letustakearest.domain.Booking;
@@ -16,8 +17,11 @@ import org.letustakearest.presentation.representations.siren.HotelWithPlacesRepr
 import org.letustakearest.presentation.transitions.BookingTransition;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 
@@ -116,6 +120,20 @@ public class HotelResource {
         }
         final URI bookingURI = BookingResource.selfURI(result, uriInfo);
         return Response.created(bookingURI).entity(bookingRepresentationAssembler.from(result)).build();
+    }
+
+    @Path("/rooms/{roomId}/booking")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public Response create(@Context final UriInfo uriInfo,
+                           @Context final ServletContext context,
+                           @PathParam("roomId") final Long roomId) throws IOException {
+        // TODO Simplistic implementation, use template engine
+        final InputStream resourceStream = context.getResourceAsStream("/doc/book-GET.html");
+        final String html = IOUtils.toString(resourceStream).
+                replaceAll("\\$\\{contextPath\\}", uriInfo.getBaseUriBuilder().replacePath("").build().toString()).
+                replaceAll("\\$\\{link\\}", uriInfo.getBaseUriBuilder().replacePath("doc").segment("book.html").build().toString());
+        return Response.status(Response.Status.METHOD_NOT_ALLOWED).entity(html).build();
     }
 
     private Entity prepareHotelAsPlaceRepresentation(final UriInfo uriInfo) {
