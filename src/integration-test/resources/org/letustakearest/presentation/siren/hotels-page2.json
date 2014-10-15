@@ -31,7 +31,7 @@
             "class": ["hotel"],
             "rel": ["hotel"],
             "properties": {
-                "name": "President"
+                "name": "Cosmopolite"
             },
             "links": [
                 {
