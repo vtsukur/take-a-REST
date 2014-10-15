@@ -1,0 +1,32 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <title>Take a REST! API - 'booking' Resource</title>
+    <link rel="stylesheet" media="screen" href="${contextPath}doc/css/bootstrap.css" />
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+        .method div {
+            padding-left: 20px;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+    <link rel="stylesheet" media="screen" href="${contextPath}doc/css/bootstrap-responsive.css" />
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <h1>Take a REST! <small>API</small></h1>
+    <h2 class="error">405 Method Not Allowed</h2>
+    <hr>
+    <p class="description">
+        You've issued a GET request, which is <span class="error">NOT</span> supported by this resource.
+        Please refer to <a href="${link}">documentation</a> for available set of operations.
+    </p>
+</div>
+</body>
