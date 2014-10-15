@@ -2,6 +2,7 @@ package org.letustakearest.presentation.resources;
 
 import com.google.code.siren4j.Siren4J;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.letustakearest.application.service.BookingService;
@@ -13,10 +14,13 @@ import org.letustakearest.presentation.transitions.BookingTransition;
 import org.letustakearest.presentation.transitions.PayForBookingTransition;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -59,6 +63,19 @@ public class BookingResource {
         catch (final EntityNotFoundException e) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
+    }
+
+    @Path("/payment")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public Response create(@Context final UriInfo uriInfo,
+                           @Context final ServletContext context) throws IOException {
+        // TODO Simplistic implementation, use template engine
+        final InputStream resourceStream = context.getResourceAsStream("/doc/booking-payment-GET.html");
+        final String html = IOUtils.toString(resourceStream).
+                replaceAll("\\$\\{contextPath\\}", uriInfo.getBaseUriBuilder().replacePath("").build().toString()).
+                replaceAll("\\$\\{link\\}", uriInfo.getBaseUriBuilder().replacePath("doc").segment("booking-payment.html").build().toString());
+        return Response.status(Response.Status.METHOD_NOT_ALLOWED).entity(html).build();
     }
 
     @POST
