@@ -25,11 +25,21 @@
       if (!rel.match(urlRegex) && isCurie(rel) && HAL.currentDocument._links.curies) {
         var parts = rel.split(':');
         var curies = HAL.currentDocument._links.curies;
-        for (var i=0; i<curies.length; i++) {
-          if (curies[i].name == parts[0]) {
-            var tmpl = uritemplate(curies[i].href);
-            return tmpl.expand({ rel: parts[1] });
-          }
+        if (typeof curies == "object" &&
+            typeof curies.length == "undefined" &&
+            typeof curies.name == "string" &&
+            typeof curies.href == "string" &&
+            curies.templated === true) {
+          var tmpl = uritemplate(curies.href);
+          return tmpl.expand({ rel: parts[1] });
+        }
+        else {
+            for (var i=0; i<curies.length; i++) {
+                if (curies[i].name == parts[0]) {
+                    var tmpl = uritemplate(curies[i].href);
+                    return tmpl.expand({ rel: parts[1] });
+                }
+            }
         }
       }
       else if (!rel.match(urlRegex) && isCurie(rel) && HAL.currentDocument._links.curie) {
