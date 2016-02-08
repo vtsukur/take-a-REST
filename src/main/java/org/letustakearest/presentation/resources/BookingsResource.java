@@ -45,8 +45,8 @@ public class BookingsResource {
     }
 
     @POST
-    @Produces({ Siren4J.JSON_MEDIATYPE })
-    @Consumes("application/vnd.booking.v2+json")
+    @Produces({ RepresentationFactory.HAL_JSON, Siren4J.JSON_MEDIATYPE })
+    @Consumes("application/json")
     public Response create(final CreateBookingAsPlaceTransition transition, @Context final UriInfo uriInfo) {
         final Booking result;
         try {
